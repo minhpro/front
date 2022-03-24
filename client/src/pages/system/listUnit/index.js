@@ -37,7 +37,7 @@ export const PageSystemListUnit = () => {
 
     handleSearch = () => {
       Function.handler
-        .api(() => Api.unitApi.search(search.unitName, search.chapterId))
+        .api(() => Api.unitApi.search(search.chapterId, search.unitName))
         .then((res) => {
           console.log(res);
           setUnit(res);
