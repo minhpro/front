@@ -1,12 +1,13 @@
 import WysiwygIcon from "@mui/icons-material/Wysiwyg";
-
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import DataUsageIcon from "@mui/icons-material/DataUsage";
 import * as Pages from "pages";
 class NavRouter {
   constructor() {
     this.data = [
       {
         name: "He thong",
-        icon: <WysiwygIcon />,
+        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "Cau hinh chung",
@@ -27,28 +28,28 @@ class NavRouter {
       },
       {
         name: "Ngan hang cau hoi EBD",
-        icon: <WysiwygIcon />,
+        icon: <AccountBalanceIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "Danh sach cau hoi",
             link: "danh-sach-cau-hoi-EBD",
-            element: <div>saddas</div>,
+            element: <Pages.BankQuestion.ListQuestion />,
           },
           {
             name: "Them cau hoi trac nghiem",
             link: "them-cau-trac-nghiem-EDB",
-            element: <div>saddas</div>,
+            element: <Pages.BankQuestion.AddMultiQuestion />,
           },
           {
             name: "Them cau hoi tu luan",
             link: "them-cau-tu-luan-EBD",
-            element: <div>saddas</div>,
+            element: <Pages.BankQuestion.AddEssayQuestion />,
           },
         ],
       },
       {
         name: "Quan ly du lieu rieng",
-        icon: <WysiwygIcon />,
+        icon: <DataUsageIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "Danh sach cau hoi",
@@ -74,7 +75,7 @@ class NavRouter {
       },
       {
         name: "Khoi tao de thi",
-        icon: <WysiwygIcon />,
+        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "Quan ly ma tran de",
@@ -95,7 +96,7 @@ class NavRouter {
       },
       {
         name: "To chuc khao thi",
-        icon: <WysiwygIcon />,
+        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "Khao thi",
@@ -106,7 +107,7 @@ class NavRouter {
       },
       {
         name: "Lam bai thi/ kiem tra",
-        icon: <WysiwygIcon />,
+        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "lam bai",
@@ -117,7 +118,7 @@ class NavRouter {
       },
       {
         name: "Xem dap an",
-        icon: <WysiwygIcon />,
+        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "Dap an",
@@ -128,7 +129,7 @@ class NavRouter {
       },
       {
         name: "Quan ly user",
-        icon: <WysiwygIcon />,
+        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "quan ly user",
@@ -139,7 +140,7 @@ class NavRouter {
       },
       {
         name: "Quan ly member",
-        icon: <WysiwygIcon />,
+        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "Quan ly member",

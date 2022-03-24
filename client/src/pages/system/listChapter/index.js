@@ -3,9 +3,36 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import React from "react";
 import * as Views from "views";
+import { useSelector } from "react-redux";
+import * as Function from "functions";
+import * as Api from "api";
 
 export const PageSystemListChapter = () => {
   const [open, setIsOpen] = React.useState(false);
+  const [search, setSearch] = React.useState({
+    chapterName: "",
+    classId: null,
+    subjectId: null,
+  });
+
+  const [subject, setSubject] = React.useState(null);
+  const [chapter, setChapter] = React.useState(null);
+
+  // life cirle
+  React.useEffect(() => {
+    if (search.classId) {
+      Function.handler
+        .api(() => Api.subjectApi.search(search.classId))
+        .then((res) => {
+          console.log(res);
+          setSubject(res);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [search.classId]);
+
+  // redux
+  const reduxClass = useSelector((state) => state.reduxClass);
   class Func {
     constructor() {
       this.message = {
@@ -14,6 +41,26 @@ export const PageSystemListChapter = () => {
         add: "da them dang de, id: ",
       };
     }
+    handleChange = (e) => {
+      setSearch({ ...search, [e.target.name]: e.target.value });
+      console.log(search);
+    };
+
+    handleSearch = () => {
+      Function.handler
+        .api(() =>
+          Api.chapterApi.search(
+            search.subjectId,
+            search.classId,
+            search.chapterName
+          )
+        )
+        .then((res) => {
+          console.log(res);
+          setChapter(res);
+        })
+        .catch((error) => console.log(error));
+    };
 
     onSubmit = (e) => {
       e.preventDefault();
@@ -42,26 +89,42 @@ export const PageSystemListChapter = () => {
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
-              <Ex.ExInputWrapper.Basic name={"Ten chuong:"} />
+              <Ex.ExInputWrapper.Basic
+                label={"Ten chuong:"}
+                name={"chapterName"}
+                onChange={func.handleChange}
+              />
             </Item>
             <Item>
-              <Ex.ExInputWrapper.Select name={"Chon lop:"} data={data} />
+              <Ex.ExInputWrapper.Select
+                label={"Chon lop:"}
+                name={"classId"}
+                data={reduxClass?.data}
+                onChange={func.handleChange}
+              />
             </Item>
             <Item>
-              <Ex.ExInputWrapper.Select name={"Chon mon:"} data={data} />
+              <Ex.ExInputWrapper.Select
+                label={"Chon mon:"}
+                name={"subjectId"}
+                data={subject?.data}
+              />
             </Item>
           </Mui.Grid>
           <Mui.Stack direction={"row"} py={2} spacing={2}>
             <Eui.EuiButton.Progress />
-            <Eui.EuiButton.Progress />
+            <Eui.EuiButton.Progress
+              name={"tim kiem"}
+              onClick={func.handleSearch}
+            />
           </Mui.Stack>
         </Views.ViewBoard>
 
         {/* bang du lieu */}
         <Views.ViewBoard>
           <Eui.EuiTable dataColumn={dataColumn}>
-            {rowData
-              ? rowData.data.map((row, i) => (
+            {chapter
+              ? chapter.data.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {i + 1}

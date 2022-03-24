@@ -31,7 +31,7 @@ export const Header = () => {
 
 const Style = {
   Wrapper: styled.header`
-    background-image: url(${Func.getImage.getJpeg("header")});
+    background-image: url(${Func.getImage.getPng("header1")});
     min-height: 230px;
     background-position: center;
     background-repeat: no-repeat;

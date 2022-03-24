@@ -3,8 +3,11 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import React from "react";
 import * as Element from "../../element";
+import { useSelector } from "react-redux";
 
 export const TypeTime = () => {
+  // redux
+  const reduxTimeExam = useSelector((state) => state.reduxTimeExam);
   const [open, setIsOpen] = React.useState(false);
 
   class Func {
@@ -81,14 +84,14 @@ export const TypeTime = () => {
         }
       >
         <Eui.EuiTable dataColumn={dataColumn}>
-          {rowData
-            ? rowData.data.map((row, i) => (
+          {reduxTimeExam
+            ? reduxTimeExam.data.map((row, i) => (
                 <Eui.EuiTable.StyledTableRow key={i}>
                   <Eui.EuiTable.StyledTableCell align="center">
                     {i + 1}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {row.name || "code"}
+                    {row.time || "code"}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     {row.des || "name class"}

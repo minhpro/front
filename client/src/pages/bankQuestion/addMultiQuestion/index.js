@@ -1,0 +1,301 @@
+import * as Mui from "@mui/material";
+import * as Eui from "components/Eui";
+import * as Ex from "Example";
+import React from "react";
+import * as Views from "views";
+
+import * as Function from "functions";
+import * as Api from "api";
+
+export const AddMultiQuestion = () => {
+  const [open, setIsOpen] = React.useState(false);
+  const [search, setSearch] = React.useState({
+    chapterId: null,
+    classId: null,
+    subjectId: null,
+    unitId: null,
+    typeQuestionId: null,
+    questionName: "",
+    timeAnswer: 1,
+  });
+
+  const [question, setQuestion] = React.useState({
+    question: "",
+    suggest: "",
+    answer: 0,
+    answerOne: "",
+    answerTwo: "",
+    answerThree: "",
+    answerFour: "",
+  });
+
+  //   function
+  class Func {
+    constructor() {
+      this.message = {
+        delete: "da xoa dang de, id:",
+        null: "chua nhap ten dang de",
+        add: "da them dang de, id: ",
+      };
+    }
+    handleChange = (e) => {
+      setSearch({ ...search, [e.target.name]: e.target.value });
+      console.log(search);
+    };
+
+    handleChangeQuestion = (name, e) => {
+      setSearch({ ...search, [name]: e });
+      console.log(search);
+    };
+
+    onSubmit = (e) => {
+      e.preventDefault();
+      let data = {
+        question: question.question,
+        suggest: question.suggest,
+        time: search.timeAnswer,
+        questionTypeId: search.typeQuestionId,
+        unitId: search.unitId,
+        type: "MultiChoice",
+        answer: question.answer,
+        answerOne: question.answerOne,
+        answerTwo: question.answerTwo,
+        answerThree: question.answerThree,
+        answerFour: question.answerFour,
+      };
+      console.log(data);
+      Function.handler
+        .api(() => Api.questionApi.add(data))
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => console.log(error));
+      console.log("submit");
+    };
+    onDelete = () => {
+      console.log("submit");
+    };
+
+    onEdit = (e) => {
+      console.log("submit");
+    };
+
+    handleClose = () => {
+      setIsOpen(false);
+    };
+    handleOpen = () => {
+      setIsOpen(true);
+    };
+  }
+
+  const func = new Func();
+
+  return (
+    <Views.ViewContent title={"Them moi cau trac nghiem"}>
+      <Mui.Stack spacing={0.5} component={"form"} onSubmit={func.onSubmit}>
+        {/* tim kiem */}
+        <Views.ViewBoard>
+          <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
+            <Item>
+              <Ex.ExInputWrapper.Basic
+                label={"Ten cau hoi"}
+                name={"questionName"}
+                required
+                onChange={func.handleChange}
+              />
+            </Item>
+            <Item>
+              <Mui.Grid container columnSpacing={2}>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.Class
+                    required
+                    onChange={func.handleChange}
+                  />
+                </Mui.Grid>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.Subject
+                    required
+                    id={search.classId}
+                    onChange={func.handleChange}
+                  />
+                </Mui.Grid>
+              </Mui.Grid>
+            </Item>
+            <Item>
+              <Ex.ExDataSelect.Chapter
+                required
+                id={search.subjectId}
+                onChange={func.handleChange}
+              />
+            </Item>
+            <Item>
+              <Ex.ExDataSelect.Units
+                required
+                id={search.chapterId}
+                onChange={func.handleChange}
+              />
+            </Item>
+            <Item>
+              <Mui.Grid container columnSpacing={2}>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.Classify
+                    required
+                    onChange={func.handleChange}
+                  />
+                </Mui.Grid>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.TypeQuestion
+                    required
+                    onChange={func.handleChange}
+                  />
+                </Mui.Grid>
+              </Mui.Grid>
+            </Item>
+            <Item>
+              <Mui.Grid container columnSpacing={2}>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExInputWrapper.Basic
+                    label={"Thoi gian tra loi"}
+                    name={"timeAnswer"}
+                    type={"number"}
+                    required
+                    onChange={func.handleChange}
+                  />
+                </Mui.Grid>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.TimeType required />
+                </Mui.Grid>
+              </Mui.Grid>
+            </Item>
+          </Mui.Grid>
+        </Views.ViewBoard>
+        {/* noi dung cau hoi */}
+        <Views.ViewBoard>
+          <Mui.Stack spacing={1}>
+            <Ex.ExInputWrapper.Editor
+              label={"Cau hoi:"}
+              name={"ads"}
+              defaultValue={"Nhap cau hoi"}
+              onChange={(e) => setQuestion((pre) => ({ ...pre, question: e }))}
+              required
+            />
+            <Ex.ExInputWrapper.Editor
+              label={"Huong dan giai:"}
+              name={"ads"}
+              defaultValue={"Nhap huong dan giai"}
+              onChange={(e) => setQuestion((pre) => ({ ...pre, suggest: e }))}
+            />
+            <Ex.ExInputWrapper.Editor
+              label={"Dap an A:"}
+              name={"ads"}
+              defaultValue={"Nhap dap an A"}
+              onChange={(e) => setQuestion((pre) => ({ ...pre, answerOne: e }))}
+            />
+            <Ex.ExInputWrapper.Editor
+              label={"Dap an B:"}
+              name={"ads"}
+              defaultValue={"Nhap dap an B"}
+              onChange={(e) => setQuestion((pre) => ({ ...pre, answerTwo: e }))}
+            />
+            <Ex.ExInputWrapper.Editor
+              label={"Dap an C:"}
+              name={"ads"}
+              defaultValue={"Nhap dap an C"}
+              onChange={(e) =>
+                setQuestion((pre) => ({ ...pre, answerThree: e }))
+              }
+            />
+            <Ex.ExInputWrapper.Editor
+              label={"Dap an D:"}
+              name={"ads"}
+              defaultValue={"Nhap dap an D"}
+              onChange={(e) =>
+                setQuestion((pre) => ({ ...pre, answerFour: e }))
+              }
+            />
+            <Mui.Stack>
+              <Mui.FormControl>
+                <Mui.RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                  onChange={(e) => {
+                    setQuestion({
+                      ...question,
+                      answer: parseInt(e.target.value),
+                    });
+                    console.log(question);
+                  }}
+                >
+                  <Mui.FormControlLabel
+                    value={0}
+                    control={
+                      <Mui.Radio
+                        sx={{
+                          "& .MuiSvgIcon-root": {
+                            fontSize: 28,
+                          },
+                        }}
+                      />
+                    }
+                    label={<p>Dap an A</p>}
+                  />
+                  <Mui.FormControlLabel
+                    value={1}
+                    control={
+                      <Mui.Radio
+                        sx={{
+                          "& .MuiSvgIcon-root": {
+                            fontSize: 28,
+                          },
+                        }}
+                      />
+                    }
+                    label={<p>Dap an B</p>}
+                  />
+                  <Mui.FormControlLabel
+                    value={2}
+                    control={
+                      <Mui.Radio
+                        sx={{
+                          "& .MuiSvgIcon-root": {
+                            fontSize: 28,
+                          },
+                        }}
+                      />
+                    }
+                    label={<p>Dap an C</p>}
+                  />
+                  <Mui.FormControlLabel
+                    value={3}
+                    control={
+                      <Mui.Radio
+                        sx={{
+                          "& .MuiSvgIcon-root": {
+                            fontSize: 28,
+                          },
+                        }}
+                      />
+                    }
+                    label={<p>Dap an D</p>}
+                  />
+                </Mui.RadioGroup>
+              </Mui.FormControl>
+            </Mui.Stack>
+            <Mui.Stack>
+              <Eui.EuiButton.Progress name={"Them moi"} component={"button"} />
+            </Mui.Stack>
+          </Mui.Stack>
+        </Views.ViewBoard>
+      </Mui.Stack>
+    </Views.ViewContent>
+  );
+};
+
+const Item = ({ children }) => {
+  return (
+    <Mui.Grid item xs={12} md={6}>
+      {children}
+    </Mui.Grid>
+  );
+};

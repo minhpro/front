@@ -3,8 +3,11 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import React from "react";
 import * as Element from "../../element";
+import { useSelector } from "react-redux";
 
 export const TypeExam = () => {
+  // redux
+  const reduxTestType = useSelector((state) => state.reduxTestType);
   const [open, setIsOpen] = React.useState(false);
 
   class Func {
@@ -80,8 +83,8 @@ export const TypeExam = () => {
         }
       >
         <Eui.EuiTable dataColumn={dataColumn}>
-          {rowData
-            ? rowData.data.map((row, i) => (
+          {reduxTestType
+            ? reduxTestType.data.map((row, i) => (
                 <Eui.EuiTable.StyledTableRow key={i}>
                   <Eui.EuiTable.StyledTableCell align="center">
                     {i + 1}

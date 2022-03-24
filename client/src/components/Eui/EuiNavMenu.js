@@ -7,7 +7,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const EuiNavMenu = ({ data }) => {
+export const EuiNavMenu = ({ data, icon }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -19,6 +19,7 @@ export const EuiNavMenu = ({ data }) => {
         onClick={handleClick}
         open={open}
         name={data.name || "name"}
+        icon={icon}
       />
       <Mui.Collapse in={open} timeout="auto" unmountOnExit>
         <Mui.Stack spacing={1}>
@@ -35,7 +36,7 @@ export const EuiNavMenu = ({ data }) => {
   );
 };
 
-EuiNavMenu.Parent = function ({ name, open, ...rest }) {
+EuiNavMenu.Parent = function ({ name, open, icon, ...rest }) {
   return (
     <Style.SuiStack
       direction={"row"}
@@ -52,7 +53,8 @@ EuiNavMenu.Parent = function ({ name, open, ...rest }) {
         alignItems={"center"}
         spacing={2}
       >
-        <GrSystem size={20} />
+        {icon ? icon : <GrSystem size={20} />}
+
         <h3>{name || "name"}</h3>
       </Mui.Stack>
 

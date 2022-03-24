@@ -1,3 +1,4 @@
 import { urlIcons } from "./urlContant";
+import * as ApiUrl from "./apiContant";
 
-export { urlIcons };
+export { urlIcons, ApiUrl };
