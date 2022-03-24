@@ -4,11 +4,18 @@ import * as Ex from "Example";
 import React from "react";
 import * as Element from "../../element";
 import { useSelector } from "react-redux";
+import * as Function from "functions";
+import * as Api from "api";
 
 export const TypeQuestion = () => {
   // redux
   const reduxQuestionType = useSelector((state) => state.reduxQuestionType);
   const [open, setIsOpen] = React.useState(false);
+
+  const [data, setData] = React.useState({
+    TypeQuestion: "",
+    des: "",
+  });
 
   class Func {
     constructor() {
@@ -18,9 +25,18 @@ export const TypeQuestion = () => {
         add: "da them dang de, id: ",
       };
     }
-
+    handleChange = (e) => {
+      setData({ ...data, [e.target.name]: e.target.value });
+      console.log(data);
+    };
     onSubmit = (e) => {
       e.preventDefault();
+      Function.handler
+        .api(() => Api.questionTypeApi.add(data.TypeQuestion))
+        .then((res) => {
+          this.handleClose();
+        })
+        .catch((error) => console.log(error));
       console.log("submit");
     };
     onDelete = () => {
@@ -48,17 +64,21 @@ export const TypeQuestion = () => {
         handleClose={func.handleClose}
         w={"80%"}
         mw={400}
-        title={"Them moi mon hoc"}
+        title={"Them moi dang cau hoi"}
       >
         <Mui.Stack spacing={2} component={"form"} onSubmit={func.onSubmit}>
           <Ex.ExInputWrapper.Basic
-            name={"Loai de thi"}
+            label={"Loai de thi"}
+            name={"TypeQuestion"}
             required
             placeholder="Nhap loai de thi"
+            onChange={func.handleChange}
           />
           <Ex.ExInputWrapper.Multiline
-            name={"Mo ta"}
+            label={"Mo ta"}
+            name={"des"}
             placeholder="Nhap mo ta"
+            onChange={func.handleChange}
           />
 
           <Mui.Stack

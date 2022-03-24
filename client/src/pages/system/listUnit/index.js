@@ -19,8 +19,6 @@ export const PageSystemListUnit = () => {
     unitName: "",
   });
 
-  const [subject, setSubject] = React.useState(null);
-  const [chapter, setChapter] = React.useState(null);
   const [unit, setUnit] = React.useState(null);
 
   //   function
@@ -39,7 +37,7 @@ export const PageSystemListUnit = () => {
 
     handleSearch = () => {
       Function.handler
-        .api(() => Api.unitApi.search(search.chapterId, search.unitName))
+        .api(() => Api.unitApi.search(search.unitName, search.chapterId))
         .then((res) => {
           console.log(res);
           setUnit(res);
@@ -47,12 +45,28 @@ export const PageSystemListUnit = () => {
         .catch((error) => console.log(error));
     };
 
+    handleAdd = () => {
+      if (search.unitName && search.chapterId) {
+        Function.handler
+          .api(() => Api.unitApi.add(search.unitName, search.chapterId))
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => console.log(error));
+      }
+    };
+
     onSubmit = (e) => {
       e.preventDefault();
       console.log("submit");
     };
-    onDelete = () => {
-      console.log("submit");
+    onDelete = (id) => {
+      Function.handler
+        .api(() => Api.unitApi.delete(id))
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => console.log(error));
     };
 
     onEdit = (e) => {
@@ -69,31 +83,6 @@ export const PageSystemListUnit = () => {
 
   const func = new Func();
 
-  // life cirle
-  React.useEffect(() => {
-    if (search.classId) {
-      Function.handler
-        .api(() => Api.subjectApi.search(search.classId))
-        .then((res) => {
-          console.log(res);
-          setSubject(res);
-        })
-        .catch((error) => console.log(error));
-    } else setSubject(null);
-  }, [search.classId]);
-  // life cirle
-  React.useEffect(() => {
-    if (search.subjectId) {
-      Function.handler
-        .api(() => Api.chapterApi.search(search.subjectId))
-        .then((res) => {
-          console.log(res);
-          setChapter(res);
-        })
-        .catch((error) => console.log(error));
-    } else setChapter(null);
-  }, [search.subjectId]);
-
   return (
     <Views.ViewContent title={"Danh sach bai"}>
       <Mui.Stack spacing={0.5}>
@@ -109,7 +98,7 @@ export const PageSystemListUnit = () => {
               />
             </Item>
             <Item>
-              <Ex.ExDataSelect.Subject
+              <Ex.ExDataSelect.Chapter
                 id={search.subjectId}
                 onChange={func.handleChange}
               />
@@ -136,7 +125,7 @@ export const PageSystemListUnit = () => {
             />
             <Eui.EuiButton.Progress
               name={"them bai moi"}
-              onClick={func.handleSearch}
+              onClick={func.handleAdd}
             />
           </Mui.Stack>
         </Views.ViewBoard>
@@ -152,7 +141,7 @@ export const PageSystemListUnit = () => {
                       {i + 1}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.chapterData?.subjectData.classs.name || "code"}
+                      {row.chapterData?.subjectData?.classs?.name || "code"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.chapterData?.subjectData.name || "name class"}
@@ -165,7 +154,7 @@ export const PageSystemListUnit = () => {
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete
-                        onDelete={func.onDelete}
+                        onDelete={() => func.onDelete(row.id)}
                         onEdit={func.onEdit}
                       />
                     </Eui.EuiTable.StyledTableCell>

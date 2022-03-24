@@ -17,5 +17,10 @@ const Style = {
   Wrapper: styled.div`
     height: ${(props) => props.height || "2rem"};
     width: "auto";
+
+    img {
+      height: "100%";
+      width: "100%";
+    }
   `,
 };

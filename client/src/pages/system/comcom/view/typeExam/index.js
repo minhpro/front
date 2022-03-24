@@ -4,11 +4,18 @@ import * as Ex from "Example";
 import React from "react";
 import * as Element from "../../element";
 import { useSelector } from "react-redux";
+import * as Function from "functions";
+import * as Api from "api";
 
 export const TypeExam = () => {
   // redux
   const reduxTestType = useSelector((state) => state.reduxTestType);
   const [open, setIsOpen] = React.useState(false);
+
+  const [data, setData] = React.useState({
+    typeExam: "",
+    des: "",
+  });
 
   class Func {
     constructor() {
@@ -18,9 +25,20 @@ export const TypeExam = () => {
         add: "da them dang de, id: ",
       };
     }
+    handleChange = (e) => {
+      setData({ ...data, [e.target.name]: e.target.value });
+      console.log(data);
+    };
 
     onSubmit = (e) => {
       e.preventDefault();
+
+      Function.handler
+        .api(() => Api.testTypeApi.add(data.typeExam))
+        .then((res) => {
+          this.handleClose();
+        })
+        .catch((error) => console.log(error));
       console.log("submit");
     };
     onDelete = () => {
@@ -48,16 +66,20 @@ export const TypeExam = () => {
         handleClose={func.handleClose}
         w={"80%"}
         mw={400}
-        title={"Them moi mon hoc"}
+        title={"Them moi dang de"}
       >
         <Mui.Stack spacing={2} component={"form"} onSubmit={func.onSubmit}>
           <Ex.ExInputWrapper.Basic
-            name={"Loai de thi"}
+            label={"Loai de thi"}
+            name={"typeExam"}
+            onChange={func.handleChange}
             required
             placeholder="Nhap loai de thi"
           />
           <Ex.ExInputWrapper.Multiline
-            name={"Mo ta"}
+            label={"Mo ta"}
+            name={"des"}
+            onChange={func.handleChange}
             placeholder="Nhap mo ta"
           />
 

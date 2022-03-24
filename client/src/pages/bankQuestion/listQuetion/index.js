@@ -138,7 +138,7 @@ export const ListQuestion = () => {
                       {row.code || "code"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.unitData?.chapterData.subjectData.classs.name ||
+                      {row.unitData.chapterData.subjectData.classs?.name ||
                         "name class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">

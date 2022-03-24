@@ -19,9 +19,9 @@ class UnitApi {
     const body = { id: id };
     return axiosClient.post(url, body);
   };
-  add = (name) => {
+  add = (name, chapterId) => {
     const url = `${this.api}add`;
-    const body = { name: name };
+    const body = { name: name, chapterId: chapterId };
     return axiosClient.post(url, body);
   };
 }

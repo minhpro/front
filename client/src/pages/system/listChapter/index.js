@@ -62,12 +62,30 @@ export const PageSystemListChapter = () => {
         .catch((error) => console.log(error));
     };
 
+    handleAdd = () => {
+      if (search.chapterName && search.subjectId) {
+        Function.handler
+          .api(() =>
+            Api.chapterApi.add(search.subjectId, search.chapterName, "code", [])
+          )
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => console.log(error));
+      }
+    };
+
     onSubmit = (e) => {
       e.preventDefault();
       console.log("submit");
     };
-    onDelete = () => {
-      console.log("submit");
+    onDelete = (id) => {
+      Function.handler
+        .api(() => Api.chapterApi.delete(id))
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => console.log(error));
     };
 
     onEdit = (e) => {
@@ -108,11 +126,15 @@ export const PageSystemListChapter = () => {
                 label={"Chon mon:"}
                 name={"subjectId"}
                 data={subject?.data}
+                onChange={func.handleChange}
               />
             </Item>
           </Mui.Grid>
           <Mui.Stack direction={"row"} py={2} spacing={2}>
-            <Eui.EuiButton.Progress />
+            <Eui.EuiButton.Progress
+              name={"Them moi chuong"}
+              onClick={func.handleAdd}
+            />
             <Eui.EuiButton.Progress
               name={"tim kiem"}
               onClick={func.handleSearch}
@@ -133,14 +155,14 @@ export const PageSystemListChapter = () => {
                       {row.name || "code"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.des || "name class"}
+                      {row.subjectData?.name || "name mon"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.chapter || "list class"}
+                      {row.subjectData?.classs.name || "name class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete
-                        onDelete={func.onDelete}
+                        onDelete={() => func.onDelete(row.id)}
                         onEdit={func.onEdit}
                       />
                     </Eui.EuiTable.StyledTableCell>

@@ -4,11 +4,17 @@ import * as Ex from "Example";
 import React from "react";
 import * as Element from "../../element";
 import { useSelector } from "react-redux";
+import * as Function from "functions";
+import * as Api from "api";
 
 export const TypeTime = () => {
   // redux
   const reduxTimeExam = useSelector((state) => state.reduxTimeExam);
   const [open, setIsOpen] = React.useState(false);
+  const [data, setData] = React.useState({
+    timeType: "",
+    des: "",
+  });
 
   class Func {
     constructor() {
@@ -18,9 +24,20 @@ export const TypeTime = () => {
         add: "da them dang de, id: ",
       };
     }
+    handleChange = (e) => {
+      setData({ ...data, [e.target.name]: e.target.value });
+      console.log(data);
+    };
 
     onSubmit = (e) => {
       e.preventDefault();
+
+      Function.handler
+        .api(() => Api.testTimeApi.add(data.timeType))
+        .then((res) => {
+          this.handleClose();
+        })
+        .catch((error) => console.log(error));
       console.log("submit");
     };
     onDelete = () => {
@@ -52,13 +69,17 @@ export const TypeTime = () => {
       >
         <Mui.Stack spacing={2} component={"form"} onSubmit={func.onSubmit}>
           <Ex.ExInputWrapper.Basic
-            name={"Thoi gian lam bai"}
+            label={"Thoi gian lam bai"}
+            name={"timeType"}
             type={"number"}
+            onChange={func.handleChange}
             required
             placeholder="Nhap thoi gian lam bai"
           />
           <Ex.ExInputWrapper.Multiline
-            name={"Mo ta"}
+            name={"des"}
+            label={"Mo ta"}
+            onChange={func.handleChange}
             placeholder="Nhap mo ta"
           />
 
