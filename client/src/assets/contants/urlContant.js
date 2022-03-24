@@ -1,0 +1,1 @@
+export const urlIcons = "/images/";
