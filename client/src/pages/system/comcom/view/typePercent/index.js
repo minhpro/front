@@ -34,7 +34,7 @@ export const TypePercent = () => {
       />
       <Stack direction={"row"} py={3} spacing={3}>
         <EuiButton.Cancel />
-        <EuiButton.Progress name={"Luu cau hinh"} onClick={save} />
+        <EuiButton.Progress name={"Lưu cấu hình"} onClick={save} />
       </Stack>
     </div>
   );

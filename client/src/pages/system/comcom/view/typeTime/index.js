@@ -65,7 +65,7 @@ export const TypeTime = () => {
         handleClose={func.handleClose}
         w={"80%"}
         mw={400}
-        title={"Them moi thoi gian lam bai"}
+        title={"Thêm mới thời gian làm bài"}
       >
         <Mui.Stack spacing={2} component={"form"} onSubmit={func.onSubmit}>
           <Ex.ExInputWrapper.Basic
@@ -74,13 +74,13 @@ export const TypeTime = () => {
             type={"number"}
             onChange={func.handleChange}
             required
-            placeholder="Nhap thoi gian lam bai"
+            placeholder="Nhập thời gian làm bài"
           />
           <Ex.ExInputWrapper.Multiline
             name={"des"}
-            label={"Mo ta"}
+            label={"Mô tả"}
             onChange={func.handleChange}
-            placeholder="Nhap mo ta"
+            placeholder="Nhập mô tả"
           />
 
           <Mui.Stack
@@ -90,7 +90,7 @@ export const TypeTime = () => {
             borderTop="solid 2px"
             py={2}
           >
-            <button>sadads</button>
+            <button>Thêm mới</button>
           </Mui.Stack>
         </Mui.Stack>
       </Eui.EuiModal.Title>
@@ -99,7 +99,7 @@ export const TypeTime = () => {
       <Element.LayoutTable
         button={
           <Eui.EuiButton.AddType
-            name={"Them moi dang de thi"}
+            name={"Thêm mới thời gian làm bài"}
             onClick={func.handleOpen}
           />
         }
@@ -138,15 +138,15 @@ const dataColumn = [
     width: 50,
   },
   {
-    name: "Thoi gian",
+    name: "Thời gian",
     width: 200,
   },
   {
-    name: "Mo ta",
+    name: "Mô tả",
     width: 200,
   },
   {
-    name: "Thao tac",
+    name: "Thao tác",
     width: 200,
   },
 ];

@@ -46,7 +46,7 @@ EuiButton.Cancel = function ({ ...rest }) {
       }}
       {...rest}
     >
-      Huy
+      Huỷ
     </Mui.Stack>
   );
 };

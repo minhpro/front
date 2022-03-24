@@ -74,15 +74,19 @@ export const ListQuestion = () => {
 
   const func = new Func();
 
+  React.useEffect(()=>{
+    func.handleSearch()
+  },[])
+
   return (
-    <Views.ViewContent title={"Danh sach cau hoi"}>
+    <Views.ViewContent title={"Danh sách câu hỏi"}>
       <Mui.Stack spacing={0.5}>
         <Views.ViewBoard>
           <Mui.Stack>
             <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
               <ItemOne>
                 <Ex.ExInputWrapper.Basic
-                  label={"Ten cau hoi"}
+                  label={"Tên câu hỏi"}
                   name={"questionName"}
                   onChange={func.handleChange}
                 />
@@ -119,7 +123,7 @@ export const ListQuestion = () => {
               borderTop={"solid 2px"}
             >
               <Eui.EuiButton.Progress
-                name={"Tim kiem"}
+                name={"Tìm kiếm"}
                 onClick={func.handleSearch}
               />
             </Mui.Stack>
@@ -181,27 +185,27 @@ const dataColumn = [
     width: 50,
   },
   {
-    name: "Ma cau hoi",
+    name: "Mã câu hỏi",
     width: 200,
   },
   {
-    name: "Lop",
+    name: "Lớp",
     width: 200,
   },
   {
-    name: "Mon",
+    name: "Môn",
     width: 200,
   },
   {
-    name: "Ten cau hoi",
+    name: "Tên câu hỏi",
     width: 200,
   },
   {
-    name: "Do kho",
+    name: "Độ khó",
     width: 200,
   },
   {
-    name: "Thao tac",
+    name: "Thao tác",
     width: 200,
   },
 ];

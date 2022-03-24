@@ -101,21 +101,29 @@ export const PageSystemListChapter = () => {
   }
 
   const func = new Func();
+  React.useEffect(()=>{
+    func.handleSearch()
+  }, [])
+
+  React.useEffect(()=>{
+    console.log(search)
+  })
+
   return (
-    <Views.ViewContent title={"Danh sach chuong"}>
+    <Views.ViewContent title={"Danh sách chủ đề"}>
       <Mui.Stack spacing={0.5}>
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
               <Ex.ExInputWrapper.Basic
-                label={"Ten chuong:"}
+                label={"Tên chủ đề:"}
                 name={"chapterName"}
                 onChange={func.handleChange}
               />
             </Item>
             <Item>
               <Ex.ExInputWrapper.Select
-                label={"Chon lop:"}
+                label={"Chọn lớp:"}
                 name={"classId"}
                 data={reduxClass?.data}
                 onChange={func.handleChange}
@@ -123,7 +131,7 @@ export const PageSystemListChapter = () => {
             </Item>
             <Item>
               <Ex.ExInputWrapper.Select
-                label={"Chon mon:"}
+                label={"Chọn môn:"}
                 name={"subjectId"}
                 data={subject?.data}
                 onChange={func.handleChange}
@@ -132,11 +140,11 @@ export const PageSystemListChapter = () => {
           </Mui.Grid>
           <Mui.Stack direction={"row"} py={2} spacing={2}>
             <Eui.EuiButton.Progress
-              name={"Them moi chuong"}
+              name={"Thêm mới chương"}
               onClick={func.handleAdd}
             />
             <Eui.EuiButton.Progress
-              name={"tim kiem"}
+              name={"tìm kiếm"}
               onClick={func.handleSearch}
             />
           </Mui.Stack>
@@ -152,13 +160,13 @@ export const PageSystemListChapter = () => {
                       {i + 1}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.name || "code"}
+                      {row.subjectData?.classs?.name || "code"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.subjectData?.name || "name mon"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.subjectData?.classs.name || "name class"}
+                      {row.name || "name class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete
@@ -197,19 +205,19 @@ const dataColumn = [
     width: 50,
   },
   {
-    name: "Lop",
+    name: "Lớp",
     width: 200,
   },
   {
-    name: "Mon",
+    name: "Môn",
     width: 200,
   },
   {
-    name: "Ten chuong",
+    name: "Tên chủ đề",
     width: 200,
   },
   {
-    name: "Thao tac",
+    name: "Thao tác",
     width: 200,
   },
 ];

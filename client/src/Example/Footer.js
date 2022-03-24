@@ -72,15 +72,15 @@ const NavParent = ({ title, children }) => {
 
 const data = [
   {
-    title: "Ve chung toi",
-    nav: [{ name: "Gioi thieu" }, { name: "Ho tro" }, { name: "Lien he" }],
+    title: "Về chúng tôi",
+    nav: [{ name: "Giới thiệu" }, { name: "Hỗ trợ" }, { name: "Liên hệ" }],
   },
   {
-    title: "Lien ket",
+    title: "Liên kết",
     nav: [
-      { name: "Huong dan" },
-      { name: "Cau hoi thuong gap" },
-      { name: "ho tro" },
+      { name: "Hướng dẫn" },
+      { name: "Câu hỏi thường gặp" },
+      { name: "hỗ trợ" },
     ],
   },
 ];

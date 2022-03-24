@@ -82,9 +82,12 @@ export const PageSystemListUnit = () => {
   }
 
   const func = new Func();
+  React.useEffect(()=>{
+    func.handleSearch()
+  }, [])
 
   return (
-    <Views.ViewContent title={"Danh sach bai"}>
+    <Views.ViewContent title={"Danh sách đơn vị kiến thức"}>
       <Mui.Stack spacing={0.5}>
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
@@ -105,7 +108,7 @@ export const PageSystemListUnit = () => {
             </Item>
             <Item>
               <Ex.ExInputWrapper.Basic
-                label={"Ten bai:"}
+                label={"Tên đơn vị kiến thức:"}
                 name={"unitName"}
                 onChange={func.handleChange}
               />
@@ -120,11 +123,11 @@ export const PageSystemListUnit = () => {
             spacing={2}
           >
             <Eui.EuiButton.Progress
-              name={"tim kiem"}
+              name={"tìm kiếm"}
               onClick={func.handleSearch}
             />
             <Eui.EuiButton.Progress
-              name={"them bai moi"}
+              name={"thêm đơn vị kiến thức"}
               onClick={func.handleAdd}
             />
           </Mui.Stack>
@@ -182,23 +185,23 @@ const dataColumn = [
     width: 50,
   },
   {
-    name: "Lop",
+    name: "Lớp",
     width: 200,
   },
   {
-    name: "Mon",
+    name: "Môn",
     width: 200,
   },
   {
-    name: "Ten chuong",
+    name: "Chủ đề",
     width: 200,
   },
   {
-    name: "Ten bai",
+    name: "Đơn vị kiến thức",
     width: 200,
   },
   {
-    name: "Thao tac",
+    name: "Thao tác",
     width: 200,
   },
 ];

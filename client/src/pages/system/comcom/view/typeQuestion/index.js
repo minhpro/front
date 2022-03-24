@@ -64,20 +64,20 @@ export const TypeQuestion = () => {
         handleClose={func.handleClose}
         w={"80%"}
         mw={400}
-        title={"Them moi dang cau hoi"}
+        title={"Thêm mới loại câu hỏi"}
       >
         <Mui.Stack spacing={2} component={"form"} onSubmit={func.onSubmit}>
           <Ex.ExInputWrapper.Basic
-            label={"Loai de thi"}
+            label={"Loại câu hỏi"}
             name={"TypeQuestion"}
             required
-            placeholder="Nhap loai de thi"
+            placeholder="Nhập loại câu hỏi"
             onChange={func.handleChange}
           />
           <Ex.ExInputWrapper.Multiline
-            label={"Mo ta"}
+            label={"Mô tả"}
             name={"des"}
-            placeholder="Nhap mo ta"
+            placeholder="Nhập mô tả"
             onChange={func.handleChange}
           />
 
@@ -88,7 +88,7 @@ export const TypeQuestion = () => {
             borderTop="solid 2px"
             py={2}
           >
-            <button>sadads</button>
+            <button>Thêm mới</button>
           </Mui.Stack>
         </Mui.Stack>
       </Eui.EuiModal.Title>
@@ -97,7 +97,7 @@ export const TypeQuestion = () => {
       <Element.LayoutTable
         button={
           <Eui.EuiButton.AddType
-            name={"Them moi dang de thi"}
+            name={"Thêm mới loại câu hỏi"}
             onClick={func.handleOpen}
           />
         }
@@ -136,15 +136,15 @@ const dataColumn = [
     width: 50,
   },
   {
-    name: "Loai de thi",
+    name: "Loại câu hỏi",
     width: 200,
   },
   {
-    name: "Mo ta",
+    name: "Mô tả",
     width: 200,
   },
   {
-    name: "Thao tac",
+    name: "Tha tác",
     width: 200,
   },
 ];

@@ -66,21 +66,21 @@ export const TypeExam = () => {
         handleClose={func.handleClose}
         w={"80%"}
         mw={400}
-        title={"Them moi dang de"}
+        title={"Thêm mới dạng đề thi"}
       >
         <Mui.Stack spacing={2} component={"form"} onSubmit={func.onSubmit}>
           <Ex.ExInputWrapper.Basic
-            label={"Loai de thi"}
+            label={"Loại đề thi"}
             name={"typeExam"}
             onChange={func.handleChange}
             required
-            placeholder="Nhap loai de thi"
+            placeholder="Nhập loại đề thi"
           />
           <Ex.ExInputWrapper.Multiline
-            label={"Mo ta"}
+            label={"Mô tả"}
             name={"des"}
             onChange={func.handleChange}
-            placeholder="Nhap mo ta"
+            placeholder="Nhập mô tả"
           />
 
           <Mui.Stack
@@ -90,7 +90,7 @@ export const TypeExam = () => {
             borderTop="solid 2px"
             py={2}
           >
-            <button>sadads</button>
+            <button>Thêm mới</button>
           </Mui.Stack>
         </Mui.Stack>
       </Eui.EuiModal.Title>
@@ -99,7 +99,7 @@ export const TypeExam = () => {
       <Element.LayoutTable
         button={
           <Eui.EuiButton.AddType
-            name={"Them moi dang de thi"}
+            name={"Thêm mới dạng đề thi"}
             onClick={func.handleOpen}
           />
         }
@@ -138,15 +138,15 @@ const dataColumn = [
     width: 50,
   },
   {
-    name: "Loai de thi",
+    name: "Loại đề thi",
     width: 200,
   },
   {
-    name: "Mo ta",
+    name: "Mô tả",
     width: 200,
   },
   {
-    name: "Thao tac",
+    name: "Thao tác",
     width: 200,
   },
 ];

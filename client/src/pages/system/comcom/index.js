@@ -35,7 +35,7 @@ export const PagesSystemComcom = () => {
     }
   };
   return (
-    <Views.ViewContent title={"Cau hinh chung"}>
+    <Views.ViewContent title={"Cấu hình chung"}>
       <Mui.Stack spacing={0.5}>
         {/* nav */}
         <Views.ViewBoard>
@@ -69,11 +69,11 @@ export const PagesSystemComcom = () => {
 };
 
 const dataNav = [
-  { name: "Dang de" },
-  { name: "Thoi gian lam bai" },
-  { name: "Loai cau hoi" },
-  { name: "Cach tinh diem" },
-  { name: "% trung cau hoi" },
-  { name: "Thoi gian gui link" },
+  { name: "Dạng đề" },
+  { name: "Thời gian làm bài" },
+  { name: "Loại câu hỏi" },
+  { name: "Cách tính điểm" },
+  { name: "% câu hỏi trùng" },
+  { name: "Thời gian gửi link" },
   // { name: "Thời gian gửi link bài thi/kiểm tra" },
 ];

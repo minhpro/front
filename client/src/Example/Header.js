@@ -23,7 +23,7 @@ export const Header = () => {
       </Mui.Stack>
 
       <Mui.Stack sx={{ height: "100%" }} justifyContent={"center"} py={10}>
-        <h1>Khao thi</h1>
+        <h1>Khảo thí</h1>
       </Mui.Stack>
     </Style.Wrapper>
   );

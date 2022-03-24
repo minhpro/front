@@ -14,7 +14,7 @@ ExDataSelect.Class = function Class({ ...rest }) {
 
   return (
     <Ex.ExInputWrapper.Select
-      label={"Chon lop:"}
+      label={"Chọn lớp:"}
       name={"classId"}
       data={reduxClass?.data}
       {...rest}
@@ -39,7 +39,7 @@ ExDataSelect.Subject = function Subject({ id, ...rest }) {
 
   return (
     <Ex.ExInputWrapper.Select
-      label={"Chon mon:"}
+      label={"Chọn môn:"}
       name={"subjectId"}
       data={subject?.data}
       {...rest}
@@ -64,7 +64,7 @@ ExDataSelect.Chapter = function Chapter({ id, ...rest }) {
 
   return (
     <Ex.ExInputWrapper.Select
-      label={"Chon chuong:"}
+      label={"Chọn chương:"}
       name={"chapterId"}
       data={chapter?.data}
       {...rest}
@@ -89,7 +89,7 @@ ExDataSelect.Units = function Units({ id, ...rest }) {
 
   return (
     <Ex.ExInputWrapper.Select
-      label={"Chon bai:"}
+      label={"Chọn bài:"}
       name={"unitId"}
       data={units?.data}
       {...rest}
