@@ -15,6 +15,12 @@ export const CreateMatrix = () => {
     subjectId: null,
   });
 
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
+  });
+
   // redux
   const dataNumber = useSelector((state) => state.reduxQuestionDistributions);
 
@@ -62,20 +68,32 @@ export const CreateMatrix = () => {
         questionDistributions: [],
       };
 
-      dataNumber.forEach((data) => {
+      for (let i = 0; i < dataNumber.length; i++) {
         payload.questionDistributions.push({
-          id: data.id,
-          numberOfQuestions: data.numberOfQuestions,
+          id: dataNumber[i].id,
+          numberOfQuestions: dataNumber[i].numberOfQuestions,
           units: [],
         });
-        data.unitData.forEach((data, i) => {
+        for (let j = 0; j < dataNumber[i].unitData.length; j++) {
           payload.questionDistributions[i].units.push({
-            id: data.id,
-            numberOfQuestions: data.numberOfQuestions,
+            id: dataNumber[i].unitData[j].id,
+            questionDistributions:
+              dataNumber[i].unitData[j].questionDistributions,
           });
-        });
-      });
-
+        }
+      }
+      Function.handler
+        .api(() => Api.matrixApi.add(payload))
+        .then((res) => {
+          console.log(res);
+          setSnack({
+            isOpen: true,
+            message: "da them ma tran",
+            severity: null,
+          });
+        })
+        .catch((error) => console.log(error));
+      this.handleClose();
       console.log(payload);
     };
 
@@ -94,12 +112,27 @@ export const CreateMatrix = () => {
     handleOpen = () => {
       setIsOpen(true);
     };
+
+    handleCloseSnack = () => {
+      setSnack({
+        isOpen: false,
+        message: null,
+        severity: null,
+      });
+    };
   }
 
   const func = new Func();
 
   return (
     <Views.ViewContent title={"Tạo ma trận đề thi mới"}>
+      {/* thong bao */}
+      <Eui.EuiSnackbar
+        open={snack.isOpen}
+        handleClose={func.handleCloseSnack}
+        message={snack.message}
+        severity={snack.severity}
+      />
       {/* create */}
       <Ex.ExModalPoppup.Create
         open={open}

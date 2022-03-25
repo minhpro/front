@@ -81,7 +81,7 @@ export const OrganExam = () => {
     func.handleSearch();
   }, []);
   return (
-    <Views.ViewContent title={"Quản lý ma trận đề"}>
+    <Views.ViewContent title={"Quản lý đề thi"}>
       <Mui.Stack spacing={0.5}>
         {/* nav */}
         <Views.ViewBoard>

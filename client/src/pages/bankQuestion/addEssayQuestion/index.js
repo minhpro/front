@@ -25,6 +25,12 @@ export const AddEssayQuestion = () => {
     answer: "",
   });
 
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
+  });
+
   //   function
   class Func {
     constructor() {
@@ -44,8 +50,7 @@ export const AddEssayQuestion = () => {
       console.log(search);
     };
 
-    onSubmit = (e) => {
-      e.preventDefault();
+    onSubmit = () => {
       let data = {
         question: question.question,
         suggest: question.suggest,
@@ -60,8 +65,14 @@ export const AddEssayQuestion = () => {
         .api(() => Api.questionApi.add(data))
         .then((res) => {
           console.log(res);
+          setSnack({
+            isOpen: true,
+            message: "da them cau hoi",
+            severity: null,
+          });
         })
         .catch((error) => console.log(error));
+      this.handleClose();
       console.log("submit");
     };
     onDelete = () => {
@@ -75,8 +86,16 @@ export const AddEssayQuestion = () => {
     handleClose = () => {
       setIsOpen(false);
     };
-    handleOpen = () => {
+    handleOpen = (e) => {
+      e.preventDefault();
       setIsOpen(true);
+    };
+    handleCloseSnack = () => {
+      setSnack({
+        isOpen: false,
+        message: null,
+        severity: null,
+      });
     };
   }
 
@@ -84,7 +103,20 @@ export const AddEssayQuestion = () => {
 
   return (
     <Views.ViewContent title={"Them moi cau tu luan"}>
-      <Mui.Stack spacing={0.5} component={"form"} onSubmit={func.onSubmit}>
+      {/* thong bao */}
+      <Eui.EuiSnackbar
+        open={snack.isOpen}
+        handleClose={func.handleCloseSnack}
+        message={snack.message}
+        severity={snack.severity}
+      />
+      {/* create */}
+      <Ex.ExModalPoppup.Create
+        open={open}
+        handleClose={func.handleClose}
+        handleCreate={func.onSubmit}
+      />
+      <Mui.Stack spacing={0.5} component={"form"} onSubmit={func.handleOpen}>
         {/* tim kiem */}
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
@@ -196,7 +228,7 @@ export const AddEssayQuestion = () => {
 
 const Item = ({ children }) => {
   return (
-    <Mui.Grid item xs={12} md={6}>
+    <Mui.Grid item xs={12} lg={6}>
       {children}
     </Mui.Grid>
   );
