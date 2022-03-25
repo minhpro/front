@@ -66,14 +66,28 @@ export const PageSystemListChapter = () => {
       Function.handler
         .api(() => Api.chapterApi.delete(deleteState.id))
         .then((res) => {
-          setSnack({
-            isOpen: true,
-            message: this.message.delete + " " + deleteState.id,
-            severity: "warning",
-          });
+          console.log("on then")
+          if(res?.response?.status == 400){
+            console.log("loi roi")
+            console.log(res.response.data.message)
+            setSnack({
+              isOpen: true,
+              message: res.response.data.message,
+              severity: "error",
+            });
+          }else{
+            setSnack({
+              isOpen: true,
+              message: this.message.delete + " " + deleteState.id,
+              severity: "warning",
+            });
+          }
           this.handleClosePopupDelete();
         })
-        .catch((error) => console.log(error));
+        .catch((error) =>{
+          console.log("lỗi: ")
+          console.log(error.response)
+        });
     };
 
     handleCloseSnack = () => {

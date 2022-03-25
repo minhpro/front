@@ -19,6 +19,12 @@ export const PageSystemListUnit = () => {
     unitName: "",
   });
 
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
+  });
+
   const [unit, setUnit] = React.useState(null);
 
   //   function
@@ -50,6 +56,12 @@ export const PageSystemListUnit = () => {
         Function.handler
           .api(() => Api.unitApi.add(search.unitName, search.chapterId))
           .then((res) => {
+            setSnack({
+              isOpen: true,
+              message: "Đã thêm dữ liệu",
+              severity: "info",
+            });
+            this.handleSearch()
             console.log(res);
           })
           .catch((error) => console.log(error));
@@ -64,9 +76,26 @@ export const PageSystemListUnit = () => {
       Function.handler
         .api(() => Api.unitApi.delete(id))
         .then((res) => {
+          if(res?.response?.status == 400){
+            setSnack({
+              isOpen: true,
+              message: res.response.data.message,
+              severity: "error",
+            });
+          }else{
+            setSnack({
+              isOpen: true,
+              message: "Đã xoá dữ liệu",
+              severity: "warning",
+            });
+            this.handleSearch()
+          }
           console.log(res);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log("loi nay")
+          console.log(error)
+        });
     };
 
     onEdit = (e) => {
@@ -79,6 +108,15 @@ export const PageSystemListUnit = () => {
     handleOpen = () => {
       setIsOpen(true);
     };
+
+    handleCloseSnack = () => {
+      setSnack({
+        isOpen: false,
+        message: "",
+        severity: null,
+      });
+    };
+
   }
 
   const func = new Func();
@@ -88,6 +126,12 @@ export const PageSystemListUnit = () => {
 
   return (
     <Views.ViewContent title={"Danh sách đơn vị kiến thức"}>
+      <Eui.EuiSnackbar
+          open={snack.isOpen}
+          handleClose={func.handleCloseSnack}
+          message={snack.message}
+          severity={snack.severity}
+      />
       <Mui.Stack spacing={0.5}>
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>

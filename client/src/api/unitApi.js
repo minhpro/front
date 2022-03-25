@@ -14,10 +14,17 @@ class UnitApi {
     };
     return axiosClient.post(url, body);
   };
-  delete = (id) => {
+  delete = async (id, set) => {
     const url = `${this.api}delete`;
     const body = { id: id };
-    return axiosClient.post(url, body);
+    try {
+      const res = await axiosClient.post(url, body);
+      set(res);
+      return res
+
+    }catch (error){
+      return error;
+    }
   };
   add = (name, chapterId) => {
     const url = `${this.api}add`;
