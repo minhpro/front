@@ -6,6 +6,7 @@ import * as ScoreSlide from "./scoreSlide";
 import * as unitsSilde from "./unitsSilde";
 import * as TimeExamSlide from "./timeExamSlide";
 import * as OtherConfigSlide from "./otherConfigSlide";
+import * as questionDistributionsSlide from "./questionDistributionsSlide";
 
 export {
   SubjectSlide,
@@ -16,4 +17,5 @@ export {
   TimeExamSlide,
   ScoreSlide,
   OtherConfigSlide,
+  questionDistributionsSlide,
 };

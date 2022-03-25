@@ -9,7 +9,6 @@ import questionDistributionsSlide from "redux/slide/questionDistributionsSlide";
 import timeExamSlide from "redux/slide/timeExamSlide";
 import scoreSlide from "redux/slide/scoreSlide";
 import otherConfigSlide from "redux/slide/otherConfigSlide";
-
 export default combineReducers({
   reduxQuestionType: questionTypeSlide,
   reduxClass: classReducer,

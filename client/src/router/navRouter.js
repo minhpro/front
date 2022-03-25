@@ -1,6 +1,12 @@
 import WysiwygIcon from "@mui/icons-material/Wysiwyg";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import DataUsageIcon from "@mui/icons-material/DataUsage";
+import ArticleIcon from "@mui/icons-material/Article";
+import BorderAllIcon from "@mui/icons-material/BorderAll";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import GroupIcon from "@mui/icons-material/Group";
+import PersonIcon from "@mui/icons-material/Person";
 import * as Pages from "pages";
 class NavRouter {
   constructor() {
@@ -54,98 +60,118 @@ class NavRouter {
           {
             name: "Danh sách câu hỏi",
             link: "danh-sach-cau-hoi",
-            element: <div>saddas</div>,
+            element: <Pages.BankQuestion.ListQuestion />,
           },
           {
             name: "Ngân hàng câu hỏi",
             link: "ngan-hang-cau-hoi",
-            element: <div>saddas</div>,
+            element: <Pages.BankQuestion.ListQuestion />,
           },
           {
             name: "Thêm câu hỏi trắc nghiệm",
             link: "them-cau-trac-nghiem",
-            element: <div>saddas</div>,
+            element: <Pages.BankQuestion.ListQuestion />,
           },
           {
             name: "Thêm câu hỏi tự luận",
             link: "them-cau-tu-luan",
-            element: <div>saddas</div>,
+            element: <Pages.BankQuestion.ListQuestion />,
           },
         ],
       },
       {
         name: "Khởi tạo đề thi",
-        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
+        icon: <ArticleIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "Quản lý ma trận đề",
             link: "quan-ly-ma-tran-de",
-            element: <div>saddas</div>,
+            element: <Pages.CreateExam.OrganMatrix />,
           },
           {
             name: "Quản lý đề thi",
             link: "quan-ly-de-thi",
-            element: <div>saddas</div>,
+            element: <Pages.CreateExam.OrganExam />,
           },
           {
-            name: "Chỉnh sửa đề thi",
-            link: "chinh-sua-de-thi",
-            element: <div>saddas</div>,
+            name: "Tạo đề ma trận mới",
+            link: "tao-ma-tran-moi",
+            element: <Pages.CreateExam.CreateMatrix />,
+          },
+          {
+            name: "Tạo đề thi mới",
+            link: "tao-de-thi-moi",
+            element: <Pages.CreateExam.CreateExams />,
           },
         ],
       },
       {
         name: "Tổ chức khảo thí",
-        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
+        icon: <BorderAllIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "Khảo thí",
             link: "khao-thi",
-            element: <div>saddas</div>,
+            element: <Pages.OrganTest.OrganTest />,
           },
         ],
       },
       {
         name: "Làm bài thi / Kiểm tra",
-        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
+        icon: <WorkOutlineIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "làm bài",
             link: "lam-bai",
-            element: <div>saddas</div>,
+            element: <Pages.DoTest.DoTest />,
           },
         ],
       },
       {
         name: "Xem đáp án",
-        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
+        icon: <RemoveRedEyeIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
             name: "Đáp án",
             link: "dap-an",
-            element: <div>saddas</div>,
+            element: <Pages.AnswerCheck.AnswerCheck />,
           },
         ],
       },
       {
         name: "Quản lý user",
-        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
+        icon: <PersonIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
-            name: "Quản lý user",
-            link: "quan-ly-user",
-            element: <div>saddas</div>,
+            name: "Hồ sơ người dùng ",
+            link: "ho-so-nguoi-dung",
+            element: <Pages.UserManage.UserProfile />,
+          },
+          {
+            name: "Danh sách User",
+            link: "danh-sach-user",
+            element: <Pages.UserManage.ListUser />,
+          },
+          {
+            name: "Danh sách nhóm",
+            link: "danh-sach-nhom",
+            element: <Pages.UserManage.ListUserGroup />,
           },
         ],
       },
       {
         name: "Quản lý member",
-        icon: <WysiwygIcon sx={{ fontSize: 30 }} />,
+        icon: <GroupIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
-            name: "Quản lý member",
+            name: "Quản lý loại thành viên",
             link: "quan-ly-member",
-            element: <div>saddas</div>,
+            element: <Pages.MemberManage.MemberType />,
+          },
+          {
+            name: "Quản lý nhóm thành viên",
+            link: "quan-ly-nhom-member",
+            element: <Pages.MemberManage.MemberGroup />,
           },
         ],
       },

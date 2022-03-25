@@ -22,6 +22,20 @@ ExDataSelect.Class = function Class({ ...rest }) {
   );
 };
 
+ExDataSelect.ExamType = function ExamType({ ...rest }) {
+  // redux
+  const reduxTestType = useSelector((state) => state.reduxTestType);
+
+  return (
+    <Ex.ExInputWrapper.Select
+      label={"Chọn dạng đề thi:"}
+      name={"examTypeId"}
+      data={reduxTestType?.data}
+      {...rest}
+    />
+  );
+};
+
 ExDataSelect.Subject = function Subject({ id, ...rest }) {
   const [subject, setSubject] = React.useState(null);
   // life cirle
@@ -97,6 +111,31 @@ ExDataSelect.Units = function Units({ id, ...rest }) {
   );
 };
 
+ExDataSelect.Matrix = function Matrix({ id, ...rest }) {
+  const [matrix, setMatrix] = React.useState(null);
+  // life cirle
+  React.useEffect(() => {
+    if (!id) {
+      Function.handler
+        .api(() => Api.matrixApi.search())
+        .then((res) => {
+          console.log(res);
+          setMatrix(res);
+        })
+        .catch((error) => console.log(error));
+    } else setMatrix(null);
+  }, []);
+
+  return (
+    <Ex.ExInputWrapper.Select
+      label={"Chọn ma trận:"}
+      name={"matrixID"}
+      data={matrix?.data}
+      {...rest}
+    />
+  );
+};
+
 ExDataSelect.Classify = function Classify({ ...rest }) {
   const data = [
     {
@@ -113,6 +152,28 @@ ExDataSelect.Classify = function Classify({ ...rest }) {
     <Ex.ExInputWrapper.Select
       label={"Chon dang cau hoi:"}
       name={"classifyId"}
+      data={data}
+      {...rest}
+    />
+  );
+};
+
+ExDataSelect.MatrixTarget = function MatrixTarget({ ...rest }) {
+  const data = [
+    {
+      id: 0,
+      name: "Kiểm tra",
+    },
+    {
+      id: 1,
+      name: "Khảo thí",
+    },
+  ];
+
+  return (
+    <Ex.ExInputWrapper.Select
+      label={"Mục tiêu ma trận:"}
+      name={"matrixTargetId"}
       data={data}
       {...rest}
     />

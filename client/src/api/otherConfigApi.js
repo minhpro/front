@@ -10,14 +10,14 @@ class OtherConfigApi {
     return axiosClient.get(url);
   };
   updateDuration = (testingDuration) => {
-    const url = `${this.api}update`;
+    const url = `${this.api}testing-duration/update`;
     const body = {
       testingDuration: testingDuration,
     };
     return axiosClient.post(url, body);
   };
   updateRate = (questionDuplicationRate) => {
-    const url = `${this.api}update`;
+    const url = `${this.api}duplication-rate/update`;
     const body = {
       questionDuplicationRate: questionDuplicationRate,
     };

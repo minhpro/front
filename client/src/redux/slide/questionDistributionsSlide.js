@@ -10,6 +10,7 @@ const questionDistributionsSlide = createSlice({
         chapter.numberOfQuestions = 0;
         chapter.unitData.forEach((unit) => (unit.numberOfQuestions = 0));
       });
+      console.log("redux", data);
 
       return data;
     },

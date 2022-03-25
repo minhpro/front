@@ -9,10 +9,22 @@ import * as Api from "api";
 
 export const PageSystemListChapter = () => {
   const [open, setIsOpen] = React.useState(false);
+
   const [search, setSearch] = React.useState({
     chapterName: "",
     classId: null,
     subjectId: null,
+  });
+
+  const [deleteState, setDeleteState] = React.useState({
+    id: null,
+    open: false,
+  });
+
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
   });
 
   const [subject, setSubject] = React.useState(null);
@@ -36,11 +48,42 @@ export const PageSystemListChapter = () => {
   class Func {
     constructor() {
       this.message = {
-        delete: "da xoa dang de, id:",
+        delete: "Đã xoá chủ đề, id:",
         null: "chua nhap ten dang de",
-        add: "da them dang de, id: ",
+        add: "Đã thêm chủ đề mới, id: ",
       };
     }
+
+    handleOpenPopupDelete = (id) => {
+      setDeleteState({ id: id, open: true });
+    };
+
+    handleClosePopupDelete = () => {
+      setDeleteState({ id: null, open: false });
+    };
+
+    onDelete = () => {
+      Function.handler
+        .api(() => Api.chapterApi.delete(deleteState.id))
+        .then((res) => {
+          setSnack({
+            isOpen: true,
+            message: this.message.delete + " " + deleteState.id,
+            severity: "warning",
+          });
+          this.handleClosePopupDelete();
+        })
+        .catch((error) => console.log(error));
+    };
+
+    handleCloseSnack = () => {
+      setSnack({
+        isOpen: false,
+        message: this.message.delete + " " + deleteState.id,
+        severity: null,
+      });
+    };
+
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });
       console.log(search);
@@ -70,6 +113,12 @@ export const PageSystemListChapter = () => {
           )
           .then((res) => {
             console.log(res);
+            setSnack({
+              isOpen: true,
+              message: this.message.add + " " + res.id,
+              severity: null,
+            });
+            this.handleClose();
           })
           .catch((error) => console.log(error));
       }
@@ -78,14 +127,6 @@ export const PageSystemListChapter = () => {
     onSubmit = (e) => {
       e.preventDefault();
       console.log("submit");
-    };
-    onDelete = (id) => {
-      Function.handler
-        .api(() => Api.chapterApi.delete(id))
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => console.log(error));
     };
 
     onEdit = (e) => {
@@ -101,16 +142,35 @@ export const PageSystemListChapter = () => {
   }
 
   const func = new Func();
-  React.useEffect(()=>{
-    func.handleSearch()
-  }, [])
+  React.useEffect(() => {
+    func.handleSearch();
+  }, [snack]);
 
-  React.useEffect(()=>{
-    console.log(search)
-  })
+  React.useEffect(() => {
+    console.log(search);
+  });
 
   return (
     <Views.ViewContent title={"Danh sách chủ đề"}>
+      {/* thong bao */}
+      <Eui.EuiSnackbar
+        open={snack.isOpen}
+        handleClose={func.handleCloseSnack}
+        message={snack.message}
+        severity={snack.severity}
+      />
+      {/* popup */}
+      <Ex.ExModalPoppup.Delete
+        open={deleteState.open}
+        handleClose={func.handleClosePopupDelete}
+        handleDelete={func.onDelete}
+      />
+      <Ex.ExModalPoppup.Create
+        open={open}
+        handleClose={func.handleClose}
+        handleCreate={func.handleAdd}
+      />
+
       <Mui.Stack spacing={0.5}>
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
@@ -141,7 +201,7 @@ export const PageSystemListChapter = () => {
           <Mui.Stack direction={"row"} py={2} spacing={2}>
             <Eui.EuiButton.Progress
               name={"Thêm mới chương"}
-              onClick={func.handleAdd}
+              onClick={func.handleOpen}
             />
             <Eui.EuiButton.Progress
               name={"tìm kiếm"}
@@ -170,7 +230,7 @@ export const PageSystemListChapter = () => {
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete
-                        onDelete={() => func.onDelete(row.id)}
+                        onDelete={() => func.handleOpenPopupDelete(row.id)}
                         onEdit={func.onEdit}
                       />
                     </Eui.EuiTable.StyledTableCell>

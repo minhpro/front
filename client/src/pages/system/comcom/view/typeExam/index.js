@@ -6,11 +6,25 @@ import * as Element from "../../element";
 import { useSelector } from "react-redux";
 import * as Function from "functions";
 import * as Api from "api";
+import { useDispatch } from "react-redux";
+import * as Slide from "redux/slide";
 
 export const TypeExam = () => {
   // redux
   const reduxTestType = useSelector((state) => state.reduxTestType);
   const [open, setIsOpen] = React.useState(false);
+  const dispatch = useDispatch();
+
+  const [deleteState, setDeleteState] = React.useState({
+    id: null,
+    open: false,
+  });
+
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
+  });
 
   const [data, setData] = React.useState({
     typeExam: "",
@@ -20,11 +34,33 @@ export const TypeExam = () => {
   class Func {
     constructor() {
       this.message = {
-        delete: "da xoa dang de, id:",
-        null: "chua nhap ten dang de",
-        add: "da them dang de, id: ",
+        delete: "Đã xoá dạng đề thi mới, id:",
+        null: "Không tìm thấy ID",
+        add: "Đã thêm dạng đề thi mới, id:",
       };
     }
+    update = () => {
+      Function.handler
+        .api(() => Api.testTypeApi.search())
+        .then((res) => {
+          console.log(res);
+          dispatch(Slide.TestTypeSlide.setTestType(res));
+        })
+        .catch((error) => console.log(error));
+    };
+
+    handleCloseSnack = () => {
+      setSnack({ ...snack, isOpen: false });
+    };
+
+    handleCloseDelete = () => {
+      setDeleteState({ id: null, open: false });
+    };
+
+    handleOpenDelete = (id) => {
+      setDeleteState({ id: id, open: true });
+    };
+
     handleChange = (e) => {
       setData({ ...data, [e.target.name]: e.target.value });
       console.log(data);
@@ -36,17 +72,36 @@ export const TypeExam = () => {
       Function.handler
         .api(() => Api.testTypeApi.add(data.typeExam))
         .then((res) => {
+          setSnack({
+            isOpen: true,
+            message: this.message.add + " " + res.id,
+            severity: null,
+          });
           this.handleClose();
         })
         .catch((error) => console.log(error));
+
       console.log("submit");
     };
     onDelete = () => {
-      console.log("submit");
-    };
+      Function.handler
+        .api(() => Api.testTypeApi.delete(deleteState.id))
+        .then((res) => {
+          setSnack({
+            isOpen: true,
+            message: this.message.delete + " " + res.id,
+            severity: "warning",
+          });
+        })
+        .catch((error) =>
+          setSnack({
+            isOpen: true,
+            message: this.message.null,
+            severity: "warning",
+          })
+        );
 
-    onEdit = (e) => {
-      console.log("submit");
+      this.handleCloseDelete();
     };
 
     handleClose = () => {
@@ -58,9 +113,26 @@ export const TypeExam = () => {
   }
 
   const func = new Func();
+
+  // React.useEffect =
+  //   (() => {
+  //     console.log("das");
+  //   },
+  //   [snack]);
+
+  React.useEffect(() => {
+    func.update();
+  }, [snack]);
   return (
     <>
-      {/* modal */}
+      {/* thong bao */}
+      <Eui.EuiSnackbar
+        open={snack.isOpen}
+        handleClose={func.handleCloseSnack}
+        message={snack.message}
+        severity={snack.severity}
+      />
+      {/* modal add */}
       <Eui.EuiModal.Title
         open={open}
         handleClose={func.handleClose}
@@ -95,6 +167,20 @@ export const TypeExam = () => {
         </Mui.Stack>
       </Eui.EuiModal.Title>
 
+      {/* modal delete */}
+      <Eui.EuiModal.Title
+        open={deleteState.open}
+        handleClose={func.handleCloseDelete}
+        w={"80%"}
+        mw={300}
+        title={"Xác nhận xoá?"}
+      >
+        <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
+          <Eui.EuiButton.Cancel onClick={func.handleCloseDelete} />
+          <Eui.EuiButton.Progress name={"Xoá"} onClick={func.onDelete} />
+        </Mui.Stack>
+      </Eui.EuiModal.Title>
+
       {/* bang du lieu */}
       <Element.LayoutTable
         button={
@@ -106,7 +192,7 @@ export const TypeExam = () => {
       >
         <Eui.EuiTable dataColumn={dataColumn}>
           {reduxTestType
-            ? reduxTestType.data.map((row, i) => (
+            ? reduxTestType?.data.map((row, i) => (
                 <Eui.EuiTable.StyledTableRow key={i}>
                   <Eui.EuiTable.StyledTableCell align="center">
                     {i + 1}
@@ -119,7 +205,7 @@ export const TypeExam = () => {
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     <Ex.ExIconEditDelete
-                      onDelete={func.onDelete}
+                      onDelete={() => func.handleOpenDelete(row.id)}
                       onEdit={func.onEdit}
                     />
                   </Eui.EuiTable.StyledTableCell>

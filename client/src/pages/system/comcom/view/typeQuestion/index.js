@@ -6,6 +6,8 @@ import * as Element from "../../element";
 import { useSelector } from "react-redux";
 import * as Function from "functions";
 import * as Api from "api";
+import { useDispatch } from "react-redux";
+import * as Slide from "redux/slide";
 
 export const TypeQuestion = () => {
   // redux
@@ -17,6 +19,19 @@ export const TypeQuestion = () => {
     des: "",
   });
 
+  const dispatch = useDispatch();
+
+  const [deleteState, setDeleteState] = React.useState({
+    id: null,
+    open: false,
+  });
+
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
+  });
+
   class Func {
     constructor() {
       this.message = {
@@ -25,6 +40,29 @@ export const TypeQuestion = () => {
         add: "da them dang de, id: ",
       };
     }
+
+    update = () => {
+      Function.handler
+        .api(() => Api.testTypeApi.search())
+        .then((res) => {
+          console.log(res);
+          dispatch(Slide.TestTypeSlide.setTestType(res));
+        })
+        .catch((error) => console.log(error));
+    };
+
+    handleCloseSnack = () => {
+      setSnack({ ...snack, isOpen: false });
+    };
+
+    handleCloseDelete = () => {
+      setDeleteState({ id: null, open: false });
+    };
+
+    handleOpenDelete = (id) => {
+      setDeleteState({ id: id, open: true });
+    };
+
     handleChange = (e) => {
       setData({ ...data, [e.target.name]: e.target.value });
       console.log(data);
@@ -34,13 +72,35 @@ export const TypeQuestion = () => {
       Function.handler
         .api(() => Api.questionTypeApi.add(data.TypeQuestion))
         .then((res) => {
+          setSnack({
+            isOpen: true,
+            message: this.message.add + " " + res.id,
+            severity: null,
+          });
           this.handleClose();
         })
         .catch((error) => console.log(error));
       console.log("submit");
     };
     onDelete = () => {
-      console.log("submit");
+      Function.handler
+        .api(() => Api.questionTypeApi.delete(deleteState.id))
+        .then((res) => {
+          setSnack({
+            isOpen: true,
+            message: this.message.delete + " " + res.id,
+            severity: "warning",
+          });
+        })
+        .catch((error) =>
+          setSnack({
+            isOpen: true,
+            message: this.message.null,
+            severity: "warning",
+          })
+        );
+
+      this.handleCloseDelete();
     };
 
     onEdit = (e) => {
@@ -56,8 +116,33 @@ export const TypeQuestion = () => {
   }
 
   const func = new Func();
+
+  React.useEffect(() => {
+    func.update();
+  }, [snack]);
   return (
     <>
+      {/* thong bao */}
+      <Eui.EuiSnackbar
+        open={snack.isOpen}
+        handleClose={func.handleCloseSnack}
+        message={snack.message}
+        severity={snack.severity}
+      />
+
+      {/* modal delete */}
+      <Eui.EuiModal.Title
+        open={deleteState.open}
+        handleClose={func.handleCloseDelete}
+        w={"80%"}
+        mw={300}
+        title={"Xác nhận xoá?"}
+      >
+        <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
+          <Eui.EuiButton.Cancel onClick={func.handleCloseDelete} />
+          <Eui.EuiButton.Progress name={"Xoá"} onClick={func.onDelete} />
+        </Mui.Stack>
+      </Eui.EuiModal.Title>
       {/* modal */}
       <Eui.EuiModal.Title
         open={open}
@@ -117,7 +202,7 @@ export const TypeQuestion = () => {
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     <Ex.ExIconEditDelete
-                      onDelete={func.onDelete}
+                      onDelete={() => func.handleOpenDelete(row.id)}
                       onEdit={func.onEdit}
                     />
                   </Eui.EuiTable.StyledTableCell>

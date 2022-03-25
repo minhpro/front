@@ -7,6 +7,8 @@ import subjectApi from "./subjectApi";
 import chapterApi from "./chapterApi";
 import unitApi from "./unitApi";
 import questionApi from "./questionApi";
+import matrixApi from "./matrixApi";
+import examApi from "./examApi";
 
 export {
   testTypeApi,
@@ -18,4 +20,6 @@ export {
   chapterApi,
   unitApi,
   questionApi,
+  matrixApi,
+  examApi,
 };

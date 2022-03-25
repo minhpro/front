@@ -1,17 +1,13 @@
 import * as Mui from "@mui/material";
 import * as Eui from "components/Eui";
-import * as Ex from "Example";
 import React from "react";
 import * as Views from "views";
-import { useSelector } from "react-redux";
+import * as Ex from "Example";
 import * as Function from "functions";
 import * as Api from "api";
 
-export const PageSystemListUnit = () => {
-  // redux
-
+export const OrganExam = () => {
   const [open, setIsOpen] = React.useState(false);
-
   const [search, setSearch] = React.useState({
     chapterId: null,
     classId: null,
@@ -19,8 +15,7 @@ export const PageSystemListUnit = () => {
     unitName: "",
   });
 
-  const [unit, setUnit] = React.useState(null);
-
+  const [matrix, setMatrix] = React.useState(null);
   //   function
   class Func {
     constructor() {
@@ -37,10 +32,10 @@ export const PageSystemListUnit = () => {
 
     handleSearch = () => {
       Function.handler
-        .api(() => Api.unitApi.search(search.chapterId, search.unitName))
+        .api(() => Api.examApi.search())
         .then((res) => {
           console.log(res);
-          setUnit(res);
+          setMatrix(res);
         })
         .catch((error) => console.log(error));
     };
@@ -62,7 +57,7 @@ export const PageSystemListUnit = () => {
     };
     onDelete = (id) => {
       Function.handler
-        .api(() => Api.unitApi.delete(id))
+        .api(() => Api.examApi.delete(id))
         .then((res) => {
           console.log(res);
         })
@@ -85,75 +80,77 @@ export const PageSystemListUnit = () => {
   React.useEffect(() => {
     func.handleSearch();
   }, []);
-
   return (
-    <Views.ViewContent title={"Danh sách đơn vị kiến thức"}>
+    <Views.ViewContent title={"Quản lý ma trận đề"}>
       <Mui.Stack spacing={0.5}>
+        {/* nav */}
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
-              <Ex.ExDataSelect.Class onChange={func.handleChange} />
-            </Item>
-            <Item>
-              <Ex.ExDataSelect.Subject
-                id={search.classId}
-                onChange={func.handleChange}
-              />
-            </Item>
-            <Item>
-              <Ex.ExDataSelect.Chapter
-                id={search.subjectId}
-                onChange={func.handleChange}
-              />
-            </Item>
-            <Item>
               <Ex.ExInputWrapper.Basic
-                label={"Tên đơn vị kiến thức:"}
-                name={"unitName"}
+                label={"Tên đề thi:"}
+                name={"matrixName"}
                 onChange={func.handleChange}
               />
+            </Item>
+            <Item>
+              <Mui.Grid container columnSpacing={5}>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.Class />
+                </Mui.Grid>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.Subject />
+                </Mui.Grid>
+              </Mui.Grid>
+            </Item>
+            <Item>
+              <Ex.ExDataSelect.Matrix />
+            </Item>
+            <Item>
+              <Mui.Grid container columnSpacing={5}>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.Class />
+                </Mui.Grid>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.Subject />
+                </Mui.Grid>
+              </Mui.Grid>
             </Item>
           </Mui.Grid>
           <Mui.Stack
-            borderTop={"solid 1px"}
-            borderColor={"primary.main"}
             direction={"row"}
-            justifyContent={"flex-start"}
-            pt={2}
             spacing={2}
+            pt={2}
+            borderTop={"solid 1px"}
+            borderColor={"red"}
           >
-            <Eui.EuiButton.Progress
-              name={"tìm kiếm"}
-              onClick={func.handleSearch}
-            />
-            <Eui.EuiButton.Progress
-              name={"thêm đơn vị kiến thức"}
-              onClick={func.handleAdd}
-            />
+            <Eui.EuiButton.Progress name={"Tim kiem"} />
+            <Eui.EuiButton.Progress name={"Tao moi"} />
           </Mui.Stack>
         </Views.ViewBoard>
 
-        {/* bang du lieu */}
-
         <Views.ViewBoard>
           <Eui.EuiTable dataColumn={dataColumn}>
-            {unit
-              ? unit.data.map((row, i) => (
+            {matrix
+              ? matrix.data.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {i + 1}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.chapterData?.subjectData?.classs?.name || "code"}
+                      {row.id}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.chapterData?.subjectData.name || "name class"}
+                      {row.name || "name class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.chapterData?.name || "list class"}
+                      dang de
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.name || "list class"}
+                      lop
+                    </Eui.EuiTable.StyledTableCell>
+                    <Eui.EuiTable.StyledTableCell align="center">
+                      mon
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete
@@ -185,19 +182,23 @@ const dataColumn = [
     width: 50,
   },
   {
+    name: "Mã đề",
+    width: 200,
+  },
+  {
+    name: "Tên đề",
+    width: 200,
+  },
+  {
+    name: "Dạng đề",
+    width: 200,
+  },
+  {
     name: "Lớp",
     width: 200,
   },
   {
     name: "Môn",
-    width: 200,
-  },
-  {
-    name: "Chủ đề",
-    width: 200,
-  },
-  {
-    name: "Đơn vị kiến thức",
     width: 200,
   },
   {
