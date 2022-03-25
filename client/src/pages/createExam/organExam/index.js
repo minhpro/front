@@ -5,6 +5,7 @@ import * as Views from "views";
 import * as Ex from "Example";
 import * as Function from "functions";
 import * as Api from "api";
+import { Link } from "react-router-dom";
 
 export const OrganExam = () => {
   const [open, setIsOpen] = React.useState(false);
@@ -125,7 +126,9 @@ export const OrganExam = () => {
             borderColor={"red"}
           >
             <Eui.EuiButton.Progress name={"Tim kiem"} />
-            <Eui.EuiButton.Progress name={"Tao moi"} />
+            <Link to={"/tao-de-thi-moi"}>
+              <Eui.EuiButton.Progress name={"Tao moi"} />
+            </Link>
           </Mui.Stack>
         </Views.ViewBoard>
 

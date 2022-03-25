@@ -5,6 +5,7 @@ import * as Views from "views";
 import * as Ex from "Example";
 import * as Function from "functions";
 import * as Api from "api";
+import { Link } from "react-router-dom";
 
 export const OrganMatrix = () => {
   const [open, setIsOpen] = React.useState(false);
@@ -121,7 +122,9 @@ export const OrganMatrix = () => {
               name={"Tim kiem"}
               onClick={func.handleSearch}
             />
-            <Eui.EuiButton.Progress name={"Tao moi"} />
+            <Link to={"/tao-ma-tran-moi"}>
+              <Eui.EuiButton.Progress name={"Tao moi"} />
+            </Link>
           </Mui.Stack>
         </Views.ViewBoard>
 
