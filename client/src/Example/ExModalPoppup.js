@@ -35,7 +35,7 @@ ExModalPoppup.Create = function Create({
       open={open}
       handleClose={handleClose}
       w={"80%"}
-      mw={300}
+      mw={700}
       title={"Xác nhận Tạo mới?"}
     >
       <Mui.Stack direction={"column"} spacing={1.5}>

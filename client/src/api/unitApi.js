@@ -20,15 +20,18 @@ class UnitApi {
     try {
       const res = await axiosClient.post(url, body);
       set(res);
-      return res
-
-    }catch (error){
+      return res;
+    } catch (error) {
       return error;
     }
   };
-  add = (name, chapterId) => {
+  add = (name, chapterId, requirements) => {
     const url = `${this.api}add`;
-    const body = { name: name, chapterId: chapterId };
+    const body = {
+      name: name,
+      chapterId: chapterId,
+      requirements: requirements || [],
+    };
     return axiosClient.post(url, body);
   };
 }

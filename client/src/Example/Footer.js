@@ -7,7 +7,7 @@ import * as Sui from "components/Sui";
 export const Footer = () => {
   return (
     <Style.Wrapper className="container">
-      <Mui.Grid container py={5}>
+      <Mui.Grid container py={5} columnSpacing={5}>
         <Item>
           <Mui.Stack spacing={5} pr={5}>
             <Sui.SuiLogo.Basic src={Func.getImage.getPng("logo")} />
@@ -17,7 +17,8 @@ export const Footer = () => {
             </p>
           </Mui.Stack>
         </Item>
-        <Item>
+
+        {/* <Item>
           <Mui.Grid container>
             {data.map((data, i) => {
               return (
@@ -31,7 +32,18 @@ export const Footer = () => {
               );
             })}
           </Mui.Grid>
-        </Item>
+        </Item> */}
+        {data.map((data, i) => {
+          return (
+            <Item>
+              <NavParent title={data.title} key={i}>
+                {data.nav.map((nav, i) => {
+                  return <p key={i}>{nav.name}</p>;
+                })}
+              </NavParent>
+            </Item>
+          );
+        })}
         <Item>
           <NavParent title={"Kết nối với chúng tôi"} />
         </Item>
@@ -55,7 +67,7 @@ const Style = {
 
 const Item = ({ children }) => {
   return (
-    <Mui.Grid item xs={12} md={6} xl={4}>
+    <Mui.Grid item xs={12} md={6} lg={4} xl={3}>
       {children}
     </Mui.Grid>
   );

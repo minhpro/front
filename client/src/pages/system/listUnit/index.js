@@ -1,7 +1,7 @@
 import * as Mui from "@mui/material";
 import * as Eui from "components/Eui";
 import * as Ex from "Example";
-import React from "react";
+import React, { useState } from "react";
 import * as Views from "views";
 import * as Class from "Class";
 import * as Function from "functions";
@@ -23,6 +23,11 @@ export const PageSystemListUnit = () => {
     classId: null,
     subjectId: null,
     unitName: "",
+  });
+
+  const [requirements, setRequirements] = useState({
+    input: "",
+    data: [],
   });
 
   const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
@@ -55,6 +60,12 @@ export const PageSystemListUnit = () => {
   );
   //   function
   class Func {
+    onSubmitAddRequirement(e) {
+      e.preventDefault();
+      let data = requirements.data;
+      data.push({ name: requirements.input });
+      setRequirements({ input: "", data: data });
+    }
     handlePagination(event, value) {
       console.log(value);
       setPages({ ...pages, page: value });
@@ -96,9 +107,15 @@ export const PageSystemListUnit = () => {
     handleAdd = () => {
       if (search.unitName && search.chapterId) {
         Function.handler
-          .api(() => Api.unitApi.add(search.unitName, search.chapterId))
+          .api(() =>
+            Api.unitApi.add(
+              search.unitName,
+              search.chapterId,
+              requirements.data
+            )
+          )
           .then((res) => {
-            handleSnack.add();
+            handleSnack.add(search.unitName);
             this.handleSearch();
             console.log(res);
           })
@@ -143,23 +160,45 @@ export const PageSystemListUnit = () => {
         handleClose={() => handleOpenNew.close()}
         handleCreate={func.handleAdd}
       >
-        <Ex.ExInputWrapper.Basic
-          label={"Tên đơn vị kiến thức:"}
-          name={"unitName"}
-          onChange={func.handleChange}
-        />
-        <Mui.Divider />
-        <Ex.ExDataSelect.Class onChange={func.handleChange} />
-        <Mui.Divider />
-        <Ex.ExDataSelect.Subject
-          id={search.classId}
-          onChange={func.handleChange}
-        />
-        <Mui.Divider />
-        <Ex.ExDataSelect.Chapter
-          id={search.subjectId}
-          onChange={func.handleChange}
-        />
+        <Mui.Grid container columnSpacing={2}>
+          <Mui.Grid item xs={12} md={6}>
+            <Ex.ExInputWrapper.Basic
+              label={"Tên đơn vị kiến thức:"}
+              name={"unitName"}
+              onChange={func.handleChange}
+            />
+            <Mui.Divider />
+            <Ex.ExDataSelect.Class onChange={func.handleChange} />
+            <Mui.Divider />
+            <Ex.ExDataSelect.Subject
+              id={search.classId}
+              onChange={func.handleChange}
+            />
+            <Mui.Divider />
+            <Ex.ExDataSelect.Chapter
+              id={search.subjectId}
+              onChange={func.handleChange}
+            />
+          </Mui.Grid>
+          <Mui.Grid item xs={12} md={6}>
+            <Mui.Stack
+              component={"form"}
+              onSubmit={func.onSubmitAddRequirement}
+            >
+              <Ex.ExInputWrapper.Basic
+                label={"Thêm yêu cầu kiến thức:"}
+                name={"requireName"}
+                value={requirements.input}
+                onChange={(e) =>
+                  setRequirements({ ...requirements, input: e.target.value })
+                }
+              />
+              {requirements.data.map((data, i) => {
+                return <p>{data.name}</p>;
+              })}
+            </Mui.Stack>
+          </Mui.Grid>
+        </Mui.Grid>
       </Ex.ExModalPoppup.Create>
       <Ex.ExModalPoppup.Delete
         open={isDeteteOpen}
@@ -240,7 +279,7 @@ export const PageSystemListUnit = () => {
                       {row.name || "list class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      <Ex.ExIconEditDelete
+                      <Ex.ExIconEditDelete.View
                         onDelete={() => func.openDelete(row.id)}
                         onEdit={func.onEdit}
                       />
