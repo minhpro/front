@@ -33,7 +33,7 @@ export const ViewQuestion = (id) => {
         <p>Cau hoi</p>
 
         <div dangerouslySetInnerHTML={{ __html: data.question }} />
-        <p>Dap an Dung</p>
+        <p>Đáp án đúng</p>
         <div dangerouslySetInnerHTML={{ __html: data.answerOne }} />
 
         <p>Huong dan giai</p>

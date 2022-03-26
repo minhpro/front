@@ -78,7 +78,7 @@ ExDataSelect.Chapter = function Chapter({ id, ...rest }) {
 
   return (
     <Ex.ExInputWrapper.Select
-      label={"Chọn chương:"}
+      label={"Chọn chủ đề:"}
       name={"chapterId"}
       data={chapter?.data}
       {...rest}
@@ -103,7 +103,7 @@ ExDataSelect.Units = function Units({ id, ...rest }) {
 
   return (
     <Ex.ExInputWrapper.Select
-      label={"Chọn bài:"}
+      label={"Chọn đơn vị kiến thức:"}
       name={"unitId"}
       data={units?.data}
       {...rest}
@@ -150,7 +150,7 @@ ExDataSelect.Classify = function Classify({ ...rest }) {
 
   return (
     <Ex.ExInputWrapper.Select
-      label={"Chon dang cau hoi:"}
+      label={"Chọn loại câu hỏi:"}
       name={"classifyId"}
       data={data}
       {...rest}
@@ -198,7 +198,7 @@ ExDataSelect.TimeType = function TimeType({ ...rest }) {
 
   return (
     <Ex.ExInputWrapper.Select
-      label={"Chon loai thoi gian:"}
+      label={"Chọn đơn vị thời gian:"}
       name={"timeTypeId"}
       data={data}
       {...rest}
@@ -212,7 +212,7 @@ ExDataSelect.TypeQuestion = function TypeQuestion({ ...rest }) {
 
   return (
     <Ex.ExInputWrapper.Select
-      label={"Chon loai cau hoi:"}
+      label={"Mức độ câu hỏi:"}
       name={"typeQuestionId"}
       data={reduxQuestionType?.data}
       {...rest}
