@@ -115,7 +115,7 @@ export const TypeTime = () => {
 
     convertSecondToTimeWithUnit(value){
       if(value % 3600 == 0){
-        return value + " giờ"
+        return value / 3600 + " giờ"
       }else if(value % 60 == 0){
         return value / 60 + " phút"
       }else{
