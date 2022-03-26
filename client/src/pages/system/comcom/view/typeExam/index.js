@@ -70,7 +70,7 @@ export const TypeExam = () => {
       e.preventDefault();
 
       Function.handler
-        .api(() => Api.testTypeApi.add(data.typeExam))
+        .api(() => Api.testTypeApi.add(data.typeExam, data.des))
         .then((res) => {
           setSnack({
             isOpen: true,
@@ -201,7 +201,7 @@ export const TypeExam = () => {
                     {row.name || "code"}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {row.des || "name class"}
+                    {row.description || ""}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     <Ex.ExIconEditDelete

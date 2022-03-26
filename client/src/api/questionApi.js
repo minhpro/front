@@ -15,10 +15,20 @@ class QuestionApi {
     };
     return axiosClient.post(url, body);
   };
-  delete = (id) => {
-    const url = `${this.api}delete`;
-    const body = { id: id };
-    return axiosClient.post(url, body);
+  delete = async (id, set) => {
+    try {
+      const url = `${this.api}delete`;
+      const body = { id: id };
+      const res = await axiosClient.post(url, body);
+      set(res)
+      return res;
+    }catch (error){
+      return error;
+    }
+
+    // const url = `${this.api}delete`;
+    // const body = { id: id };
+    // return axiosClient.post(url, body);
   };
 
   add = (data) => {

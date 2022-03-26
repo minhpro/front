@@ -51,6 +51,7 @@ export const AddMultiQuestion = () => {
     onSubmit = (e) => {
       e.preventDefault();
       let data = {
+        name: search.questionName,
         question: question.question,
         suggest: question.suggest,
         time: search.timeAnswer,

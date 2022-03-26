@@ -18,9 +18,9 @@ class TestTypeApi {
     const body = { id: id };
     return axiosClient.post(url, body);
   };
-  add = (name) => {
+  add = (name, description) => {
     const url = `${this.api}add`;
-    const body = { name: name };
+    const body = { name: name, description: description };
     return axiosClient.post(url, body);
   };
 }

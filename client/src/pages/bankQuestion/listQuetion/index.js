@@ -13,6 +13,11 @@ export const ListQuestion = () => {
   const [open, setIsOpen] = React.useState(false);
 
   const [questionList, setQuestionList] = React.useState(null);
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
+  });
 
   const [search, setSearch] = React.useState({
     chapterId: null,
@@ -55,6 +60,22 @@ export const ListQuestion = () => {
       Function.handler
         .api(() => Api.questionApi.delete(id))
         .then((res) => {
+
+          if(res?.response?.status == 400){
+            setSnack({
+              isOpen: true,
+              message: res.response.data.message,
+              severity: "error",
+            });
+          }else{
+            setSnack({
+              isOpen: true,
+              message: "Đã xoá dữ liệu",
+              severity: "warning",
+            });
+            this.handleSearch()
+          }
+          console.log(res);
           console.log(res);
         })
         .catch((error) => console.log(error));
@@ -70,6 +91,13 @@ export const ListQuestion = () => {
     handleOpen = () => {
       setIsOpen(true);
     };
+    handleCloseSnack = () => {
+      setSnack({
+        isOpen: false,
+        message: "",
+        severity: null,
+      });
+    };
   }
 
   const func = new Func();
@@ -80,6 +108,12 @@ export const ListQuestion = () => {
 
   return (
     <Views.ViewContent title={"Danh sách câu hỏi"}>
+      <Eui.EuiSnackbar
+          open={snack.isOpen}
+          handleClose={func.handleCloseSnack}
+          message={snack.message}
+          severity={snack.severity}
+      />
       <Mui.Stack spacing={0.5}>
         <Views.ViewBoard>
           <Mui.Stack>
