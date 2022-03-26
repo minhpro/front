@@ -36,12 +36,16 @@ export const PageSystemListUnit = () => {
   // class
 
   const handleSnack = new Class.HandleSnack(setSnack);
-  handleSnack.setMessage("Đã thêm chủ đề mới, id: ", "Đã xoá chủ đề, id: ", "");
+  handleSnack.setMessage(
+    "Đã thêm đơn vị kiến thức mới",
+    "Đã xoá đớn vị kiến thức, id: ",
+    ""
+  );
 
   const handleOpenNew = new Class.HandlePopup(
     setIsOpen,
     "",
-    "Thêm mới thời gian làm bài"
+    "Thêm đơn vị kiến thức mới"
   );
 
   const handleOpenDelete = new Class.HandlePopup(
@@ -94,25 +98,18 @@ export const PageSystemListUnit = () => {
         Function.handler
           .api(() => Api.unitApi.add(search.unitName, search.chapterId))
           .then((res) => {
-            setSnack({
-              isOpen: true,
-              message: "Đã thêm dữ liệu",
-              severity: "info",
-            });
+            handleSnack.add();
             this.handleSearch();
             console.log(res);
           })
           .catch((error) => console.log(error));
+        handleOpenNew.close();
       }
     };
 
-    onSubmit = (e) => {
-      e.preventDefault();
-      console.log("submit");
-    };
-    onDelete = (id) => {
+    onDelete = () => {
       Function.handler
-        .api(() => Api.unitApi.delete(id))
+        .api(() => Api.unitApi.delete(deleteId))
         .then((res) => {
           if (res?.response?.status == 400) {
             setSnack({
@@ -121,11 +118,7 @@ export const PageSystemListUnit = () => {
               severity: "error",
             });
           } else {
-            setSnack({
-              isOpen: true,
-              message: "Đã xoá dữ liệu",
-              severity: "warning",
-            });
+            handleSnack.delete();
             this.handleSearch();
           }
           console.log(res);
@@ -136,25 +129,6 @@ export const PageSystemListUnit = () => {
         });
       handleOpenDelete.close();
     };
-
-    onEdit = (e) => {
-      console.log("submit");
-    };
-
-    handleClose = () => {
-      setIsOpen(false);
-    };
-    handleOpen = () => {
-      setIsOpen(true);
-    };
-
-    handleCloseSnack = () => {
-      setSnack({
-        isOpen: false,
-        message: "",
-        severity: null,
-      });
-    };
   }
 
   const func = new Func();
@@ -164,6 +138,29 @@ export const PageSystemListUnit = () => {
 
   return (
     <Views.ViewContent title={"Danh sách đơn vị kiến thức"}>
+      <Ex.ExModalPoppup.Create
+        open={open}
+        handleClose={() => handleOpenNew.close()}
+        handleCreate={func.handleAdd}
+      >
+        <Ex.ExInputWrapper.Basic
+          label={"Tên đơn vị kiến thức:"}
+          name={"unitName"}
+          onChange={func.handleChange}
+        />
+        <Mui.Divider />
+        <Ex.ExDataSelect.Class onChange={func.handleChange} />
+        <Mui.Divider />
+        <Ex.ExDataSelect.Subject
+          id={search.classId}
+          onChange={func.handleChange}
+        />
+        <Mui.Divider />
+        <Ex.ExDataSelect.Chapter
+          id={search.subjectId}
+          onChange={func.handleChange}
+        />
+      </Ex.ExModalPoppup.Create>
       <Ex.ExModalPoppup.Delete
         open={isDeteteOpen}
         handleClose={() => handleOpenDelete.close()}
@@ -215,7 +212,7 @@ export const PageSystemListUnit = () => {
             />
             <Eui.EuiButton.Progress
               name={"thêm đơn vị kiến thức"}
-              onClick={func.handleAdd}
+              onClick={() => handleOpenNew.open()}
             />
           </Mui.Stack>
         </Views.ViewBoard>
