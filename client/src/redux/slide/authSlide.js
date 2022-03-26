@@ -7,12 +7,17 @@ const authSlide = createSlice({
     auth: null,
   },
   reducers: {
-    setChapter(state, action) {
-      return action.payload;
+    setAuth(state, action) {
+      const data = {
+        loading: false,
+        auth: action.payload,
+      };
+
+      return data;
     },
   },
 });
 
-export const { setChapter } = authSlide.actions;
+export const { setAuth } = authSlide.actions;
 
 export default authSlide.reducer;

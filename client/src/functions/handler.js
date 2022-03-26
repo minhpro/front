@@ -9,11 +9,12 @@ class Handler {
   onChange = (e, func) => {
     func(e.target.value);
   };
-  api = async (func) => {
+  api = async (func, funcE) => {
     try {
       const res = await func();
       return res;
     } catch (error) {
+      funcE();
       return console.log(error);
     }
   };

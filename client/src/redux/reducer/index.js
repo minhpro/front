@@ -9,6 +9,7 @@ import questionDistributionsSlide from "redux/slide/questionDistributionsSlide";
 import timeExamSlide from "redux/slide/timeExamSlide";
 import scoreSlide from "redux/slide/scoreSlide";
 import otherConfigSlide from "redux/slide/otherConfigSlide";
+import authSlide from "redux/slide/authSlide";
 export default combineReducers({
   reduxQuestionType: questionTypeSlide,
   reduxClass: classReducer,
@@ -20,4 +21,5 @@ export default combineReducers({
   reduxTimeExam: timeExamSlide,
   reduxScoreSlide: scoreSlide,
   reduxOtherConfig: otherConfigSlide,
+  reduxAuth: authSlide,
 });

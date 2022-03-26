@@ -4,6 +4,8 @@ import React from "react";
 import * as Function from "functions";
 import * as Api from "api";
 import { useDispatch } from "react-redux";
+import * as Slide from "redux/slide";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   AccountCircle,
   Visibility,
@@ -12,6 +14,10 @@ import {
 } from "@mui/icons-material";
 import * as Class from "Class";
 export const LoginPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const dispatch = useDispatch();
   const [authInput, setAuthInput] = React.useState({
     username: "",
     password: "",
@@ -33,26 +39,26 @@ export const LoginPage = () => {
     handleChange(e) {
       setAuthInput({ ...authInput, [e.target.name]: e.target.value });
     }
-    login(e) {
+    async login(e) {
       e.preventDefault();
 
-      Function.handler
-        .api(() => Api.authApi.login(authInput.username, authInput.password))
-        .then((res) => {
-          if (res?.response?.status == 400) {
-            console.log(res?.response?.status);
-            handleSnack.error(res.response.data.message);
-          } else {
-            handleSnack.add("");
-          }
-          console.log("login success")
-          console.log(res);
-        })
-        .catch((error) =>{
-            console.log("login error")
-            handleSnack.error("")
-        });
-      console.log("login");
+      try {
+        const res = await Api.authApi.login(
+          authInput.username,
+          authInput.password
+        );
+        handleSnack.add("");
+        dispatch(
+          Slide.authSlide.setAuth({
+            username: "admin",
+            roles: ["ADMIN"],
+          })
+        );
+        console.log(res);
+        navigate(from, { replace: true });
+      } catch (error) {
+        handleSnack.error("");
+      }
     }
   }
   const func = new Func();
