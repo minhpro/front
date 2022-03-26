@@ -12,8 +12,14 @@ import * as Class from "Class";
 
 export const TypeTime = () => {
   const dispatch = useDispatch();
+
+  const [pages, setPages] = React.useState({
+    data: null,
+    page: 1,
+    total: 1,
+    limit: 32,
+  });
   // state
-  const reduxTimeExam = useSelector((state) => state.reduxTimeExam);
 
   const [data, setData] = React.useState({
     timeType: "",
@@ -53,18 +59,23 @@ export const TypeTime = () => {
 
   // function
   class Func {
-    constructor() {
-      this.message = {
-        delete: "da xoa dang de, id:",
-        null: "chua nhap ten dang de",
-        add: "da them dang de, id: ",
-      };
+    handlePagination(event, value) {
+      console.log(value);
+      setPages({ ...pages, page: value });
+    }
+    getTotalPage(total) {
+      return total / pages.limit + 1;
     }
     update = () => {
       Function.handler
-        .api(() => Api.testTimeApi.search())
+        .api(() => Api.testTimeApi.search(null, pages.page, pages.limit))
         .then((res) => {
           console.log(res);
+          setPages({
+            ...pages,
+            total: this.getTotalPage(res.total),
+            data: res.data,
+          });
           dispatch(Slide.TimeExamSlide.setTimeExam(res));
         })
         .catch((error) => console.log(error));
@@ -112,7 +123,7 @@ export const TypeTime = () => {
 
   React.useEffect(() => {
     func.update();
-  }, [snack]);
+  }, [snack, pages.page]);
   return (
     <>
       {/* thong bao */}
@@ -182,8 +193,8 @@ export const TypeTime = () => {
         }
       >
         <Eui.EuiTable dataColumn={dataColumn}>
-          {reduxTimeExam
-            ? reduxTimeExam.data.map((row, i) => (
+          {pages.data
+            ? pages.data.map((row, i) => (
                 <Eui.EuiTable.StyledTableRow key={i}>
                   <Eui.EuiTable.StyledTableCell align="center">
                     {i + 1}
@@ -207,6 +218,15 @@ export const TypeTime = () => {
               ))
             : null}
         </Eui.EuiTable>
+        <Eui.EuiPagination
+          count={pages.total}
+          defaultPage={1}
+          siblingCount={0}
+          boundaryCount={2}
+          size={"large"}
+          shape={"rounded"}
+          onChange={func.handlePagination}
+        />
       </Element.LayoutTable>
     </>
   );

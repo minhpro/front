@@ -8,6 +8,12 @@ import * as Function from "functions";
 import * as Api from "api";
 import * as Class from "Class";
 export const PageSystemListChapter = () => {
+  const [pages, setPages] = React.useState({
+    data: null,
+    page: 1,
+    total: 10,
+    limit: 32,
+  });
   const [search, setSearch] = React.useState({
     chapterName: "",
     classId: null,
@@ -21,7 +27,6 @@ export const PageSystemListChapter = () => {
   });
 
   const [subject, setSubject] = React.useState(null);
-  const [chapter, setChapter] = React.useState(null);
 
   // life cirle
   React.useEffect(() => {
@@ -67,6 +72,13 @@ export const PageSystemListChapter = () => {
   );
 
   class Func {
+    handlePagination(event, value) {
+      console.log(value);
+      setPages({ ...pages, page: value });
+    }
+    getTotalPage(total) {
+      return total / pages.limit + 1;
+    }
     openDelete(id) {
       handleOpenDelete.open();
       setDeleteId(id);
@@ -79,11 +91,7 @@ export const PageSystemListChapter = () => {
           if (res?.response?.status == 400) {
             console.log("loi roi");
             console.log(res.response.data.message);
-            setSnack({
-              isOpen: true,
-              message: res.response.data.message,
-              severity: "error",
-            });
+            handleSnack.error(res.response.data.message);
           } else {
             handleSnack.delete(deleteId);
           }
@@ -100,22 +108,28 @@ export const PageSystemListChapter = () => {
       console.log(search);
     };
 
-    handleInput = (e)=>{
-      setAddingData({...addingData, [e.target.name]: e.target.value})
-    }
+    handleInput = (e) => {
+      setAddingData({ ...addingData, [e.target.name]: e.target.value });
+    };
 
     handleSearch = () => {
-      console.log("thuc hien search nay")
+      console.log("thuc hien search nay");
       Function.handler
         .api(() =>
           Api.chapterApi.search(
             search.subjectId,
             search.classId,
-            search.chapterName
+            search.chapterName,
+            pages.page,
+            pages.limit
           )
         )
         .then((res) => {
-          setChapter(res);
+          setPages({
+            ...pages,
+            total: this.getTotalPage(res.total),
+            data: res.data,
+          });
         })
         .catch((error) => console.log(error));
     };
@@ -124,7 +138,12 @@ export const PageSystemListChapter = () => {
       if (addingData.chapterName && addingData.subjectId) {
         Function.handler
           .api(() =>
-            Api.chapterApi.add(addingData.subjectId, addingData.chapterName, "code", [])
+            Api.chapterApi.add(
+              addingData.subjectId,
+              addingData.chapterName,
+              "code",
+              []
+            )
           )
           .then((res) => {
             console.log(res);
@@ -248,8 +267,8 @@ export const PageSystemListChapter = () => {
         {/* bang du lieu */}
         <Views.ViewBoard>
           <Eui.EuiTable dataColumn={dataColumn}>
-            {chapter
-              ? chapter.data.map((row, i) => (
+            {pages.data
+              ? pages.data.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {i + 1}
@@ -273,6 +292,15 @@ export const PageSystemListChapter = () => {
                 ))
               : null}
           </Eui.EuiTable>
+          <Eui.EuiPagination
+            count={pages.total}
+            defaultPage={1}
+            siblingCount={0}
+            boundaryCount={2}
+            size={"large"}
+            shape={"rounded"}
+            onChange={func.handlePagination}
+          />
         </Views.ViewBoard>
       </Mui.Stack>
     </Views.ViewContent>

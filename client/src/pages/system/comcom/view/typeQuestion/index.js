@@ -10,6 +10,12 @@ import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
 import * as Class from "Class";
 export const TypeQuestion = () => {
+  const [pages, setPages] = React.useState({
+    data: null,
+    page: 1,
+    total: 1,
+    limit: 32,
+  });
   // redux
   const reduxQuestionType = useSelector((state) => state.reduxQuestionType);
 
@@ -52,6 +58,14 @@ export const TypeQuestion = () => {
   //  func
 
   class Func {
+    handlePagination(event, value) {
+      console.log(value);
+      setPages({ ...pages, page: value });
+    }
+    getTotalPage(total) {
+      return total / pages.limit + 1;
+    }
+
     openDelete(id) {
       handleOpenDelete.open();
       setDeleteId(id);
@@ -59,8 +73,13 @@ export const TypeQuestion = () => {
 
     handleSearch = () => {
       Function.handler
-        .api(() => Api.questionTypeApi.search())
+        .api(() => Api.questionTypeApi.search(null, pages.page, pages.limit))
         .then((res) => {
+          setPages({
+            ...pages,
+            total: this.getTotalPage(res.total),
+            data: res.data,
+          });
           dispatch(Slide.QuestionTypeSilde.setQuestionType(res));
         })
         .catch((error) => console.log(error));
@@ -97,7 +116,7 @@ export const TypeQuestion = () => {
 
   React.useEffect(() => {
     func.handleSearch();
-  }, [snack]);
+  }, [snack, pages.page]);
   return (
     <>
       {/* thong bao */}
@@ -188,6 +207,15 @@ export const TypeQuestion = () => {
               ))
             : null}
         </Eui.EuiTable>
+        <Eui.EuiPagination
+          count={pages.total}
+          defaultPage={1}
+          siblingCount={0}
+          boundaryCount={2}
+          size={"large"}
+          shape={"rounded"}
+          onChange={func.handlePagination}
+        />
       </Element.LayoutTable>
     </>
   );

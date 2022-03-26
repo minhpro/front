@@ -12,6 +12,15 @@ export const ListQuestion = () => {
   // redux
 
   const [questionList, setQuestionList] = React.useState(null);
+  const [pages, setPages] = React.useState({
+    page: 1,
+    total: 10,
+    limit: 32,
+  });
+  // const [page, setPage] = React.useState(1);
+  // const handleChange = (event, value) => {
+  //   setPage(value);
+  // };
 
   const [search, setSearch] = React.useState({
     chapterId: null,
@@ -57,6 +66,13 @@ export const ListQuestion = () => {
 
   //   function
   class Func {
+    handlePagination(event, value) {
+      console.log(value);
+      setPages({ ...pages, page: value });
+    }
+    getTotalPage(total) {
+      return total / pages.limit + 1;
+    }
     onView(id) {
       setQuestionId(id);
       handleOpenNew.open();
@@ -74,9 +90,18 @@ export const ListQuestion = () => {
 
     handleSearch = () => {
       Function.handler
-        .api(() => Api.questionApi.search(search.unitId, search.questionName))
+        .api(() =>
+          Api.questionApi.search(
+            search.unitId,
+            search.questionName,
+            null,
+            pages.page,
+            pages.limit
+          )
+        )
         .then((res) => {
           console.log(res);
+          setPages({ ...pages, total: this.getTotalPage(res.total) });
           setQuestionList(res);
         })
         .catch((error) => console.log(error));
@@ -104,7 +129,7 @@ export const ListQuestion = () => {
 
   React.useEffect(() => {
     func.handleSearch();
-  }, []);
+  }, [pages.page]);
 
   return (
     <Views.ViewContent title={"Danh sách câu hỏi"}>
@@ -226,6 +251,15 @@ export const ListQuestion = () => {
                 ))
               : null}
           </Eui.EuiTable>
+          <Eui.EuiPagination
+            count={pages.total}
+            defaultPage={1}
+            siblingCount={0}
+            boundaryCount={2}
+            size={"large"}
+            shape={"rounded"}
+            onChange={func.handlePagination}
+          />
         </Views.ViewBoard>
       </Mui.Stack>
     </Views.ViewContent>

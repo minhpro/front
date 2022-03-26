@@ -3,11 +3,17 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import React from "react";
 import * as Views from "views";
-import { useSelector } from "react-redux";
+import * as Class from "Class";
 import * as Function from "functions";
 import * as Api from "api";
 
 export const PageSystemListUnit = () => {
+  const [pages, setPages] = React.useState({
+    data: null,
+    page: 1,
+    total: 10,
+    limit: 32,
+  });
   // redux
 
   const [open, setIsOpen] = React.useState(false);
@@ -19,34 +25,66 @@ export const PageSystemListUnit = () => {
     unitName: "",
   });
 
+  const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
+  const [deleteId, setDeleteId] = React.useState(null);
   const [snack, setSnack] = React.useState({
     isOpen: false,
     message: "",
     severity: null,
   });
 
-  const [unit, setUnit] = React.useState(null);
+  // class
 
+  const handleSnack = new Class.HandleSnack(setSnack);
+  handleSnack.setMessage("Đã thêm chủ đề mới, id: ", "Đã xoá chủ đề, id: ", "");
+
+  const handleOpenNew = new Class.HandlePopup(
+    setIsOpen,
+    "",
+    "Thêm mới thời gian làm bài"
+  );
+
+  const handleOpenDelete = new Class.HandlePopup(
+    setIsDeleteOpen,
+    "",
+    "Xác nhận xoá?"
+  );
   //   function
   class Func {
-    constructor() {
-      this.message = {
-        delete: "da xoa dang de, id:",
-        null: "chua nhap ten dang de",
-        add: "da them dang de, id: ",
-      };
+    handlePagination(event, value) {
+      console.log(value);
+      setPages({ ...pages, page: value });
+    }
+    getTotalPage(total) {
+      return total / pages.limit + 1;
     }
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });
       console.log(search);
     };
 
+    openDelete(id) {
+      handleOpenDelete.open();
+      setDeleteId(id);
+    }
+
     handleSearch = () => {
       Function.handler
-        .api(() => Api.unitApi.search(search.chapterId, search.unitName))
+        .api(() =>
+          Api.unitApi.search(
+            search.chapterId,
+            search.unitName,
+            pages.page,
+            pages.limit
+          )
+        )
         .then((res) => {
           console.log(res);
-          setUnit(res);
+          setPages({
+            ...pages,
+            total: this.getTotalPage(res.total),
+            data: res.data,
+          });
         })
         .catch((error) => console.log(error));
     };
@@ -61,7 +99,7 @@ export const PageSystemListUnit = () => {
               message: "Đã thêm dữ liệu",
               severity: "info",
             });
-            this.handleSearch()
+            this.handleSearch();
             console.log(res);
           })
           .catch((error) => console.log(error));
@@ -76,26 +114,27 @@ export const PageSystemListUnit = () => {
       Function.handler
         .api(() => Api.unitApi.delete(id))
         .then((res) => {
-          if(res?.response?.status == 400){
+          if (res?.response?.status == 400) {
             setSnack({
               isOpen: true,
               message: res.response.data.message,
               severity: "error",
             });
-          }else{
+          } else {
             setSnack({
               isOpen: true,
               message: "Đã xoá dữ liệu",
               severity: "warning",
             });
-            this.handleSearch()
+            this.handleSearch();
           }
           console.log(res);
         })
         .catch((error) => {
-          console.log("loi nay")
-          console.log(error)
+          console.log("loi nay");
+          console.log(error);
         });
+      handleOpenDelete.close();
     };
 
     onEdit = (e) => {
@@ -116,21 +155,25 @@ export const PageSystemListUnit = () => {
         severity: null,
       });
     };
-
   }
 
   const func = new Func();
   React.useEffect(() => {
     func.handleSearch();
-  }, []);
+  }, [pages.page, isDeteteOpen]);
 
   return (
     <Views.ViewContent title={"Danh sách đơn vị kiến thức"}>
+      <Ex.ExModalPoppup.Delete
+        open={isDeteteOpen}
+        handleClose={() => handleOpenDelete.close()}
+        handleDelete={func.onDelete}
+      />
       <Eui.EuiSnackbar
-          open={snack.isOpen}
-          handleClose={func.handleCloseSnack}
-          message={snack.message}
-          severity={snack.severity}
+        open={snack.isOpen}
+        handleClose={func.handleCloseSnack}
+        message={snack.message}
+        severity={snack.severity}
       />
       <Mui.Stack spacing={0.5}>
         <Views.ViewBoard>
@@ -181,8 +224,8 @@ export const PageSystemListUnit = () => {
 
         <Views.ViewBoard>
           <Eui.EuiTable dataColumn={dataColumn}>
-            {unit
-              ? unit.data.map((row, i) => (
+            {pages.data
+              ? pages.data.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {i + 1}
@@ -201,7 +244,7 @@ export const PageSystemListUnit = () => {
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete
-                        onDelete={() => func.onDelete(row.id)}
+                        onDelete={() => func.openDelete(row.id)}
                         onEdit={func.onEdit}
                       />
                     </Eui.EuiTable.StyledTableCell>
@@ -209,6 +252,15 @@ export const PageSystemListUnit = () => {
                 ))
               : null}
           </Eui.EuiTable>
+          <Eui.EuiPagination
+            count={pages.total}
+            defaultPage={1}
+            siblingCount={0}
+            boundaryCount={2}
+            size={"large"}
+            shape={"rounded"}
+            onChange={func.handlePagination}
+          />
         </Views.ViewBoard>
       </Mui.Stack>
     </Views.ViewContent>

@@ -3,18 +3,22 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import React from "react";
 import * as Element from "../../element";
-import { useSelector } from "react-redux";
+
 import * as Function from "functions";
 import * as Api from "api";
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
 import * as Class from "Class";
-import { styled } from "@mui/material/styles";
-import { paginationClasses } from "@mui/material";
 
 export const TypeExam = () => {
+  const [pages, setPages] = React.useState({
+    data: null,
+    page: 1,
+    total: 10,
+    limit: 32,
+  });
   // redux
-  const reduxTestType = useSelector((state) => state.reduxTestType);
+
   const [open, setIsOpen] = React.useState(false);
   const dispatch = useDispatch();
 
@@ -45,10 +49,23 @@ export const TypeExam = () => {
   const handleOpenDelete = new Class.HandlePopup(setDeleteState);
 
   class Func {
+    handlePagination(event, value) {
+      console.log(value);
+      setPages({ ...pages, page: value });
+    }
+    getTotalPage(total) {
+      return total / pages.limit + 1;
+    }
     update = () => {
       Function.handler
-        .api(() => Api.testTypeApi.search())
+        .api(() => Api.testTypeApi.search(null, pages.page, pages.limit))
         .then((res) => {
+          console.log(res);
+          setPages({
+            ...pages,
+            total: this.getTotalPage(res.total),
+            data: res.data,
+          });
           dispatch(Slide.TestTypeSlide.setTestType(res));
         })
         .catch((error) => console.log(error));
@@ -83,7 +100,7 @@ export const TypeExam = () => {
 
   React.useEffect(() => {
     func.update();
-  }, [snack]);
+  }, [snack, pages.page]);
   return (
     <>
       {/* thong bao */}
@@ -152,8 +169,8 @@ export const TypeExam = () => {
         }
       >
         <Eui.EuiTable dataColumn={dataColumn}>
-          {reduxTestType
-            ? reduxTestType?.data.map((row, i) => (
+          {pages.data
+            ? pages.data.map((row, i) => (
                 <Eui.EuiTable.StyledTableRow key={i}>
                   <Eui.EuiTable.StyledTableCell align="center">
                     {i + 1}
@@ -177,17 +194,15 @@ export const TypeExam = () => {
               ))
             : null}
         </Eui.EuiTable>
-        <Mui.Stack>
-          <Hu
-            count={11}
-            defaultPage={6}
-            siblingCount={0}
-            boundaryCount={2}
-            size={"large"}
-            shape={"rounded"}
-            // renderItem={(item) => <div>asddsa</div>}
-          />
-        </Mui.Stack>
+        <Eui.EuiPagination
+          count={pages.total}
+          defaultPage={1}
+          siblingCount={0}
+          boundaryCount={2}
+          size={"large"}
+          shape={"rounded"}
+          onChange={func.handlePagination}
+        />
       </Element.LayoutTable>
     </>
   );
@@ -211,16 +226,3 @@ const dataColumn = [
     width: 200,
   },
 ];
-
-const Hu = styled(Mui.Pagination)`
-  .MuiButtonBase-root {
-    color: red;
-    font-size: 20;
-  }
-  .MuiButtonBase-root {
-    font-size: 20;
-  }
-  &.MuiPaginationItem-root {
-    font-size: 20;
-  }
-`;
