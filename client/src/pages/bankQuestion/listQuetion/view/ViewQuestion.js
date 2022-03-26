@@ -24,10 +24,11 @@ export const ViewQuestion = (id) => {
   const Question = () => {
     return (
       <Mui.Stack>
+        <p>Thông tin câu hỏi:</p>
         <InforQuestion data={data} />
-        <p>Loại câu hỏi: {getType(data.type)}</p>
+
         <p> Ten cau hoi: {data.name}</p>
-        <p>ID: {data.id}</p>
+
         <p>thoi gian lam bai: {data.time}</p>
         <p>Cau hoi</p>
 
@@ -47,20 +48,39 @@ export const ViewQuestion = (id) => {
 };
 
 const InforQuestion = ({ data }) => {
+  function getType(text) {
+    if (text === "MultiChoiceQuestion") {
+      return "Câu hỏi trắc nghiệm";
+    } else return "Câu hỏi tự luận";
+  }
   return (
     <Mui.Grid container>
-      <Mui.Grid item xs={6} border={"solid 1px"}>
+      <Item xs={6} border={"solid 1px"}>
         <p>Lớp: {data.unitData?.chapterData?.subjectData?.classs?.name}</p>
-      </Mui.Grid>
-      <Mui.Grid item xs={6} border={"solid 1px"}>
-        <p>Mon: {data.unitData?.chapterData?.subjectData?.name}</p>
-      </Mui.Grid>
-      <Mui.Grid item xs={12} border={"solid 1px"}>
-        <p>Chuong: {data.unitData?.chapterData?.name}</p>
-      </Mui.Grid>
-      <Mui.Grid item xs={12} border={"solid 1px"}>
-        <p>Bai: {data.unitData?.name}</p>
-      </Mui.Grid>
+      </Item>
+      <Item xs={6} border={"solid 1px"}>
+        <p>Môn: {data.unitData?.chapterData?.subjectData?.name}</p>
+      </Item>
+      <Item xs={12} border={"solid 1px"}>
+        <p>Chương: {data.unitData?.chapterData?.name}</p>
+      </Item>
+      <Item xs={12} border={"solid 1px"}>
+        <p>Bài: {data.unitData?.name}</p>
+      </Item>
+      <Item xs={12} border={"solid 1px"}>
+        <p>{getType(data.type)}</p>
+      </Item>
+      <Item xs={12} border={"solid 1px"}>
+        <p>Thời gian làm bài: {data.time}</p>
+      </Item>
+    </Mui.Grid>
+  );
+};
+
+const Item = ({ children, ...rest }) => {
+  return (
+    <Mui.Grid item {...rest} border={"solid 1px"} p={1}>
+      {children}
     </Mui.Grid>
   );
 };
