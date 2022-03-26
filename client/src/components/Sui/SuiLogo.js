@@ -5,9 +5,9 @@ export const SuiLogo = () => {
   return <div>SuiLogo</div>;
 };
 
-SuiLogo.Basic = function ({ src, height }) {
+SuiLogo.Basic = function ({ src, height, w }) {
   return (
-    <Style.Wrapper height={height}>
+    <Style.Wrapper height={height} w={w}>
       <img src={src} alt="logo" />
     </Style.Wrapper>
   );
@@ -16,7 +16,7 @@ SuiLogo.Basic = function ({ src, height }) {
 const Style = {
   Wrapper: styled.div`
     height: ${(props) => props.height || "2rem"};
-    width: "auto";
+    width: ${(props) => props.w || "auto"};
 
     img {
       height: "100%";

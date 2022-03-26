@@ -101,3 +101,26 @@ EuiInput.SelectBasic = function ({ children, ...rest }) {
     </Mui.FormControl>
   );
 };
+
+EuiInput.Icon = function (props) {
+  const { name, label, value, onChange, ...rest } = props;
+  return (
+    <Mui.TextField
+      variant="outlined"
+      label={label}
+      name={name}
+      value={value}
+      onChange={onChange}
+      // {...(error && { error: true, helperText: error })}
+      required
+      fullWidth
+      color="secondary"
+      {...rest}
+      sx={{
+        input: { fontSize: "2rem" },
+        svg: { fontSize: "30px" },
+        label: { color: "black", fontSize: "1.6rem" },
+      }}
+    />
+  );
+};

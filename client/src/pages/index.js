@@ -6,6 +6,8 @@ import * as DoTest from "./doTest";
 import * as UserManage from "./userManage";
 import * as MemberManage from "./memberManage";
 import * as AnswerCheck from "./answerCheck";
+
+import * as AuthPage from "./authPage";
 export {
   System,
   BankQuestion,
@@ -15,4 +17,5 @@ export {
   UserManage,
   MemberManage,
   AnswerCheck,
+  AuthPage,
 };
