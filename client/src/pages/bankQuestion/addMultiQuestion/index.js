@@ -105,7 +105,7 @@ export const AddMultiQuestion = () => {
   });
 
   return (
-    <Views.ViewContent title={"Them moi cau trac nghiem"}>
+    <Views.ViewContent title={"Thêm mới câu hỏi trắc nghiệm"}>
       {/* thong bao */}
       <Eui.EuiSnackbar
         open={snack.isOpen}
@@ -125,7 +125,7 @@ export const AddMultiQuestion = () => {
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
               <Ex.ExInputWrapper.Basic
-                label={"Ten cau hoi"}
+                label={"Tên câu hỏi"}
                 name={"questionName"}
                 required
                 onChange={func.handleChange}
@@ -182,7 +182,7 @@ export const AddMultiQuestion = () => {
               <Mui.Grid container columnSpacing={2}>
                 <Mui.Grid item xs={6}>
                   <Ex.ExInputWrapper.Basic
-                    label={"Thoi gian tra loi"}
+                    label={"Thời gian trả lời"}
                     name={"timeAnswer"}
                     type={"number"}
                     required
@@ -200,32 +200,32 @@ export const AddMultiQuestion = () => {
         <Views.ViewBoard>
           <Mui.Stack spacing={1}>
             <Ex.ExInputWrapper.Editor
-              label={"Cau hoi:"}
+              label={"Câu hỏi:"}
               name={"ads"}
               defaultValue={"Nhap cau hoi"}
               onChange={(e) => setQuestion((pre) => ({ ...pre, question: e }))}
               required
             />
             <Ex.ExInputWrapper.Editor
-              label={"Huong dan giai:"}
+              label={"Hướng dẫn giải:"}
               name={"ads"}
               defaultValue={"Nhap huong dan giai"}
               onChange={(e) => setQuestion((pre) => ({ ...pre, suggest: e }))}
             />
             <Ex.ExInputWrapper.Editor
-              label={"Dap an A:"}
+              label={"Đáp án A:"}
               name={"ads"}
               defaultValue={"Nhap dap an A"}
               onChange={(e) => setQuestion((pre) => ({ ...pre, answerOne: e }))}
             />
             <Ex.ExInputWrapper.Editor
-              label={"Dap an B:"}
+              label={"Đáp án B:"}
               name={"ads"}
               defaultValue={"Nhap dap an B"}
               onChange={(e) => setQuestion((pre) => ({ ...pre, answerTwo: e }))}
             />
             <Ex.ExInputWrapper.Editor
-              label={"Dap an C:"}
+              label={"Đáp án C:"}
               name={"ads"}
               defaultValue={"Nhap dap an C"}
               onChange={(e) =>
@@ -233,7 +233,7 @@ export const AddMultiQuestion = () => {
               }
             />
             <Ex.ExInputWrapper.Editor
-              label={"Dap an D:"}
+              label={"Đáp án D:"}
               name={"ads"}
               defaultValue={"Nhap dap an D"}
               onChange={(e) =>
@@ -265,7 +265,7 @@ export const AddMultiQuestion = () => {
                         }}
                       />
                     }
-                    label={<p>Dap an A</p>}
+                    label={<p>Đáp án A</p>}
                   />
                   <Mui.FormControlLabel
                     value={1}
@@ -278,7 +278,7 @@ export const AddMultiQuestion = () => {
                         }}
                       />
                     }
-                    label={<p>Dap an B</p>}
+                    label={<p>Đáp án B</p>}
                   />
                   <Mui.FormControlLabel
                     value={2}
@@ -291,7 +291,7 @@ export const AddMultiQuestion = () => {
                         }}
                       />
                     }
-                    label={<p>Dap an C</p>}
+                    label={<p>Đáp án C</p>}
                   />
                   <Mui.FormControlLabel
                     value={3}
@@ -304,13 +304,13 @@ export const AddMultiQuestion = () => {
                         }}
                       />
                     }
-                    label={<p>Dap an D</p>}
+                    label={<p>Đáp án D</p>}
                   />
                 </Mui.RadioGroup>
               </Mui.FormControl>
             </Mui.Stack>
             <Mui.Stack>
-              <Eui.EuiButton.Progress name={"Them moi"} component={"button"} />
+              <Eui.EuiButton.Progress name={"Thêm mới"} component={"button"} />
             </Mui.Stack>
           </Mui.Stack>
         </Views.ViewBoard>

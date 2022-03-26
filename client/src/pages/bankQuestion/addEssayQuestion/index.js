@@ -103,7 +103,7 @@ export const AddEssayQuestion = () => {
   const func = new Func();
 
   return (
-    <Views.ViewContent title={"Them moi cau tu luan"}>
+    <Views.ViewContent title={"Thêm mới câu hỏi tự luận"}>
       {/* thong bao */}
       <Eui.EuiSnackbar
         open={snack.isOpen}
@@ -123,7 +123,7 @@ export const AddEssayQuestion = () => {
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
               <Ex.ExInputWrapper.Basic
-                label={"Ten cau hoi"}
+                label={"Tên câu hỏi"}
                 name={"questionName"}
                 required
                 onChange={func.handleChange}
@@ -180,7 +180,7 @@ export const AddEssayQuestion = () => {
               <Mui.Grid container columnSpacing={2}>
                 <Mui.Grid item xs={6}>
                   <Ex.ExInputWrapper.Basic
-                    label={"Thoi gian tra loi"}
+                    label={"Thời gian trả lời"}
                     name={"timeAnswer"}
                     type={"number"}
                     required
@@ -198,27 +198,27 @@ export const AddEssayQuestion = () => {
         <Views.ViewBoard>
           <Mui.Stack spacing={1}>
             <Ex.ExInputWrapper.Editor
-              label={"Cau hoi:"}
+              label={"Câu hỏi:"}
               name={"ads"}
               defaultValue={"Nhap cau hoi"}
               onChange={(e) => setQuestion((pre) => ({ ...pre, question: e }))}
               required
             />
             <Ex.ExInputWrapper.Editor
-              label={"Dap an dung:"}
+              label={"Đáp án đúng:"}
               name={"ads"}
               defaultValue={"Nhap dap an dung"}
               onChange={(e) => setQuestion((pre) => ({ ...pre, answer: e }))}
             />
             <Ex.ExInputWrapper.Editor
-              label={"Huong dan giai:"}
+              label={"Hướng dẫn giải:"}
               name={"ads"}
               defaultValue={"Nhap huong dan giai"}
               onChange={(e) => setQuestion((pre) => ({ ...pre, suggest: e }))}
             />
 
             <Mui.Stack>
-              <Eui.EuiButton.Progress name={"Them moi"} component={"button"} />
+              <Eui.EuiButton.Progress name={"Thêm mới"} component={"button"} />
             </Mui.Stack>
           </Mui.Stack>
         </Views.ViewBoard>
