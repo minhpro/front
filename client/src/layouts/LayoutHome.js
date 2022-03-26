@@ -16,35 +16,30 @@ export const LayoutHome = () => {
     Func.handler
       .api(() => Api.testTypeApi.search())
       .then((res) => {
-        console.log(res);
         dispatch(Slide.TestTypeSlide.setTestType(res));
       })
       .catch((error) => console.log(error));
     Func.handler
       .api(() => Api.testTimeApi.search())
       .then((res) => {
-        console.log(res);
         dispatch(Slide.TimeExamSlide.setTimeExam(res));
       })
       .catch((error) => console.log(error));
     Func.handler
       .api(() => Api.questionTypeApi.search())
       .then((res) => {
-        console.log(res);
         dispatch(Slide.QuestionTypeSilde.setQuestionType(res));
       })
       .catch((error) => console.log(error));
     Func.handler
       .api(() => Api.otherConfigApi.all())
       .then((res) => {
-        console.log(res);
         dispatch(Slide.OtherConfigSlide.setOtherConfig(res));
       })
       .catch((error) => console.log(error));
     Func.handler
       .api(() => Api.classApi.search())
       .then((res) => {
-        console.log(res);
         dispatch(Slide.ClassSlide.setClassName(res));
       })
       .catch((error) => console.log(error));

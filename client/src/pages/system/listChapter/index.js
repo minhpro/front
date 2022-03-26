@@ -6,25 +6,12 @@ import * as Views from "views";
 import { useSelector } from "react-redux";
 import * as Function from "functions";
 import * as Api from "api";
-
+import * as Class from "Class";
 export const PageSystemListChapter = () => {
-  const [open, setIsOpen] = React.useState(false);
-
   const [search, setSearch] = React.useState({
     chapterName: "",
     classId: null,
     subjectId: null,
-  });
-
-  const [deleteState, setDeleteState] = React.useState({
-    id: null,
-    open: false,
-  });
-
-  const [snack, setSnack] = React.useState({
-    isOpen: false,
-    message: "",
-    severity: null,
   });
 
   const [subject, setSubject] = React.useState(null);
@@ -45,57 +32,61 @@ export const PageSystemListChapter = () => {
 
   // redux
   const reduxClass = useSelector((state) => state.reduxClass);
+
+  const [open, setIsOpen] = React.useState(false);
+  const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
+
+  const [deleteId, setDeleteId] = React.useState(null);
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
+  });
+
+  // class
+
+  const handleSnack = new Class.HandleSnack(setSnack);
+  handleSnack.setMessage("Đã thêm chủ đề mới, id: ", "Đã xoá chủ đề, id: ", "");
+
+  const handleOpenNew = new Class.HandlePopup(
+    setIsOpen,
+    "",
+    "Thêm mới thời gian làm bài"
+  );
+
+  const handleOpenDelete = new Class.HandlePopup(
+    setIsDeleteOpen,
+    "",
+    "Xác nhận xoá?"
+  );
+
   class Func {
-    constructor() {
-      this.message = {
-        delete: "Đã xoá chủ đề, id:",
-        null: "chua nhap ten dang de",
-        add: "Đã thêm chủ đề mới, id: ",
-      };
+    openDelete(id) {
+      handleOpenDelete.open();
+      setDeleteId(id);
     }
-
-    handleOpenPopupDelete = (id) => {
-      setDeleteState({ id: id, open: true });
-    };
-
-    handleClosePopupDelete = () => {
-      setDeleteState({ id: null, open: false });
-    };
-
     onDelete = () => {
       Function.handler
-        .api(() => Api.chapterApi.delete(deleteState.id))
+        .api(() => Api.chapterApi.delete(deleteId))
         .then((res) => {
-          console.log("on then")
-          if(res?.response?.status == 400){
-            console.log("loi roi")
-            console.log(res.response.data.message)
+          console.log("on then");
+          if (res?.response?.status == 400) {
+            console.log("loi roi");
+            console.log(res.response.data.message);
             setSnack({
               isOpen: true,
               message: res.response.data.message,
               severity: "error",
             });
-          }else{
-            setSnack({
-              isOpen: true,
-              message: this.message.delete + " " + deleteState.id,
-              severity: "warning",
-            });
+          } else {
+            handleSnack.delete(deleteId);
           }
-          this.handleClosePopupDelete();
+          handleOpenDelete.close();
         })
-        .catch((error) =>{
-          console.log("lỗi: ")
-          console.log(error.response)
+        .catch((error) => {
+          console.log("lỗi: ");
+          console.log(error.response);
         });
-    };
-
-    handleCloseSnack = () => {
-      setSnack({
-        isOpen: false,
-        message: this.message.delete + " " + deleteState.id,
-        severity: null,
-      });
     };
 
     handleChange = (e) => {
@@ -113,7 +104,6 @@ export const PageSystemListChapter = () => {
           )
         )
         .then((res) => {
-          console.log(res);
           setChapter(res);
         })
         .catch((error) => console.log(error));
@@ -127,31 +117,29 @@ export const PageSystemListChapter = () => {
           )
           .then((res) => {
             console.log(res);
-            setSnack({
-              isOpen: true,
-              message: this.message.add + " " + res.id,
-              severity: null,
-            });
-            this.handleClose();
+            handleSnack.add(res.id);
+            handleOpenNew.close();
           })
           .catch((error) => console.log(error));
+      } else {
+        handleSnack.error("Lỗi nhập liệu, hoàn thành bảng tạo");
       }
     };
 
-    onSubmit = (e) => {
-      e.preventDefault();
-      console.log("submit");
+    searchSubjectbyId = (id) => {
+      if (subject) {
+        const index = subject?.data.findIndex((data) => data.id === id);
+
+        return subject?.data[index]?.name;
+      }
     };
 
-    onEdit = (e) => {
-      console.log("submit");
-    };
+    searchClassById = (id) => {
+      if (subject) {
+        const index = reduxClass?.data.findIndex((data) => data.id === id);
 
-    handleClose = () => {
-      setIsOpen(false);
-    };
-    handleOpen = () => {
-      setIsOpen(true);
+        return reduxClass?.data[index]?.name;
+      }
     };
   }
 
@@ -169,21 +157,41 @@ export const PageSystemListChapter = () => {
       {/* thong bao */}
       <Eui.EuiSnackbar
         open={snack.isOpen}
-        handleClose={func.handleCloseSnack}
+        handleClose={() => handleSnack.close()}
         message={snack.message}
         severity={snack.severity}
       />
       {/* popup */}
       <Ex.ExModalPoppup.Delete
-        open={deleteState.open}
-        handleClose={func.handleClosePopupDelete}
+        open={isDeteteOpen}
+        handleClose={() => handleOpenDelete.close()}
         handleDelete={func.onDelete}
       />
       <Ex.ExModalPoppup.Create
         open={open}
-        handleClose={func.handleClose}
+        handleClose={() => handleOpenNew.close()}
         handleCreate={func.handleAdd}
-      />
+      >
+        <Ex.ExInputWrapper.Basic
+          label={"Tên chủ đề:"}
+          name={"chapterName"}
+          onChange={func.handleChange}
+        />
+        <Mui.Divider />
+        <Ex.ExInputWrapper.Select
+          label={"Chọn lớp:"}
+          name={"classId"}
+          data={reduxClass?.data}
+          onChange={func.handleChange}
+        />
+        <Mui.Divider />
+        <Ex.ExInputWrapper.Select
+          label={"Chọn môn:"}
+          name={"subjectId"}
+          data={subject?.data}
+          onChange={func.handleChange}
+        />
+      </Ex.ExModalPoppup.Create>
 
       <Mui.Stack spacing={0.5}>
         <Views.ViewBoard>
@@ -215,7 +223,9 @@ export const PageSystemListChapter = () => {
           <Mui.Stack direction={"row"} py={2} spacing={2}>
             <Eui.EuiButton.Progress
               name={"Thêm mới chương"}
-              onClick={func.handleOpen}
+              onClick={() => {
+                handleOpenNew.open();
+              }}
             />
             <Eui.EuiButton.Progress
               name={"tìm kiếm"}
@@ -244,7 +254,7 @@ export const PageSystemListChapter = () => {
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete
-                        onDelete={() => func.handleOpenPopupDelete(row.id)}
+                        onDelete={() => func.openDelete(row.id)}
                         onEdit={func.onEdit}
                       />
                     </Eui.EuiTable.StyledTableCell>

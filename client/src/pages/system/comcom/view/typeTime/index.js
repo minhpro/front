@@ -8,28 +8,50 @@ import * as Function from "functions";
 import * as Api from "api";
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
+import * as Class from "Class";
 
 export const TypeTime = () => {
   const dispatch = useDispatch();
-  // redux
+  // state
   const reduxTimeExam = useSelector((state) => state.reduxTimeExam);
-  const [open, setIsOpen] = React.useState(false);
+
   const [data, setData] = React.useState({
     timeType: "",
     des: "",
   });
 
-  const [deleteState, setDeleteState] = React.useState({
-    id: null,
-    open: false,
-  });
+  const [open, setIsOpen] = React.useState(false);
+  const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
 
+  const [deleteId, setDeleteId] = React.useState(null);
   const [snack, setSnack] = React.useState({
     isOpen: false,
     message: "",
     severity: null,
   });
 
+  // class
+
+  const handleSnack = new Class.HandleSnack(setSnack);
+  handleSnack.setMessage(
+    "Đã thêm thời gian làm bài mới, id: ",
+    "Đã xoá thời gian làm bài, id: ",
+    "Lỗi hệ thống, không thể xoá"
+  );
+
+  const handleOpenNew = new Class.HandlePopup(
+    setIsOpen,
+    "",
+    "Thêm mới thời gian làm bài"
+  );
+
+  const handleOpenDelete = new Class.HandlePopup(
+    setIsDeleteOpen,
+    "",
+    "Xác nhận xoá?"
+  );
+
+  // function
   class Func {
     constructor() {
       this.message = {
@@ -48,18 +70,6 @@ export const TypeTime = () => {
         .catch((error) => console.log(error));
     };
 
-    handleCloseSnack = () => {
-      setSnack({ ...snack, isOpen: false });
-    };
-
-    handleCloseDelete = () => {
-      setDeleteState({ id: null, open: false });
-    };
-
-    handleOpenDelete = (id) => {
-      setDeleteState({ id: id, open: true });
-    };
-
     handleChange = (e) => {
       setData({ ...data, [e.target.name]: e.target.value });
       console.log(data);
@@ -71,46 +81,20 @@ export const TypeTime = () => {
       Function.handler
         .api(() => Api.testTimeApi.add(data.timeType))
         .then((res) => {
-          setSnack({
-            isOpen: true,
-            message: this.message.add + " " + res.id,
-            severity: null,
-          });
-          this.handleClose();
+          handleSnack.add(res.id);
+          handleOpenNew.close();
         })
         .catch((error) => console.log(error));
-      console.log("submit");
     };
     onDelete = () => {
       Function.handler
-        .api(() => Api.testTimeApi.delete(deleteState.id))
+        .api(() => Api.testTimeApi.delete(deleteId))
         .then((res) => {
-          setSnack({
-            isOpen: true,
-            message: this.message.delete + " " + res.id,
-            severity: "warning",
-          });
+          handleSnack.delete(res.id);
         })
-        .catch((error) =>
-          setSnack({
-            isOpen: true,
-            message: this.message.null,
-            severity: "warning",
-          })
-        );
+        .catch((error) => handleSnack.error());
 
-      this.handleCloseDelete();
-    };
-
-    onEdit = (e) => {
-      console.log("submit");
-    };
-
-    handleClose = () => {
-      setIsOpen(false);
-    };
-    handleOpen = () => {
-      setIsOpen(true);
+      handleOpenDelete.close();
     };
   }
 
@@ -124,17 +108,17 @@ export const TypeTime = () => {
       {/* thong bao */}
       <Eui.EuiSnackbar
         open={snack.isOpen}
-        handleClose={func.handleCloseSnack}
+        handleClose={() => handleSnack.close()}
         message={snack.message}
         severity={snack.severity}
       />
       {/* modal */}
       <Eui.EuiModal.Title
         open={open}
-        handleClose={func.handleClose}
+        handleClose={() => handleOpenNew.close()}
         w={"80%"}
         mw={400}
-        title={"Thêm mới thời gian làm bài"}
+        title={handleOpenNew.title}
       >
         <Mui.Stack spacing={2} component={"form"} onSubmit={func.onSubmit}>
           <Ex.ExInputWrapper.Basic
@@ -166,14 +150,14 @@ export const TypeTime = () => {
 
       {/* modal delete */}
       <Eui.EuiModal.Title
-        open={deleteState.open}
-        handleClose={func.handleCloseDelete}
+        open={isDeteteOpen}
+        handleClose={() => handleOpenDelete.close()}
         w={"80%"}
         mw={300}
-        title={"Xác nhận xoá?"}
+        title={handleOpenDelete.title}
       >
         <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
-          <Eui.EuiButton.Cancel onClick={func.handleCloseDelete} />
+          <Eui.EuiButton.Cancel onClick={() => handleOpenDelete.close()} />
           <Eui.EuiButton.Progress name={"Xoá"} onClick={func.onDelete} />
         </Mui.Stack>
       </Eui.EuiModal.Title>
@@ -183,7 +167,7 @@ export const TypeTime = () => {
         button={
           <Eui.EuiButton.AddType
             name={"Thêm mới thời gian làm bài"}
-            onClick={func.handleOpen}
+            onClick={() => handleOpenNew.open()}
           />
         }
       >
@@ -195,14 +179,17 @@ export const TypeTime = () => {
                     {i + 1}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {row.time || "code"}
+                    {row.time || "time"}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {row.des || "name class"}
+                    {row.des || "mo ta"}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     <Ex.ExIconEditDelete
-                      onDelete={() => func.handleOpenDelete(row.id)}
+                      onDelete={() => {
+                        setDeleteId(row.id);
+                        handleOpenDelete.open();
+                      }}
                       onEdit={func.onEdit}
                     />
                   </Eui.EuiTable.StyledTableCell>

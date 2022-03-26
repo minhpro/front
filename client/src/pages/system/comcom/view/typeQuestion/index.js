@@ -8,11 +8,10 @@ import * as Function from "functions";
 import * as Api from "api";
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
-
+import * as Class from "Class";
 export const TypeQuestion = () => {
   // redux
   const reduxQuestionType = useSelector((state) => state.reduxQuestionType);
-  const [open, setIsOpen] = React.useState(false);
 
   const [data, setData] = React.useState({
     TypeQuestion: "",
@@ -20,47 +19,51 @@ export const TypeQuestion = () => {
   });
 
   const dispatch = useDispatch();
+  const [open, setIsOpen] = React.useState(false);
+  const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
 
-  const [deleteState, setDeleteState] = React.useState({
-    id: null,
-    open: false,
-  });
-
+  const [deleteId, setDeleteId] = React.useState(null);
   const [snack, setSnack] = React.useState({
     isOpen: false,
     message: "",
     severity: null,
   });
+  // class
+
+  const handleSnack = new Class.HandleSnack(setSnack);
+  handleSnack.setMessage(
+    "Đã thêm loại câu hỏi mới, id: ",
+    "Đã xoá loại câu hỏi, id: ",
+    "Lỗi hệ thống, không thể xoá"
+  );
+
+  const handleOpenNew = new Class.HandlePopup(
+    setIsOpen,
+    "",
+    "Thêm mới loại câu hỏi"
+  );
+
+  const handleOpenDelete = new Class.HandlePopup(
+    setIsDeleteOpen,
+    "",
+    "Xác nhận xoá?"
+  );
+
+  //  func
 
   class Func {
-    constructor() {
-      this.message = {
-        delete: "da xoa dang de, id:",
-        null: "chua nhap ten dang de",
-        add: "da them dang de, id: ",
-      };
+    openDelete(id) {
+      handleOpenDelete.open();
+      setDeleteId(id);
     }
 
     update = () => {
       Function.handler
-        .api(() => Api.testTypeApi.search())
+        .api(() => Api.questionTypeApi.search())
         .then((res) => {
-          console.log(res);
-          dispatch(Slide.TestTypeSlide.setTestType(res));
+          dispatch(Slide.QuestionTypeSilde.setQuestionType(res));
         })
         .catch((error) => console.log(error));
-    };
-
-    handleCloseSnack = () => {
-      setSnack({ ...snack, isOpen: false });
-    };
-
-    handleCloseDelete = () => {
-      setDeleteState({ id: null, open: false });
-    };
-
-    handleOpenDelete = (id) => {
-      setDeleteState({ id: id, open: true });
     };
 
     handleChange = (e) => {
@@ -72,46 +75,21 @@ export const TypeQuestion = () => {
       Function.handler
         .api(() => Api.questionTypeApi.add(data.TypeQuestion))
         .then((res) => {
-          setSnack({
-            isOpen: true,
-            message: this.message.add + " " + res.id,
-            severity: null,
-          });
-          this.handleClose();
+          handleSnack.add(res.id);
+          handleOpenNew.close();
         })
         .catch((error) => console.log(error));
-      console.log("submit");
+      handleOpenDelete.close();
     };
     onDelete = () => {
       Function.handler
-        .api(() => Api.questionTypeApi.delete(deleteState.id))
+        .api(() => Api.questionTypeApi.delete(deleteId))
         .then((res) => {
-          setSnack({
-            isOpen: true,
-            message: this.message.delete + " " + res.id,
-            severity: "warning",
-          });
+          handleSnack.delete(res.id);
         })
-        .catch((error) =>
-          setSnack({
-            isOpen: true,
-            message: this.message.null,
-            severity: "warning",
-          })
-        );
+        .catch((error) => handleSnack.error());
 
-      this.handleCloseDelete();
-    };
-
-    onEdit = (e) => {
-      console.log("submit");
-    };
-
-    handleClose = () => {
-      setIsOpen(false);
-    };
-    handleOpen = () => {
-      setIsOpen(true);
+      handleOpenDelete.close();
     };
   }
 
@@ -125,28 +103,28 @@ export const TypeQuestion = () => {
       {/* thong bao */}
       <Eui.EuiSnackbar
         open={snack.isOpen}
-        handleClose={func.handleCloseSnack}
+        handleClose={() => handleSnack.close()}
         message={snack.message}
         severity={snack.severity}
       />
 
       {/* modal delete */}
       <Eui.EuiModal.Title
-        open={deleteState.open}
-        handleClose={func.handleCloseDelete}
+        open={isDeteteOpen}
+        handleClose={() => handleOpenDelete.close()}
         w={"80%"}
         mw={300}
         title={"Xác nhận xoá?"}
       >
         <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
-          <Eui.EuiButton.Cancel onClick={func.handleCloseDelete} />
+          <Eui.EuiButton.Cancel onClick={() => handleOpenDelete.close()} />
           <Eui.EuiButton.Progress name={"Xoá"} onClick={func.onDelete} />
         </Mui.Stack>
       </Eui.EuiModal.Title>
       {/* modal */}
       <Eui.EuiModal.Title
         open={open}
-        handleClose={func.handleClose}
+        handleClose={() => handleOpenNew.close()}
         w={"80%"}
         mw={400}
         title={"Thêm mới loại câu hỏi"}
@@ -183,7 +161,7 @@ export const TypeQuestion = () => {
         button={
           <Eui.EuiButton.AddType
             name={"Thêm mới loại câu hỏi"}
-            onClick={func.handleOpen}
+            onClick={() => handleOpenNew.open()}
           />
         }
       >
@@ -202,7 +180,7 @@ export const TypeQuestion = () => {
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     <Ex.ExIconEditDelete
-                      onDelete={() => func.handleOpenDelete(row.id)}
+                      onDelete={() => func.openDelete(row.id)}
                       onEdit={func.onEdit}
                     />
                   </Eui.EuiTable.StyledTableCell>
@@ -229,14 +207,7 @@ const dataColumn = [
     width: 200,
   },
   {
-    name: "Tha tác",
+    name: "Thao tác",
     width: 200,
   },
 ];
-
-const rowData = {
-  data: [
-    { name: "dasasd", des: "adsasd" },
-    { name: "dasasd", des: "adsasd" },
-  ],
-};

@@ -8,6 +8,9 @@ import * as Function from "functions";
 import * as Api from "api";
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
+import * as Class from "Class";
+import { styled } from "@mui/material/styles";
+import { paginationClasses } from "@mui/material";
 
 export const TypeExam = () => {
   // redux
@@ -15,10 +18,9 @@ export const TypeExam = () => {
   const [open, setIsOpen] = React.useState(false);
   const dispatch = useDispatch();
 
-  const [deleteState, setDeleteState] = React.useState({
-    id: null,
-    open: false,
-  });
+  const [deleteState, setDeleteState] = React.useState(false);
+
+  const [deleteId, setDeleteId] = React.useState(null);
 
   const [snack, setSnack] = React.useState({
     isOpen: false,
@@ -31,94 +33,53 @@ export const TypeExam = () => {
     des: "",
   });
 
+  const handleSnack = new Class.HandleSnack(setSnack);
+  handleSnack.setMessage(
+    "Đã thêm dạng đề thi mới, id: ",
+    "Đã xoá dạng đề thi, id: ",
+    "Lỗi hệ thống, dạng đề này không thể xoá"
+  );
+
+  const handleOpenNew = new Class.HandlePopup(setIsOpen);
+
+  const handleOpenDelete = new Class.HandlePopup(setDeleteState);
+
   class Func {
-    constructor() {
-      this.message = {
-        delete: "Đã xoá dạng đề thi mới, id:",
-        null: "Không tìm thấy ID",
-        add: "Đã thêm dạng đề thi mới, id:",
-      };
-    }
     update = () => {
       Function.handler
         .api(() => Api.testTypeApi.search())
         .then((res) => {
-          console.log(res);
           dispatch(Slide.TestTypeSlide.setTestType(res));
         })
         .catch((error) => console.log(error));
     };
 
-    handleCloseSnack = () => {
-      setSnack({ ...snack, isOpen: false });
-    };
-
-    handleCloseDelete = () => {
-      setDeleteState({ id: null, open: false });
-    };
-
-    handleOpenDelete = (id) => {
-      setDeleteState({ id: id, open: true });
-    };
-
     handleChange = (e) => {
       setData({ ...data, [e.target.name]: e.target.value });
-      console.log(data);
     };
 
     onSubmit = (e) => {
       e.preventDefault();
-
       Function.handler
         .api(() => Api.testTypeApi.add(data.typeExam))
         .then((res) => {
-          setSnack({
-            isOpen: true,
-            message: this.message.add + " " + res.id,
-            severity: null,
-          });
-          this.handleClose();
+          handleSnack.add(res.id);
+          handleOpenNew.close();
         })
         .catch((error) => console.log(error));
-
-      console.log("submit");
     };
     onDelete = () => {
       Function.handler
-        .api(() => Api.testTypeApi.delete(deleteState.id))
+        .api(() => Api.testTypeApi.delete(deleteId))
         .then((res) => {
-          setSnack({
-            isOpen: true,
-            message: this.message.delete + " " + res.id,
-            severity: "warning",
-          });
+          handleSnack.delete(res.id);
         })
-        .catch((error) =>
-          setSnack({
-            isOpen: true,
-            message: this.message.null,
-            severity: "warning",
-          })
-        );
-
-      this.handleCloseDelete();
-    };
-
-    handleClose = () => {
-      setIsOpen(false);
-    };
-    handleOpen = () => {
-      setIsOpen(true);
+        .catch((error) => handleSnack.error());
+      handleOpenDelete.close();
     };
   }
 
   const func = new Func();
-
-  // React.useEffect =
-  //   (() => {
-  //     console.log("das");
-  //   },
-  //   [snack]);
 
   React.useEffect(() => {
     func.update();
@@ -128,14 +89,14 @@ export const TypeExam = () => {
       {/* thong bao */}
       <Eui.EuiSnackbar
         open={snack.isOpen}
-        handleClose={func.handleCloseSnack}
+        handleClose={() => handleSnack.close()}
         message={snack.message}
         severity={snack.severity}
       />
       {/* modal add */}
       <Eui.EuiModal.Title
         open={open}
-        handleClose={func.handleClose}
+        handleClose={() => handleOpenNew.close()}
         w={"80%"}
         mw={400}
         title={"Thêm mới dạng đề thi"}
@@ -169,14 +130,14 @@ export const TypeExam = () => {
 
       {/* modal delete */}
       <Eui.EuiModal.Title
-        open={deleteState.open}
-        handleClose={func.handleCloseDelete}
+        open={deleteState}
+        handleClose={() => handleOpenDelete.close()}
         w={"80%"}
         mw={300}
         title={"Xác nhận xoá?"}
       >
         <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
-          <Eui.EuiButton.Cancel onClick={func.handleCloseDelete} />
+          <Eui.EuiButton.Cancel onClick={() => handleOpenDelete.close()} />
           <Eui.EuiButton.Progress name={"Xoá"} onClick={func.onDelete} />
         </Mui.Stack>
       </Eui.EuiModal.Title>
@@ -186,7 +147,7 @@ export const TypeExam = () => {
         button={
           <Eui.EuiButton.AddType
             name={"Thêm mới dạng đề thi"}
-            onClick={func.handleOpen}
+            onClick={() => handleOpenNew.open()}
           />
         }
       >
@@ -198,14 +159,17 @@ export const TypeExam = () => {
                     {i + 1}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {row.name || "code"}
+                    {row.name || "name"}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {row.des || "name class"}
+                    {row.des || "mo ta"}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     <Ex.ExIconEditDelete
-                      onDelete={() => func.handleOpenDelete(row.id)}
+                      onDelete={() => {
+                        setDeleteId(row.id);
+                        handleOpenDelete.open();
+                      }}
                       onEdit={func.onEdit}
                     />
                   </Eui.EuiTable.StyledTableCell>
@@ -213,6 +177,17 @@ export const TypeExam = () => {
               ))
             : null}
         </Eui.EuiTable>
+        <Mui.Stack>
+          <Hu
+            count={11}
+            defaultPage={6}
+            siblingCount={0}
+            boundaryCount={2}
+            size={"large"}
+            shape={"rounded"}
+            // renderItem={(item) => <div>asddsa</div>}
+          />
+        </Mui.Stack>
       </Element.LayoutTable>
     </>
   );
@@ -237,9 +212,15 @@ const dataColumn = [
   },
 ];
 
-const rowData = {
-  data: [
-    { name: "dasasd", des: "adsasd" },
-    { name: "dasasd", des: "adsasd" },
-  ],
-};
+const Hu = styled(Mui.Pagination)`
+  .MuiButtonBase-root {
+    color: red;
+    font-size: 20;
+  }
+  .MuiButtonBase-root {
+    font-size: 20;
+  }
+  &.MuiPaginationItem-root {
+    font-size: 20;
+  }
+`;

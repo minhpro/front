@@ -32,7 +32,7 @@ EuiModal.Title = function ({ children, title, ...rest }) {
     <EuiModal {...rest}>
       <Stack direction={"column"} white={"100%"}>
         <Stack py={1} width={"100%"} bgcolor={"grey.400"} alignItems={"center"}>
-          <p>{title || "title"}</p>
+          <h3>{title || "title"}</h3>
         </Stack>
         <Box width={"100%"} p={2}>
           {children}

@@ -26,6 +26,11 @@ class QuestionApi {
 
     return axiosClient.post(url, data);
   };
+  detail = (id) => {
+    const url = `${this.api}detail`;
+    const body = { id: id };
+    return axiosClient.post(url, id);
+  };
 }
 
 const questionApi = new QuestionApi();

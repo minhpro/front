@@ -131,7 +131,7 @@ export const OrganMatrix = () => {
         <Views.ViewBoard>
           <Eui.EuiTable dataColumn={dataColumn}>
             {matrix
-              ? matrix.data.map((row, i) => (
+              ? matrix?.data.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {i + 1}

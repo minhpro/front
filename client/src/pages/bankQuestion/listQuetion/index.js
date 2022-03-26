@@ -3,14 +3,13 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import React from "react";
 import * as Views from "views";
-
+import * as Class from "Class";
 import * as Function from "functions";
 import * as Api from "api";
+import * as View from "./view";
 
 export const ListQuestion = () => {
   // redux
-
-  const [open, setIsOpen] = React.useState(false);
 
   const [questionList, setQuestionList] = React.useState(null);
 
@@ -22,22 +21,58 @@ export const ListQuestion = () => {
     questionName: "",
   });
 
+  const [open, setIsOpen] = React.useState(false);
+  const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
+
+  const [deleteId, setDeleteId] = React.useState(null);
+
+  const [questionId, setQuestionId] = React.useState(null);
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
+  });
+  // class
+
+  const handleSnack = new Class.HandleSnack(setSnack);
+  handleSnack.setMessage(
+    "Đã thêm loại câu hỏi mới, id: ",
+    "Đã xoá loại câu hỏi, id: ",
+    "Lỗi hệ thống, không thể xoá"
+  );
+
+  const handleOpenNew = new Class.HandlePopup(
+    setIsOpen,
+    "",
+    "Thêm mới loại câu hỏi"
+  );
+
+  const handleOpenDelete = new Class.HandlePopup(
+    setIsDeleteOpen,
+    "",
+    "Xác nhận xoá?"
+  );
+
+  //  func
+
   //   function
   class Func {
-    constructor() {
-      this.message = {
-        delete: "da xoa dang de, id:",
-        null: "chua nhap ten dang de",
-        add: "da them dang de, id: ",
-      };
+    onView(id) {
+      setQuestionId(id);
+      handleOpenNew.open();
     }
+
+    openDelete(id) {
+      handleOpenDelete.open();
+      setDeleteId(id);
+    }
+
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });
       console.log(search);
     };
 
     handleSearch = () => {
-      console.log("search");
       Function.handler
         .api(() => Api.questionApi.search(search.unitId, search.questionName))
         .then((res) => {
@@ -47,39 +82,57 @@ export const ListQuestion = () => {
         .catch((error) => console.log(error));
     };
 
-    onSubmit = (e) => {
-      e.preventDefault();
-      console.log("submit");
-    };
-    onDelete = (id) => {
+    onDelete = () => {
       Function.handler
-        .api(() => Api.questionApi.delete(id))
+        .api(() => Api.questionApi.delete(deleteId))
         .then((res) => {
-          console.log(res);
+          handleSnack.delete(res.id);
         })
         .catch((error) => console.log(error));
-    };
-
-    onEdit = (e) => {
-      console.log("submit");
-    };
-
-    handleClose = () => {
-      setIsOpen(false);
-    };
-    handleOpen = () => {
-      setIsOpen(true);
+      handleOpenDelete.close();
     };
   }
 
   const func = new Func();
 
-  React.useEffect(()=>{
-    func.handleSearch()
-  },[])
+  React.useEffect(() => {
+    func.handleSearch();
+  }, []);
 
   return (
     <Views.ViewContent title={"Danh sách câu hỏi"}>
+      {/* snack */}
+      {/* thong bao */}
+      <Eui.EuiSnackbar
+        open={snack.isOpen}
+        handleClose={() => handleSnack.close()}
+        message={snack.message}
+        severity={snack.severity}
+      />
+      {/* modal delete */}
+      <Eui.EuiModal.Title
+        open={isDeteteOpen}
+        handleClose={() => handleOpenDelete.close()}
+        w={"80%"}
+        mw={300}
+        title={"Xác nhận xoá?"}
+      >
+        <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
+          <Eui.EuiButton.Cancel onClick={() => handleOpenDelete.close()} />
+          <Eui.EuiButton.Progress name={"Xoá"} onClick={func.onDelete} />
+        </Mui.Stack>
+      </Eui.EuiModal.Title>
+
+      {/* view cau hoi */}
+
+      <Ex.ExModalPoppup.ViewQuestion
+        open={open}
+        handleClose={() => handleOpenNew.close()}
+      >
+        <View.ViewQuestion id={questionId} />
+      </Ex.ExModalPoppup.ViewQuestion>
+
+      {/* view */}
       <Mui.Stack spacing={0.5}>
         <Views.ViewBoard>
           <Mui.Stack>
@@ -139,26 +192,27 @@ export const ListQuestion = () => {
                       {i + 1}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.code || "code"}
+                      {row?.code || "code"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.unitData.chapterData.subjectData.classs?.name ||
+                      {row?.unitData?.chapterData?.subjectData?.classs?.name ||
                         "name class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.unitData?.chapterData.subjectData.name ||
+                      {row.unitData?.chapterData?.subjectData?.name ||
                         "list class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.name || "ten cau hoi"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.questionTypeData.name || "do kho"}
+                      {row.questionTypeData?.name || "do kho"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      <Ex.ExIconEditDelete
-                        onDelete={() => func.onDelete(row.id)}
+                      <Ex.ExIconEditDelete.View
+                        onDelete={() => func.openDelete(row.id)}
                         onEdit={func.onEdit}
+                        onView={() => func.onView(row.id)}
                       />
                     </Eui.EuiTable.StyledTableCell>
                   </Eui.EuiTable.StyledTableRow>
