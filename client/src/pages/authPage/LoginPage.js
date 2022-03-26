@@ -45,10 +45,13 @@ export const LoginPage = () => {
           } else {
             handleSnack.add("");
           }
-
+          console.log("login success")
           console.log(res);
         })
-        .catch((error) => handleSnack.error(""));
+        .catch((error) =>{
+            console.log("login error")
+            handleSnack.error("")
+        });
       console.log("login");
     }
   }
