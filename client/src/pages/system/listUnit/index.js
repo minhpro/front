@@ -6,6 +6,7 @@ import * as Views from "views";
 import * as Class from "Class";
 import * as Function from "functions";
 import * as Api from "api";
+import * as View from "./view";
 
 export const PageSystemListUnit = () => {
   const [pages, setPages] = React.useState({
@@ -17,6 +18,7 @@ export const PageSystemListUnit = () => {
   // redux
 
   const [open, setIsOpen] = React.useState(false);
+  const [isOpenView, setIsOpenView] = React.useState(false);
 
   const [search, setSearch] = React.useState({
     chapterId: null,
@@ -38,6 +40,8 @@ export const PageSystemListUnit = () => {
     severity: null,
   });
 
+  const [data, setData] = React.useState(null);
+
   // class
 
   const handleSnack = new Class.HandleSnack(setSnack);
@@ -53,6 +57,12 @@ export const PageSystemListUnit = () => {
     "Thêm đơn vị kiến thức mới"
   );
 
+  const handleOpenView = new Class.HandlePopup(
+    setIsOpenView,
+    "",
+    "Chi tiết câu hỏi"
+  );
+
   const handleOpenDelete = new Class.HandlePopup(
     setIsDeleteOpen,
     "",
@@ -60,6 +70,17 @@ export const PageSystemListUnit = () => {
   );
   //   function
   class Func {
+    onView(id) {
+      setDeleteId(id);
+      handleOpenView.open();
+      Function.handler
+        .api(() => Api.unitApi.detail(id))
+        .then((res) => {
+          console.log(res);
+          setData(res);
+        })
+        .catch((error) => console.log(error));
+    }
     onSubmitAddRequirement(e) {
       e.preventDefault();
       let data = requirements.data;
@@ -155,6 +176,17 @@ export const PageSystemListUnit = () => {
 
   return (
     <Views.ViewContent title={"Danh sách đơn vị kiến thức"}>
+      {/* view require */}
+
+      <Ex.ExModalPoppup.ViewQuestion
+        open={isOpenView}
+        handleClose={() => handleOpenView.close()}
+        // handleCreate={func.handleAdd}
+        title={handleOpenView.title}
+      >
+        <View.ViewUnit data={data} />
+      </Ex.ExModalPoppup.ViewQuestion>
+
       <Ex.ExModalPoppup.Create
         open={open}
         handleClose={() => handleOpenNew.close()}
@@ -207,7 +239,7 @@ export const PageSystemListUnit = () => {
       />
       <Eui.EuiSnackbar
         open={snack.isOpen}
-        handleClose={func.handleCloseSnack}
+        handleClose={() => handleSnack.close()}
         message={snack.message}
         severity={snack.severity}
       />
@@ -282,6 +314,7 @@ export const PageSystemListUnit = () => {
                       <Ex.ExIconEditDelete.View
                         onDelete={() => func.openDelete(row.id)}
                         onEdit={func.onEdit}
+                        onView={() => func.onView(row.id)}
                       />
                     </Eui.EuiTable.StyledTableCell>
                   </Eui.EuiTable.StyledTableRow>

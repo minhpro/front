@@ -34,6 +34,14 @@ class UnitApi {
     };
     return axiosClient.post(url, body);
   };
+
+  detail = (id) => {
+    const url = `${this.api}detail`;
+    const body = {
+      id: id,
+    };
+    return axiosClient.post(url, body);
+  };
 }
 
 const unitApi = new UnitApi();
