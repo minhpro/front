@@ -27,7 +27,6 @@ export const CreateMatrix = () => {
   console.log(dataNumber);
   const dispatch = useDispatch();
 
-  const [chapter, setChapter] = React.useState(null);
   //   function
   class Func {
     constructor() {
@@ -48,7 +47,7 @@ export const CreateMatrix = () => {
           .api(() => Api.chapterApi.search(search.subjectId))
           .then((res) => {
             console.log(res);
-            setChapter(res);
+            // setChapter(res);
             dispatch(
               Slide.questionDistributionsSlide.setQuestionDistributions(
                 res?.data
@@ -62,26 +61,41 @@ export const CreateMatrix = () => {
     handleAdd = () => {
       const payload = {
         name: "name",
-        numberOfQuestions: 50,
+        numberOfQuestions: dataNumber.total,
         questionSource: "EBD",
         time: 123,
         questionDistributions: [],
       };
 
-      for (let i = 0; i < dataNumber.length; i++) {
+      for (let i = 0; i < dataNumber.data.length; i++) {
         payload.questionDistributions.push({
-          id: dataNumber[i].id,
-          numberOfQuestions: dataNumber[i].numberOfQuestions,
+          id: dataNumber.data[i].id,
+          numberOfQuestions: dataNumber.data[i].numberOfQuestions,
           units: [],
         });
-        for (let j = 0; j < dataNumber[i].unitData.length; j++) {
+        for (let j = 0; j < dataNumber.data[i].unitData.length; j++) {
           payload.questionDistributions[i].units.push({
-            id: dataNumber[i].unitData[j].id,
+            id: dataNumber.data[i].unitData[j].id,
             questionDistributions:
-              dataNumber[i].unitData[j].questionDistributions,
+              dataNumber.data[i].unitData[j].questionDistributions,
+            requirements: [],
           });
+
+          for (
+            let h = 0;
+            h < dataNumber.data[i].unitData[j].requirements.length;
+            h++
+          ) {
+            payload.questionDistributions[i].units[j].requirements.push({
+              id: dataNumber.data[i].unitData[j].requirements[h].id,
+              numberOfQuestions:
+                dataNumber.data[i].unitData[j].requirements[h]
+                  .numberOfQuestions,
+            });
+          }
         }
       }
+      console.log("huhu", payload);
       Function.handler
         .api(() => Api.matrixApi.add(payload))
         .then((res) => {
@@ -220,8 +234,8 @@ export const CreateMatrix = () => {
 
         <Views.ViewBoard>
           <Mui.Stack spacing={3}>
-            {dataNumber ? (
-              dataNumber?.map((data, i) => {
+            {dataNumber.data ? (
+              dataNumber.data?.map((data, i) => {
                 return <Eui.EuiMatrix data={data} />;
               })
             ) : (

@@ -35,6 +35,18 @@ export const LoginPage = () => {
     "Tên đăng nhập và mật khẩu chưa chính xác"
   );
 
+  React.useEffect(() => {
+    if (window.localStorage.getItem("token")) {
+      dispatch(
+        Slide.authSlide.setAuth({
+          username: "admin",
+          roles: ["ADMIN"],
+        })
+      );
+      return navigate(from, { replace: true });
+    } else return;
+  }, [from, navigate, dispatch]);
+
   class Func {
     handleChange(e) {
       setAuthInput({ ...authInput, [e.target.name]: e.target.value });
@@ -48,6 +60,8 @@ export const LoginPage = () => {
           authInput.password
         );
         handleSnack.add("");
+
+        window.localStorage.setItem("token", res.token);
         dispatch(
           Slide.authSlide.setAuth({
             username: "admin",
