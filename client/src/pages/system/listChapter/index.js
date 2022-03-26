@@ -14,6 +14,12 @@ export const PageSystemListChapter = () => {
     subjectId: null,
   });
 
+  const [addingData, setAddingData] = React.useState({
+    chapterName: "",
+    classId: null,
+    subjectId: null,
+  });
+
   const [subject, setSubject] = React.useState(null);
   const [chapter, setChapter] = React.useState(null);
 
@@ -94,7 +100,12 @@ export const PageSystemListChapter = () => {
       console.log(search);
     };
 
+    handleInput = (e)=>{
+      setAddingData({...addingData, [e.target.name]: e.target.value})
+    }
+
     handleSearch = () => {
+      console.log("thuc hien search nay")
       Function.handler
         .api(() =>
           Api.chapterApi.search(
@@ -110,10 +121,10 @@ export const PageSystemListChapter = () => {
     };
 
     handleAdd = () => {
-      if (search.chapterName && search.subjectId) {
+      if (addingData.chapterName && addingData.subjectId) {
         Function.handler
           .api(() =>
-            Api.chapterApi.add(search.subjectId, search.chapterName, "code", [])
+            Api.chapterApi.add(addingData.subjectId, addingData.chapterName, "code", [])
           )
           .then((res) => {
             console.log(res);
@@ -175,21 +186,21 @@ export const PageSystemListChapter = () => {
         <Ex.ExInputWrapper.Basic
           label={"Tên chủ đề:"}
           name={"chapterName"}
-          onChange={func.handleChange}
+          onChange={func.handleInput}
         />
         <Mui.Divider />
         <Ex.ExInputWrapper.Select
           label={"Chọn lớp:"}
           name={"classId"}
           data={reduxClass?.data}
-          onChange={func.handleChange}
+          onChange={func.handleInput}
         />
         <Mui.Divider />
         <Ex.ExInputWrapper.Select
           label={"Chọn môn:"}
           name={"subjectId"}
           data={subject?.data}
-          onChange={func.handleChange}
+          onChange={func.handleInput}
         />
       </Ex.ExModalPoppup.Create>
 
