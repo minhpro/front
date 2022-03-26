@@ -91,6 +91,13 @@ export const ListQuestion = () => {
         .catch((error) => console.log(error));
       handleOpenDelete.close();
     };
+    handleCloseSnack = () => {
+      setSnack({
+        isOpen: false,
+        message: "",
+        severity: null,
+      });
+    };
   }
 
   const func = new Func();

@@ -79,7 +79,7 @@ export const TypeTime = () => {
       e.preventDefault();
 
       Function.handler
-        .api(() => Api.testTimeApi.add(data.timeType))
+        .api(() => Api.testTimeApi.add(data.timeType, data.des))
         .then((res) => {
           handleSnack.add(res.id);
           handleOpenNew.close();
@@ -96,6 +96,16 @@ export const TypeTime = () => {
 
       handleOpenDelete.close();
     };
+
+    convertSecondToTimeWithUnit(value) {
+      if (value % 3600 == 0) {
+        return value / 3600 + " giờ";
+      } else if (value % 60 == 0) {
+        return value / 60 + " phút";
+      } else {
+        return value + " giây";
+      }
+    }
   }
 
   const func = new Func();
@@ -179,10 +189,10 @@ export const TypeTime = () => {
                     {i + 1}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {row.time || "time"}
+                    {func.convertSecondToTimeWithUnit(row.time || 0)}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {row.des || "mo ta"}
+                    {row.description || ""}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     <Ex.ExIconEditDelete

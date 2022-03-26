@@ -61,7 +61,7 @@ export const TypeExam = () => {
     onSubmit = (e) => {
       e.preventDefault();
       Function.handler
-        .api(() => Api.testTypeApi.add(data.typeExam))
+        .api(() => Api.testTypeApi.add(data.typeExam, data.des))
         .then((res) => {
           handleSnack.add(res.id);
           handleOpenNew.close();
@@ -162,7 +162,7 @@ export const TypeExam = () => {
                     {row.name || "name"}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {row.des || "mo ta"}
+                    {row.description || ""}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     <Ex.ExIconEditDelete

@@ -52,6 +52,7 @@ export const AddEssayQuestion = () => {
 
     onSubmit = () => {
       let data = {
+        name: search.questionName,
         question: question.question,
         suggest: question.suggest,
         time: search.timeAnswer,

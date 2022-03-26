@@ -57,7 +57,7 @@ export const TypeQuestion = () => {
       setDeleteId(id);
     }
 
-    update = () => {
+    handleSearch = () => {
       Function.handler
         .api(() => Api.questionTypeApi.search())
         .then((res) => {
@@ -73,7 +73,7 @@ export const TypeQuestion = () => {
     onSubmit = (e) => {
       e.preventDefault();
       Function.handler
-        .api(() => Api.questionTypeApi.add(data.TypeQuestion))
+        .api(() => Api.questionTypeApi.add(data.TypeQuestion, data.des))
         .then((res) => {
           handleSnack.add(res.id);
           handleOpenNew.close();
@@ -96,7 +96,7 @@ export const TypeQuestion = () => {
   const func = new Func();
 
   React.useEffect(() => {
-    func.update();
+    func.handleSearch();
   }, [snack]);
   return (
     <>
@@ -176,7 +176,7 @@ export const TypeQuestion = () => {
                     {row.name || "code"}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {row.des || "name class"}
+                    {row.description || ""}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     <Ex.ExIconEditDelete
