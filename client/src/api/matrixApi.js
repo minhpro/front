@@ -4,10 +4,11 @@ class MatrixApi {
   constructor() {
     this.api = "test-matrix/";
   }
-  search = (keyword, page, limit) => {
+  search = (keyword, subjectId, page, limit) => {
     const url = `${this.api}search`;
     const body = {
       keyword: keyword,
+      subjectId: subjectId,
       page: page || 1,
       limit: limit || 32,
     };

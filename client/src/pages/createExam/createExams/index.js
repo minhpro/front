@@ -3,6 +3,6 @@ import * as Views from "views";
 
 export const CreateExams = () => {
   return (
-    <Views.ViewContent title={"Quan ly de thi"}>CreateExam</Views.ViewContent>
+    <Views.ViewContent title={"Tạo đề thi mới"}>CreateExam</Views.ViewContent>
   );
 };

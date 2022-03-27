@@ -139,9 +139,9 @@ ExDataSelect.Matrix = function Matrix({ id, ...rest }) {
   const [matrix, setMatrix] = React.useState(null);
   // life cirle
   React.useEffect(() => {
-    if (!id) {
+    if (id) {
       Function.handler
-        .api(() => Api.matrixApi.search())
+        .api(() => Api.matrixApi.search("", id))
         .then((res) => {
           console.log(res);
           setMatrix(res);

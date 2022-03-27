@@ -65,6 +65,7 @@ export const CreateMatrix = () => {
         questionSource: "EBD",
         time: 123,
         questionDistributions: [],
+        subjectId: search.subjectId,
       };
 
       for (let i = 0; i < dataNumber.data.length; i++) {

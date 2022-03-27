@@ -6,6 +6,8 @@ import * as Ex from "Example";
 import * as Function from "functions";
 import * as Api from "api";
 import { Link } from "react-router-dom";
+import * as Class from "Class";
+import { ViewCreateExam } from "./view/ViewCreateExam";
 
 export const OrganExam = () => {
   const [pages, setPages] = React.useState({
@@ -14,7 +16,7 @@ export const OrganExam = () => {
     total: 10,
     limit: 32,
   });
-  const [open, setIsOpen] = React.useState(false);
+
   const [search, setSearch] = React.useState({
     examTypeId: null,
     classId: null,
@@ -24,9 +26,45 @@ export const OrganExam = () => {
     testCode: "",
   });
 
-  const [matrix, setMatrix] = React.useState(null);
+  const [open, setIsOpen] = React.useState(false);
+  const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
+
+  const [deleteId, setDeleteId] = React.useState(null);
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
+  });
+
+  // class
+
+  const handleSnack = new Class.HandleSnack(setSnack);
+  handleSnack.setMessage(
+    "Đã thêm đề thi mới ",
+    "Đã xoá chủ đề, id: ",
+    "Lỗi hệ thống, chưa thể thêm đề thi mới"
+  );
+
+  const handleOpenNew = new Class.HandlePopup(
+    setIsOpen,
+    "",
+    "Thêm mới thời gian làm bài"
+  );
+
+  const handleOpenDelete = new Class.HandlePopup(
+    setIsDeleteOpen,
+    "",
+    "Xác nhận xoá?"
+  );
   //   function
   class Func {
+    handlePagination(event, value) {
+      console.log(value);
+      setPages({ ...pages, page: value });
+    }
+    getTotalPage(total) {
+      return total / pages.limit + 1;
+    }
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });
       console.log(search);
@@ -34,10 +72,24 @@ export const OrganExam = () => {
 
     handleSearch = () => {
       Function.handler
-        .api(() => Api.examApi.search())
+        .api(() =>
+          Api.examApi.search(
+            search.testName,
+            search.examTypeId,
+            search.testMatrixId,
+            search.classId,
+            search.subjectId,
+            pages.page,
+            pages.limit
+          )
+        )
         .then((res) => {
           console.log(res);
-          setMatrix(res);
+          setPages({
+            ...pages,
+            data: res.data,
+            total: this.getTotalPage(res.total),
+          });
         })
         .catch((error) => console.log(error));
     };
@@ -84,6 +136,31 @@ export const OrganExam = () => {
   }, []);
   return (
     <Views.ViewContent title={"Quản lý đề thi"}>
+      {/* thong bao */}
+      <Eui.EuiSnackbar
+        open={snack.isOpen}
+        handleClose={() => handleSnack.close()}
+        message={snack.message}
+        severity={snack.severity}
+      />
+      {/* popup */}
+      <Ex.ExModalPoppup.Delete
+        open={isDeteteOpen}
+        handleClose={() => handleOpenDelete.close()}
+        handleDelete={func.onDelete}
+      />
+      <Eui.EuiModal.Title
+        open={open}
+        handleClose={() => handleOpenNew.close()}
+        title={"Tạo đề thi mới"}
+      >
+        <ViewCreateExam
+          handleClose={() => handleOpenNew.close()}
+          handleSnack={() => handleSnack.add("")}
+          handleError={() => handleSnack.error("")}
+        />
+      </Eui.EuiModal.Title>
+
       <Mui.Stack spacing={0.5}>
         {/* nav */}
         <Views.ViewBoard>
@@ -98,15 +175,21 @@ export const OrganExam = () => {
             <Item>
               <Mui.Grid container columnSpacing={5}>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Class />
+                  <Ex.ExDataSelect.Class onChange={func.handleChange} />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Subject />
+                  <Ex.ExDataSelect.Subject
+                    id={search.classId}
+                    onChange={func.handleChange}
+                  />
                 </Mui.Grid>
               </Mui.Grid>
             </Item>
             <Item>
-              <Ex.ExDataSelect.Matrix />
+              <Ex.ExDataSelect.Matrix
+                id={search.subjectId}
+                onChange={func.handleChange}
+              />
             </Item>
             <Item>
               <Mui.Grid container columnSpacing={5}>
@@ -130,29 +213,34 @@ export const OrganExam = () => {
             borderTop={"solid 1px"}
             borderColor={"red"}
           >
-            <Eui.EuiButton.Progress name={"Tim kiem"} />
-            <Link to={"/tao-de-thi-moi"}>
-              <Eui.EuiButton.Progress name={"Tao moi"} />
-            </Link>
+            <Eui.EuiButton.Progress
+              name={"Tim kiem"}
+              onClick={func.handleSearch}
+            />
+
+            <Eui.EuiButton.Progress
+              name={"Tao moi"}
+              onClick={() => handleOpenNew.open()}
+            />
           </Mui.Stack>
         </Views.ViewBoard>
 
         <Views.ViewBoard>
           <Eui.EuiTable dataColumn={dataColumn}>
-            {matrix
-              ? matrix?.data.map((row, i) => (
+            {pages.data
+              ? pages.data?.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {i + 1}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.id}
+                      {row.code}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.name || "name class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      dang de
+                      Ma tran de thi{" "}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       lop
@@ -170,6 +258,15 @@ export const OrganExam = () => {
                 ))
               : null}
           </Eui.EuiTable>
+          <Eui.EuiPagination
+            count={pages.total}
+            defaultPage={1}
+            siblingCount={0}
+            boundaryCount={2}
+            size={"large"}
+            shape={"rounded"}
+            onChange={func.handlePagination}
+          />
         </Views.ViewBoard>
       </Mui.Stack>
     </Views.ViewContent>
@@ -198,7 +295,7 @@ const dataColumn = [
     width: 200,
   },
   {
-    name: "Dạng đề",
+    name: "Ma trận đề thi",
     width: 200,
   },
   {
