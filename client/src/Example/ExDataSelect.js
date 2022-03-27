@@ -141,7 +141,12 @@ ExDataSelect.Matrix = function Matrix({ id, ...rest }) {
   React.useEffect(() => {
     if (id) {
       Function.handler
-        .api(() => Api.matrixApi.search("", id))
+        .api(() =>
+          Api.matrixApi.search({
+            keyword: "",
+            subjectId: id,
+          })
+        )
         .then((res) => {
           console.log(res);
           setMatrix(res);
