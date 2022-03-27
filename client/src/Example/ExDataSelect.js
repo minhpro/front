@@ -37,8 +37,8 @@ ExDataSelect.ExamType = function ExamType({ ...rest }) {
 };
 
 ExDataSelect.Subject = function Subject({ id, ...rest }) {
+  // redux
   const [subject, setSubject] = React.useState(null);
-  // life cirle
   React.useEffect(() => {
     if (id) {
       Function.handler

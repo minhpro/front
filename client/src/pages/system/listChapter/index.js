@@ -105,7 +105,7 @@ export const PageSystemListChapter = () => {
 
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });
-      console.log(search);
+      console.log(e.target.value);
     };
 
     handleInput = (e) => {
