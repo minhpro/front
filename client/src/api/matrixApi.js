@@ -1,30 +1,36 @@
 import axiosClient from "./axiosClient";
 
 class MatrixApi {
-  constructor() {
-    this.api = "test-matrix/";
-  }
-  search = (keyword, subjectId, page, limit) => {
-    const url = `${this.api}search`;
-    const body = {
-      keyword: keyword,
-      subjectId: subjectId,
-      page: page || 1,
-      limit: limit || 32,
+    constructor() {
+        this.api = "test-matrix/";
+    }
+
+    search = (data) => {
+        const url = `${this.api}search`;
+        return axiosClient.post(url, data);
     };
-    return axiosClient.post(url, body);
-  };
-  delete = (id) => {
-    const url = `${this.api}delete`;
-    const body = { id: id };
-    return axiosClient.post(url, body);
-  };
+    delete = async (id) => {
+        try {
+            const url = `${this.api}delete`;
+            const body = {id: id};
+            return await axiosClient.post(url, body);
+        } catch (error) {
+            return Promise.reject(error?.response?.data)
+        }
 
-  add = (data) => {
-    const url = `${this.api}add`;
+    };
 
-    return axiosClient.post(url, data);
-  };
+    add = async (data) => {
+        try {
+            const url = `${this.api}add`;
+            return await axiosClient.post(url, data);
+        } catch (error) {
+            console.log("erorr day nay")
+            console.log(error?.response?.data)
+            return Promise.reject(error?.response?.data);
+        }
+
+    };
 }
 
 const matrixApi = new MatrixApi();
