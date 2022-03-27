@@ -161,20 +161,28 @@ export const AddEssayQuestion = () => {
               />
             </Item>
             <Item>
-              <Ex.ExDataSelect.Units
-                required
-                id={search.chapterId}
-                onChange={func.handleChange}
-              />
+              <Mui.Grid container columnSpacing={2}>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.Units
+                    required
+                    id={search.chapterId}
+                    onChange={func.handleChange}
+                  />
+                </Mui.Grid>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.Require
+                    required
+                    id={search.unitId}
+                    onChange={func.handleChange}
+                  />
+                </Mui.Grid>
+              </Mui.Grid>
             </Item>
+
             <Item>
               <Mui.Grid container columnSpacing={2}>
                 <Mui.Grid item xs={6}>
-                  {" "}
-                  <Ex.ExDataSelect.Bank
-                    onChange={func.handleChange}
-                    // onChange={(e) => setSearch({ ...search, targets: e })}
-                  />
+                  <Ex.ExDataSelect.Bank onChange={func.handleChange} />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.TypeQuestion
@@ -190,23 +198,8 @@ export const AddEssayQuestion = () => {
                 onChange={(e) => setSearch({ ...search, targets: e })}
               />
             </Item>
-
             <Item>
-              <Mui.Grid container columnSpacing={2}>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Classify
-                    required
-                    onChange={func.handleChange}
-                  />
-                </Mui.Grid>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Require
-                    required
-                    id={search.unitId}
-                    onChange={func.handleChange}
-                  />
-                </Mui.Grid>
-              </Mui.Grid>
+              <Ex.ExDataSelect.Classify required onChange={func.handleChange} />
             </Item>
             <Item>
               <Mui.Grid container columnSpacing={2}>
@@ -221,6 +214,7 @@ export const AddEssayQuestion = () => {
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.TimeType
+                    label={"Loại thời gian"}
                     onChange={func.handleChange}
                     required
                   />

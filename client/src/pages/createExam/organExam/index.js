@@ -8,24 +8,25 @@ import * as Api from "api";
 import { Link } from "react-router-dom";
 
 export const OrganExam = () => {
+  const [pages, setPages] = React.useState({
+    data: null,
+    page: 1,
+    total: 10,
+    limit: 32,
+  });
   const [open, setIsOpen] = React.useState(false);
   const [search, setSearch] = React.useState({
-    chapterId: null,
+    examTypeId: null,
     classId: null,
     subjectId: null,
-    unitName: "",
+    testName: "",
+    testMatrixId: null,
+    testCode: "",
   });
 
   const [matrix, setMatrix] = React.useState(null);
   //   function
   class Func {
-    constructor() {
-      this.message = {
-        delete: "da xoa dang de, id:",
-        null: "chua nhap ten dang de",
-        add: "da them dang de, id: ",
-      };
-    }
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });
       console.log(search);
@@ -90,7 +91,7 @@ export const OrganExam = () => {
             <Item>
               <Ex.ExInputWrapper.Basic
                 label={"Tên đề thi:"}
-                name={"matrixName"}
+                name={"testName"}
                 onChange={func.handleChange}
               />
             </Item>
@@ -110,13 +111,17 @@ export const OrganExam = () => {
             <Item>
               <Mui.Grid container columnSpacing={5}>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Class />
+                  <Ex.ExDataSelect.ExamType />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Subject />
+                  <Ex.ExInputWrapper.Basic
+                    label={"Mã đề thi:"}
+                    name={"testCode"}
+                    onChange={func.handleChange}
+                  />
                 </Mui.Grid>
               </Mui.Grid>
-            </Item >
+            </Item>
           </Mui.Grid>
           <Mui.Stack
             direction={"row"}
