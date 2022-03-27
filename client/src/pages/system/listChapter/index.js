@@ -208,18 +208,14 @@ export const PageSystemListChapter = () => {
           onChange={func.handleInput}
         />
         <Mui.Divider />
-        <Ex.ExInputWrapper.Select
-          label={"Chọn lớp:"}
-          name={"classId"}
-          data={reduxClass?.data}
-          onChange={func.handleInput}
-        />
+
+        <Ex.ExDataSelect.Class onChange={func.handleInput} required />
+
         <Mui.Divider />
-        <Ex.ExInputWrapper.Select
-          label={"Chọn môn:"}
-          name={"subjectId"}
-          data={subject?.data}
+        <Ex.ExDataSelect.Subject
+          id={addingData.classId}
           onChange={func.handleInput}
+          required
         />
       </Ex.ExModalPoppup.Create>
 
