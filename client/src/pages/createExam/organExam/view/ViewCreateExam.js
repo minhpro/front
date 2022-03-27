@@ -34,8 +34,10 @@ export const ViewCreateExam = ({ handleClose, handleSnack, handleError }) => {
         console.log(res);
         handleSnack();
         handleClose();
-      } catch (error) {}
-      handleError();
+      } catch (error) {
+        handleError();
+      }
+
       console.log(search);
     };
   }

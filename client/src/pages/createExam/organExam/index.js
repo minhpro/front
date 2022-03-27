@@ -133,7 +133,7 @@ export const OrganExam = () => {
   const func = new Func();
   React.useEffect(() => {
     func.handleSearch();
-  }, []);
+  }, [snack]);
   return (
     <Views.ViewContent title={"Quản lý đề thi"}>
       {/* thong bao */}
