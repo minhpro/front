@@ -109,6 +109,8 @@ export const PageSystemListUnit = () => {
         .api(() =>
           Api.unitApi.search(
             search.chapterId,
+            search.subjectId,
+            search.classId,
             search.unitName,
             pages.page,
             pages.limit

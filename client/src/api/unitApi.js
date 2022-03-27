@@ -4,13 +4,15 @@ class UnitApi {
   constructor() {
     this.api = "unit/";
   }
-  search = (chapterId, keyword, page, limit) => {
+  search = (chapterId, subjectId, classId, keyword, page, limit) => {
     const url = `${this.api}search`;
     const body = {
       keyword: keyword,
       page: page || 1,
       limit: limit || 32,
       chapterId: chapterId,
+      subjectId: subjectId,
+      classId: classId
     };
     return axiosClient.post(url, body);
   };
