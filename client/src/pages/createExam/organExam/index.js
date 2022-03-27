@@ -240,13 +240,13 @@ export const OrganExam = () => {
                       {row.name || "name class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      Ma tran de thi{" "}
+                      {row?.testMatrixData?.name}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      lop
+                      {row?.testMatrixData?.subjectData?.classs?.name}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      mon
+                      {row?.testMatrixData?.subjectData?.name}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete
