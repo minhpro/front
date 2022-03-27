@@ -6,6 +6,7 @@ import { EuiInput } from "./EuiInput";
 import { EuiMatrix } from "./EuiMatrix";
 import { EuiSnackbar } from "./EuiSnackbar";
 import { EuiPagination } from "./EuiPagination";
+import EuiMultiSelect from "./EuiMultiSelect";
 
 export {
   EuiNavMenu,
@@ -16,4 +17,5 @@ export {
   EuiMatrix,
   EuiSnackbar,
   EuiPagination,
+  EuiMultiSelect,
 };

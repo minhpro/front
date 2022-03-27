@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import * as Mui from "@mui/material";
 
-import { EuiInput } from "components/Eui";
+import { EuiInput, EuiMultiSelect } from "components/Eui";
 import React from "react";
 import { SuiRichTextEditor } from "components/Sui";
 
@@ -73,4 +73,15 @@ const Style = {
       transform: translateY(-6px);
     }
   `,
+};
+
+ExInputWrapper.MultiSelect = function ({ name, label, required, ...rest }) {
+  return (
+    <Mui.Stack spacing={0.5}>
+      <Style.Label for={name}>
+        {label} <span> {required ? "*" : null}</span>
+      </Style.Label>
+      <EuiMultiSelect {...rest} />
+    </Mui.Stack>
+  );
 };

@@ -7,6 +7,7 @@ import * as Class from "Class";
 import * as Function from "functions";
 import * as Api from "api";
 import * as View from "./view";
+import { Link } from "react-router-dom";
 
 export const ListQuestion = () => {
   // redux
@@ -111,17 +112,10 @@ export const ListQuestion = () => {
       Function.handler
         .api(() => Api.questionApi.delete(deleteId))
         .then((res) => {
-          handleSnack.delete(res.id);
+          handleSnack.delete("");
         })
         .catch((error) => console.log(error));
       handleOpenDelete.close();
-    };
-    handleCloseSnack = () => {
-      setSnack({
-        isOpen: false,
-        message: "",
-        severity: null,
-      });
     };
   }
 
@@ -129,7 +123,7 @@ export const ListQuestion = () => {
 
   React.useEffect(() => {
     func.handleSearch();
-  }, [pages.page]);
+  }, [pages.page, snack]);
 
   return (
     <Views.ViewContent title={"Danh sách câu hỏi"}>
@@ -206,11 +200,25 @@ export const ListQuestion = () => {
               pt={2}
               borderColor={"primary.main"}
               borderTop={"solid 2px"}
+              direction={"row"}
+              spacing={2}
             >
               <Eui.EuiButton.Progress
                 name={"Tìm kiếm"}
                 onClick={func.handleSearch}
               />
+              <Link to="/them-cau-tu-luan-EBD">
+                <Eui.EuiButton.Progress
+                  name={"Thêm mới câu tự luận"}
+                  onClick={func.handleSearch}
+                />
+              </Link>
+              <Link to={"/them-cau-trac-nghiem-EDB"}>
+                <Eui.EuiButton.Progress
+                  name={"Thêm mới câu trắc nghiệm"}
+                  onClick={func.handleSearch}
+                />
+              </Link>
             </Mui.Stack>
           </Mui.Stack>
         </Views.ViewBoard>

@@ -17,6 +17,10 @@ export const AddMultiQuestion = () => {
     typeQuestionId: null,
     questionName: "",
     timeAnswer: 1,
+    requirementId: null,
+    classification: "THEORY",
+    targets: [],
+    bank: "EDB",
   });
 
   const [question, setQuestion] = React.useState({
@@ -58,6 +62,9 @@ export const AddMultiQuestion = () => {
         questionTypeId: search.typeQuestionId,
         unitId: search.unitId,
         type: "MultiChoice",
+        requirementId: search.requirementId,
+        classification: search.classification,
+        targets: search.targets,
         answer: question.answer,
         answerOne: question.answerOne,
         answerTwo: question.answerTwo,
@@ -165,14 +172,39 @@ export const AddMultiQuestion = () => {
             <Item>
               <Mui.Grid container columnSpacing={2}>
                 <Mui.Grid item xs={6}>
+                  {" "}
+                  <Ex.ExDataSelect.Bank
+                    onChange={func.handleChange}
+                    // onChange={(e) => setSearch({ ...search, targets: e })}
+                  />
+                </Mui.Grid>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.TypeQuestion
+                    required
+                    onChange={func.handleChange}
+                  />
+                </Mui.Grid>
+              </Mui.Grid>
+            </Item>
+            <Item>
+              <Ex.ExInputWrapper.MultiSelect
+                label={"Mục tiêu ma trận:"}
+                onChange={(e) => setSearch({ ...search, targets: e })}
+              />
+            </Item>
+
+            <Item>
+              <Mui.Grid container columnSpacing={2}>
+                <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Classify
                     required
                     onChange={func.handleChange}
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.TypeQuestion
+                  <Ex.ExDataSelect.Require
                     required
+                    id={search.unitId}
                     onChange={func.handleChange}
                   />
                 </Mui.Grid>
@@ -190,7 +222,10 @@ export const AddMultiQuestion = () => {
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.TimeType required />
+                  <Ex.ExDataSelect.TimeType
+                    onChange={func.handleChange}
+                    required
+                  />
                 </Mui.Grid>
               </Mui.Grid>
             </Item>
@@ -321,7 +356,7 @@ export const AddMultiQuestion = () => {
 
 const Item = ({ children }) => {
   return (
-    <Mui.Grid item xs={12} lg={6}>
+    <Mui.Grid item xs={12} xl={6}>
       {children}
     </Mui.Grid>
   );

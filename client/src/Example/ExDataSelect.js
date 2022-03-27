@@ -111,6 +111,30 @@ ExDataSelect.Units = function Units({ id, ...rest }) {
   );
 };
 
+ExDataSelect.Require = function Require({ id, ...rest }) {
+  const [data, setData] = React.useState(null);
+  // life cirle
+  React.useEffect(() => {
+    if (id) {
+      Function.handler
+        .api(() => Api.unitApi.detail(id))
+        .then((res) => {
+          setData(res);
+        })
+        .catch((error) => console.log(error));
+    } else setData(null);
+  }, [id]);
+
+  return (
+    <Ex.ExInputWrapper.Select
+      label={"Chọn yêu cầu kiến thức:"}
+      name={"requirementId"}
+      data={data?.requirementData}
+      {...rest}
+    />
+  );
+};
+
 ExDataSelect.Matrix = function Matrix({ id, ...rest }) {
   const [matrix, setMatrix] = React.useState(null);
   // life cirle
@@ -124,7 +148,7 @@ ExDataSelect.Matrix = function Matrix({ id, ...rest }) {
         })
         .catch((error) => console.log(error));
     } else setMatrix(null);
-  }, []);
+  }, [id]);
 
   return (
     <Ex.ExInputWrapper.Select
@@ -139,19 +163,43 @@ ExDataSelect.Matrix = function Matrix({ id, ...rest }) {
 ExDataSelect.Classify = function Classify({ ...rest }) {
   const data = [
     {
-      id: 0,
-      name: "Ly thuyet",
+      id: "THEORY",
+      name: "Lý thuyết",
     },
     {
-      id: 1,
-      name: "Bai tap",
+      id: "WORKING",
+      name: "Bài tập",
     },
   ];
 
   return (
     <Ex.ExInputWrapper.Select
       label={"Chọn loại câu hỏi:"}
-      name={"classifyId"}
+      name={"classification"}
+      defautValue={data[0].id}
+      data={data}
+      {...rest}
+    />
+  );
+};
+
+ExDataSelect.Bank = function Bank({ ...rest }) {
+  const data = [
+    {
+      id: "EDB",
+      name: "EBD",
+    },
+    {
+      id: "PERSON",
+      name: "Cá nhân",
+    },
+  ];
+
+  return (
+    <Ex.ExInputWrapper.Select
+      label={"Chọn ngân hàng câu hỏi:"}
+      name={"bank"}
+      defautValue={data[0].id}
       data={data}
       {...rest}
     />
