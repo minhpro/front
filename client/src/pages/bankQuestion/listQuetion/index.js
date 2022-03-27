@@ -94,6 +94,9 @@ export const ListQuestion = () => {
         .api(() =>
           Api.questionApi.search(
             search.unitId,
+            search.chapterId,
+            search.subjectId,
+            search.classId,
             search.questionName,
             null,
             pages.page,
@@ -235,11 +238,11 @@ export const ListQuestion = () => {
                       {row?.code || "code"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row?.unitData?.chapterData?.subjectData?.classs?.name ||
+                      {row?.requirementData?.unitData?.chapterData?.subjectData?.classs?.name ||
                         "name class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.unitData?.chapterData?.subjectData?.name ||
+                      {row.requirementData?.unitData?.chapterData?.subjectData?.name ||
                         "list class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">

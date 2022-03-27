@@ -4,10 +4,13 @@ class QuestionApi {
   constructor() {
     this.api = "question/";
   }
-  search = (unitId, keyword, type, page, limit) => {
+  search = (unitId, chapterId, subjectId, classId, keyword, type, page, limit) => {
     const url = `${this.api}search`;
     const body = {
       unitId: unitId,
+      chapterId: chapterId,
+      subjectId: subjectId,
+      classId: classId,
       keyword: keyword,
       page: page || 1,
       limit: limit || 32,
