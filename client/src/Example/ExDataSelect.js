@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import * as Function from "functions";
 import * as Api from "api";
 import * as Ex from "./ExInputWrapper";
+import * as Contants from "assets/contants";
 
 export const ExDataSelect = () => {
   return <div>ExDataSelect</div>;
@@ -206,6 +207,18 @@ ExDataSelect.Bank = function Bank({ ...rest }) {
       name={"bank"}
       defautValue={data[0].id}
       data={data}
+      {...rest}
+    />
+  );
+};
+
+ExDataSelect.Score = function Score({ ...rest }) {
+  return (
+    <Ex.ExInputWrapper.Select
+      label={"Cách tính điểm:"}
+      name={"scoreId"}
+      defautValue={Contants.scoreData[0].id}
+      data={Contants.scoreData}
       {...rest}
     />
   );

@@ -8,6 +8,7 @@ import * as Api from "api";
 import { Link } from "react-router-dom";
 import * as Class from "Class";
 import { ViewCreateExam } from "./view/ViewCreateExam";
+import { ViewExam } from "./view/ViewExam";
 
 export const OrganExam = () => {
   const [pages, setPages] = React.useState({
@@ -26,6 +27,7 @@ export const OrganExam = () => {
     testCode: "",
   });
 
+  const [isView, setIsView] = React.useState(false);
   const [open, setIsOpen] = React.useState(false);
   const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
 
@@ -41,7 +43,7 @@ export const OrganExam = () => {
   const handleSnack = new Class.HandleSnack(setSnack);
   handleSnack.setMessage(
     "Đã thêm đề thi mới ",
-    "Đã xoá chủ đề, id: ",
+    "Đã xoá đề thi, id: ",
     "Lỗi hệ thống, chưa thể thêm đề thi mới"
   );
 
@@ -50,6 +52,8 @@ export const OrganExam = () => {
     "",
     "Thêm mới thời gian làm bài"
   );
+
+  const handleOpenView = new Class.HandlePopup(setIsView, "", "Chi tiees ");
 
   const handleOpenDelete = new Class.HandlePopup(
     setIsDeleteOpen,
@@ -109,25 +113,25 @@ export const OrganExam = () => {
       e.preventDefault();
       console.log("submit");
     };
-    onDelete = (id) => {
+    onDelete = () => {
       Function.handler
-        .api(() => Api.examApi.delete(id))
+        .api(() => Api.examApi.delete(deleteId))
         .then((res) => {
           console.log(res);
+          handleSnack.delete(res.id);
         })
         .catch((error) => console.log(error));
+      handleOpenDelete.close();
     };
 
-    onEdit = (e) => {
-      console.log("submit");
-    };
-
-    handleClose = () => {
-      setIsOpen(false);
-    };
-    handleOpen = () => {
-      setIsOpen(true);
-    };
+    onOpenDelete(id) {
+      handleOpenDelete.open();
+      setDeleteId(id);
+    }
+    onOpenView(id) {
+      handleOpenView.open();
+      setDeleteId(id);
+    }
   }
 
   const func = new Func();
@@ -159,6 +163,14 @@ export const OrganExam = () => {
           handleSnack={() => handleSnack.add("")}
           handleError={() => handleSnack.error("")}
         />
+      </Eui.EuiModal.Title>
+
+      <Eui.EuiModal.Title
+        open={isView}
+        handleClose={() => handleOpenView.close()}
+        title={"Chi tiết đề thi"}
+      >
+        <ViewExam id={deleteId} />
       </Eui.EuiModal.Title>
 
       <Mui.Stack spacing={0.5}>
@@ -249,9 +261,10 @@ export const OrganExam = () => {
                       {row?.testMatrixData?.subjectData?.name}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      <Ex.ExIconEditDelete
-                        onDelete={() => func.onDelete(row.id)}
+                      <Ex.ExIconEditDelete.View
+                        onDelete={() => func.onOpenDelete(row.id)}
                         onEdit={func.onEdit}
+                        onView={() => func.onOpenView(row.id)}
                       />
                     </Eui.EuiTable.StyledTableCell>
                   </Eui.EuiTable.StyledTableRow>

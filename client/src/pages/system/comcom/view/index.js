@@ -3,5 +3,5 @@ import { TypeTime } from "./typeTime";
 import { TypeQuestion } from "./typeQuestion";
 import { TypePercent } from "./typePercent";
 import { TypeSent } from "./typeSent";
-
-export { TypeExam, TypeTime, TypeQuestion, TypePercent, TypeSent };
+import { TypeScore } from "./typeScore";
+export { TypeExam, TypeTime, TypeQuestion, TypePercent, TypeSent, TypeScore };

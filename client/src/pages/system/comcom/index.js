@@ -19,7 +19,7 @@ export const PagesSystemComcom = () => {
         return <View.TypeQuestion />;
       case 3:
         // code block
-        return <div />;
+        return <View.TypeScore />;
       case 4:
         // code block
         return <View.TypePercent />;
