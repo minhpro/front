@@ -28,3 +28,13 @@ ExIconEditDelete.View = function ({ onEdit, onDelete, onView }) {
     </Stack>
   );
 };
+
+ExIconEditDelete.ViewOnly = function ({ onEdit, onDelete, onView }) {
+  return (
+    <Stack direction={"row"} justifyContent="center" spacing={1}>
+      <VisibilityIcon onClick={onView} sx={{ ...style }} />
+      {/* <ModeEditIcon onClick={onEdit} sx={{ ...style }} />
+      <DeleteIcon onClick={onDelete} sx={{ ...style }} /> */}
+    </Stack>
+  );
+};

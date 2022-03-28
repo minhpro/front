@@ -51,16 +51,14 @@ export const ViewExam = ({ id }) => {
                         <Eui.EuiTable.StyledTableCell align="center">
                           {row.code}
                         </Eui.EuiTable.StyledTableCell>
-                        <Eui.EuiTable.StyledTableCell align="center">
+                        <Eui.EuiTable.StyledTableCell align="left">
                           <div
                             dangerouslySetInnerHTML={{ __html: row.question }}
                           />
                         </Eui.EuiTable.StyledTableCell>
 
                         <Eui.EuiTable.StyledTableCell align="center">
-                          <Ex.ExIconEditDelete.View
-                            onDelete={() => func.onOpenDelete(row.id)}
-                            onEdit={func.onEdit}
+                          <Ex.ExIconEditDelete.ViewOnly
                             onView={() => func.onOpenView(row.id)}
                           />
                         </Eui.EuiTable.StyledTableCell>
@@ -101,6 +99,6 @@ const dataColumn = [
   },
   {
     name: "Thao tac",
-    width: 200,
+    width: 50,
   },
 ];
