@@ -6,33 +6,44 @@ import "katex/dist/katex.css";
 import CodeMirror from "codemirror";
 import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/lib/codemirror.css";
+import * as Api from "api";
+
+const api = "http://18.179.5.86:8080/api/file/upload";
 
 export const SuiRichTextEditor = ({ ...rest }) => {
-  const onImageUploadBefore = ({ files, info, core, uploadHandler }) => {
-    // Upload image to Server
+  // const handleImageUploadBefore = (files, info, uploadHandler) => {
+  //   let response = {};
 
-    const src = UploadToServer(files[0]);
+  //   response = {
+  //     result: {
+  //       url: "sadsad",
+  //       name: files[0].name,
+  //       size: files[0].size,
+  //     },
+  //   };
+  //   uploadHandler(response);
+  //   return undefined;
+  // };
 
-    // result
-    const response = {
-      // The response must have a "result" array.
-      result: [
-        {
-          url: src,
-          name: files[0].name,
-          size: files[0].size,
-        },
-      ],
-    };
+  const onImageUploadBefore = async (files, info, uploadHandler) => {
+    try {
+      let image = {
+        url: "ass",
+        name: files.name,
+        size: files.size,
+      };
 
-    console.log(files, info);
+      const response = {
+        result: image,
+      };
+      console.log(uploadHandler(response));
+      // uploadHandler(response);
+    } catch (err) {
+      uploadHandler(err.toString());
+    }
 
-    // uploadHandler(response);
+    return undefined;
   };
-
-  function UploadToServer() {
-    return "dsdd";
-  }
   return (
     <SunEditor
       autoFocus={false}

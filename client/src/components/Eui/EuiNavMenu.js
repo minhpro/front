@@ -9,10 +9,27 @@ import styled from "styled-components";
 
 export const EuiNavMenu = ({ data, icon }) => {
   const [open, setOpen] = React.useState(false);
+  const location = useLocation().pathname;
+  const pathnames = location.split("/").filter((x) => x);
 
   const handleClick = () => {
     setOpen(!open);
   };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  console.log("ads", pathnames[0], "sad");
+
+  React.useEffect(() => {
+    data.nav.forEach((nav) => {
+      if (nav.link === pathnames[0]) {
+        handleOpen();
+      }
+    });
+  }, []);
   return (
     <Mui.Stack>
       <EuiNavMenu.Parent

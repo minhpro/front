@@ -10,6 +10,7 @@ import questionApi from "./questionApi";
 import matrixApi from "./matrixApi";
 import examApi from "./examApi";
 import authApi from "./authApi";
+import uploadApi from "./uploadApi";
 
 export {
   testTypeApi,
@@ -24,4 +25,5 @@ export {
   matrixApi,
   examApi,
   authApi,
+  uploadApi,
 };
