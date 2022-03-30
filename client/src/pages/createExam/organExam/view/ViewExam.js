@@ -4,9 +4,19 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import * as Function from "functions";
 import * as Api from "api";
+import * as Class from "Class";
+import { ViewQuestion } from "pages/bankQuestion/listQuetion/view";
 
 export const ViewExam = ({ id }) => {
   const [data, setData] = React.useState(null);
+  const [questionId, setQuestionId] = React.useState(null);
+  const [open, setIsOpen] = React.useState(false);
+
+  const handleOpenNew = new Class.HandlePopup(
+    setIsOpen,
+    "",
+    "Thêm mới thời gian làm bài"
+  );
   class Func {
     async detail() {
       try {
@@ -14,6 +24,10 @@ export const ViewExam = ({ id }) => {
         console.log(res);
         setData(res);
       } catch (error) {}
+    }
+    onOpenView(id) {
+      setQuestionId(id);
+      handleOpenNew.open();
     }
   }
   React.useEffect(() => {
@@ -23,6 +37,12 @@ export const ViewExam = ({ id }) => {
   const func = new Func();
   return (
     <Mui.Stack>
+      <Ex.ExModalPoppup.ViewQuestion
+        open={open}
+        handleClose={() => handleOpenNew.close()}
+      >
+        <ViewQuestion id={questionId} />
+      </Ex.ExModalPoppup.ViewQuestion>
       {data ? (
         <Mui.Grid container rowSpacing={2}>
           <Item xs={12}>
@@ -40,7 +60,6 @@ export const ViewExam = ({ id }) => {
 
           <Item xs={12}>
             <Mui.Stack sx={{ overflowY: "hidden", height: 400 }}>
-              {" "}
               <Eui.EuiTable dataColumn={dataColumn}>
                 {data.questionData
                   ? data.questionData?.map((row, i) => (

@@ -200,28 +200,40 @@ export const PageSystemListUnit = () => {
               label={"Tên đơn vị kiến thức:"}
               name={"unitName"}
               onChange={func.handleChange}
+              placeholder={"Nhap ten don vi kien thuc"}
+              required
             />
             <Mui.Divider />
-            <Ex.ExDataSelect.Class onChange={func.handleChange} />
+            <Ex.ExDataSelect.Class
+              onChange={func.handleChange}
+              value={search.classId}
+              required
+            />
             <Mui.Divider />
             <Ex.ExDataSelect.Subject
               id={search.classId}
               onChange={func.handleChange}
+              value={search.subjectId}
+              required
             />
             <Mui.Divider />
             <Ex.ExDataSelect.Chapter
               id={search.subjectId}
               onChange={func.handleChange}
+              value={search.chapterId}
+              required
             />
           </Mui.Grid>
           <Mui.Grid item xs={12} md={6}>
             <Mui.Stack
               component={"form"}
               onSubmit={func.onSubmitAddRequirement}
+              placeholder={"Nhap yeu cau cua don vi kien thuc"}
             >
               <Ex.ExInputWrapper.Basic
                 label={"Thêm yêu cầu kiến thức:"}
                 name={"requireName"}
+                placeholder={"Them yeu cau don vi kien thuc"}
                 value={requirements.input}
                 onChange={(e) =>
                   setRequirements({ ...requirements, input: e.target.value })
@@ -249,18 +261,23 @@ export const PageSystemListUnit = () => {
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
-              <Ex.ExDataSelect.Class onChange={func.handleChange} />
+              <Ex.ExDataSelect.Class
+                onChange={func.handleChange}
+                value={search.classId}
+              />
             </Item>
             <Item>
               <Ex.ExDataSelect.Subject
                 id={search.classId}
                 onChange={func.handleChange}
+                value={search.subjectId}
               />
             </Item>
             <Item>
               <Ex.ExDataSelect.Chapter
                 id={search.subjectId}
                 onChange={func.handleChange}
+                value={search.chapterId}
               />
             </Item>
             <Item>
@@ -306,10 +323,10 @@ export const PageSystemListUnit = () => {
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.chapterData?.subjectData.name || "name class"}
                     </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
+                    <Eui.EuiTable.StyledTableCell align="left">
                       {row.chapterData?.name || "list class"}
                     </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
+                    <Eui.EuiTable.StyledTableCell align="left">
                       {row.name || "list class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
@@ -353,11 +370,11 @@ const dataColumn = [
   },
   {
     name: "Lớp",
-    width: 200,
+    width: 100,
   },
   {
     name: "Môn",
-    width: 200,
+    width: 100,
   },
   {
     name: "Chủ đề",
@@ -369,6 +386,6 @@ const dataColumn = [
   },
   {
     name: "Thao tác",
-    width: 200,
+    width: 100,
   },
 ];

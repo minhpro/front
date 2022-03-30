@@ -142,6 +142,7 @@ export const AddEssayQuestion = () => {
                   <Ex.ExDataSelect.Class
                     required
                     onChange={func.handleChange}
+                    value={search.classId}
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
@@ -149,6 +150,7 @@ export const AddEssayQuestion = () => {
                     required
                     id={search.classId}
                     onChange={func.handleChange}
+                    value={search.subjectId}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -158,6 +160,7 @@ export const AddEssayQuestion = () => {
                 required
                 id={search.subjectId}
                 onChange={func.handleChange}
+                value={search.chapterId}
               />
             </Item>
             <Item>
@@ -167,6 +170,7 @@ export const AddEssayQuestion = () => {
                     required
                     id={search.chapterId}
                     onChange={func.handleChange}
+                    value={search.unitId}
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
@@ -174,6 +178,7 @@ export const AddEssayQuestion = () => {
                     required
                     id={search.unitId}
                     onChange={func.handleChange}
+                    value={search.requirementId}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -182,12 +187,16 @@ export const AddEssayQuestion = () => {
             <Item>
               <Mui.Grid container columnSpacing={2}>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Bank onChange={func.handleChange} />
+                  <Ex.ExDataSelect.Bank
+                    onChange={func.handleChange}
+                    value={search.bank}
+                  />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.TypeQuestion
                     required
                     onChange={func.handleChange}
+                    value={search.typeQuestionId}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -196,10 +205,15 @@ export const AddEssayQuestion = () => {
               <Ex.ExInputWrapper.MultiSelect
                 label={"Mục tiêu ma trận:"}
                 onChange={(e) => setSearch({ ...search, targets: e })}
+                defaultValue={["ONLINE_REVIEW"]}
               />
             </Item>
             <Item>
-              <Ex.ExDataSelect.Classify required onChange={func.handleChange} />
+              <Ex.ExDataSelect.Classify
+                required
+                onChange={func.handleChange}
+                value={search.classification}
+              />
             </Item>
             <Item>
               <Mui.Grid container columnSpacing={2}>
@@ -229,20 +243,17 @@ export const AddEssayQuestion = () => {
             <Ex.ExInputWrapper.Editor
               label={"Câu hỏi:"}
               name={"ads"}
-              defaultValue={"Nhap cau hoi"}
               onChange={(e) => setQuestion((pre) => ({ ...pre, question: e }))}
               required
             />
             <Ex.ExInputWrapper.Editor
               label={"Đáp án đúng:"}
               name={"ads"}
-              defaultValue={"Nhap dap an dung"}
               onChange={(e) => setQuestion((pre) => ({ ...pre, answer: e }))}
             />
             <Ex.ExInputWrapper.Editor
               label={"Hướng dẫn giải:"}
               name={"ads"}
-              defaultValue={"Nhap huong dan giai"}
               onChange={(e) => setQuestion((pre) => ({ ...pre, suggest: e }))}
             />
 

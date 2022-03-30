@@ -205,16 +205,22 @@ export const PageSystemListChapter = () => {
         <Ex.ExInputWrapper.Basic
           label={"Tên chủ đề:"}
           name={"chapterName"}
+          required
           onChange={func.handleInput}
         />
         <Mui.Divider />
 
-        <Ex.ExDataSelect.Class onChange={func.handleInput} required />
+        <Ex.ExDataSelect.Class
+          onChange={func.handleInput}
+          required
+          value={addingData.classId}
+        />
 
         <Mui.Divider />
         <Ex.ExDataSelect.Subject
           id={addingData.classId}
           onChange={func.handleInput}
+          value={addingData.subjectId}
           required
         />
       </Ex.ExModalPoppup.Create>
@@ -235,6 +241,7 @@ export const PageSystemListChapter = () => {
                 name={"classId"}
                 data={reduxClass?.data}
                 onChange={func.handleChange}
+                placeHolder={"dsa"}
               />
             </Item>
             <Item>

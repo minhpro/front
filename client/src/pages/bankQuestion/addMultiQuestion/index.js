@@ -144,6 +144,7 @@ export const AddMultiQuestion = () => {
                   <Ex.ExDataSelect.Class
                     required
                     onChange={func.handleChange}
+                    value={search.classId}
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
@@ -151,6 +152,7 @@ export const AddMultiQuestion = () => {
                     required
                     id={search.classId}
                     onChange={func.handleChange}
+                    value={search.subjectId}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -160,6 +162,7 @@ export const AddMultiQuestion = () => {
                 required
                 id={search.subjectId}
                 onChange={func.handleChange}
+                value={search.chapterId}
               />
             </Item>
             <Item>
@@ -169,6 +172,7 @@ export const AddMultiQuestion = () => {
                     required
                     id={search.chapterId}
                     onChange={func.handleChange}
+                    value={search.unitId}
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
@@ -176,6 +180,7 @@ export const AddMultiQuestion = () => {
                     required
                     id={search.unitId}
                     onChange={func.handleChange}
+                    value={search.requirementId}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -184,12 +189,16 @@ export const AddMultiQuestion = () => {
             <Item>
               <Mui.Grid container columnSpacing={2}>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Bank onChange={func.handleChange} />
+                  <Ex.ExDataSelect.Bank
+                    onChange={func.handleChange}
+                    value={search.bank}
+                  />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.TypeQuestion
                     required
                     onChange={func.handleChange}
+                    value={search.typeQuestionId}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -198,10 +207,15 @@ export const AddMultiQuestion = () => {
               <Ex.ExInputWrapper.MultiSelect
                 label={"Mục tiêu ma trận:"}
                 onChange={(e) => setSearch({ ...search, targets: e })}
+                defaultValue={["ONLINE_REVIEW"]}
               />
             </Item>
             <Item>
-              <Ex.ExDataSelect.Classify required onChange={func.handleChange} />
+              <Ex.ExDataSelect.Classify
+                required
+                onChange={func.handleChange}
+                value={search.classification}
+              />
             </Item>
             <Item>
               <Mui.Grid container columnSpacing={2}>
@@ -231,32 +245,32 @@ export const AddMultiQuestion = () => {
             <Ex.ExInputWrapper.Editor
               label={"Câu hỏi:"}
               name={"ads"}
-              defaultValue={"Nhap cau hoi"}
+              placeholder="Nhập câu hỏi tại đây..."
               onChange={(e) => setQuestion((pre) => ({ ...pre, question: e }))}
               required
             />
             <Ex.ExInputWrapper.Editor
               label={"Hướng dẫn giải:"}
               name={"ads"}
-              defaultValue={"Nhap huong dan giai"}
+              placeholder="Nhập hướng dẫn giải tại đây..."
               onChange={(e) => setQuestion((pre) => ({ ...pre, suggest: e }))}
             />
             <Ex.ExInputWrapper.Editor
               label={"Đáp án A:"}
               name={"ads"}
-              defaultValue={"Nhap dap an A"}
+              placeholder="Nhập đáp án A tại đây..."
               onChange={(e) => setQuestion((pre) => ({ ...pre, answerOne: e }))}
             />
             <Ex.ExInputWrapper.Editor
               label={"Đáp án B:"}
               name={"ads"}
-              defaultValue={"Nhap dap an B"}
+              placeholder="Nhập đáp án B tại đây..."
               onChange={(e) => setQuestion((pre) => ({ ...pre, answerTwo: e }))}
             />
             <Ex.ExInputWrapper.Editor
               label={"Đáp án C:"}
               name={"ads"}
-              defaultValue={"Nhap dap an C"}
+              placeholder="Nhập đáp án C tại đây..."
               onChange={(e) =>
                 setQuestion((pre) => ({ ...pre, answerThree: e }))
               }
@@ -264,7 +278,7 @@ export const AddMultiQuestion = () => {
             <Ex.ExInputWrapper.Editor
               label={"Đáp án D:"}
               name={"ads"}
-              defaultValue={"Nhap dap an D"}
+              placeholder="Nhập đáp án D tại đây..."
               onChange={(e) =>
                 setQuestion((pre) => ({ ...pre, answerFour: e }))
               }

@@ -8,15 +8,42 @@ import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/lib/codemirror.css";
 
 export const SuiRichTextEditor = ({ ...rest }) => {
+  const onImageUploadBefore = ({ files, info, core, uploadHandler }) => {
+    // Upload image to Server
+
+    const src = UploadToServer(files[0]);
+
+    // result
+    const response = {
+      // The response must have a "result" array.
+      result: [
+        {
+          url: src,
+          name: files[0].name,
+          size: files[0].size,
+        },
+      ],
+    };
+
+    console.log(files, info);
+
+    // uploadHandler(response);
+  };
+
+  function UploadToServer() {
+    return "dsdd";
+  }
   return (
     <SunEditor
-      autoFocus={true}
+      autoFocus={false}
       lang="en"
+      onImageUploadBefore={onImageUploadBefore}
       setOptions={{
         showPathLabel: false,
         minHeight: "20vh",
         maxHeight: "25vh",
-        placeholder: "Enter your text here!!!",
+
+        // placeholder: "Enter your text here!!!",
         katex: katex,
         codeMirror: CodeMirror,
 

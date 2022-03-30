@@ -176,12 +176,16 @@ export const ListQuestion = () => {
               <ItemOne>
                 <Mui.Grid container columnSpacing={2}>
                   <Mui.Grid item xs={6}>
-                    <Ex.ExDataSelect.Class onChange={func.handleChange} />
+                    <Ex.ExDataSelect.Class
+                      onChange={func.handleChange}
+                      value={search.classId}
+                    />
                   </Mui.Grid>
                   <Mui.Grid item xs={6}>
                     <Ex.ExDataSelect.Subject
                       onChange={func.handleChange}
                       id={search.classId}
+                      value={search.subjectId}
                     />
                   </Mui.Grid>
                 </Mui.Grid>
@@ -190,12 +194,14 @@ export const ListQuestion = () => {
                 <Ex.ExDataSelect.Chapter
                   onChange={func.handleChange}
                   id={search.subjectId}
+                  value={search.chapterId}
                 />
               </ItemOne>
               <ItemOne>
                 <Ex.ExDataSelect.Units
                   onChange={func.handleChange}
                   id={search.chapterId}
+                  value={search.unitId}
                 />
               </ItemOne>
             </Mui.Grid>
@@ -238,12 +244,12 @@ export const ListQuestion = () => {
                       {row?.code || "code"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row?.requirementData?.unitData?.chapterData?.subjectData?.classs?.name ||
-                        "name class"}
+                      {row?.requirementData?.unitData?.chapterData?.subjectData
+                        ?.classs?.name || "name class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.requirementData?.unitData?.chapterData?.subjectData?.name ||
-                        "list class"}
+                      {row.requirementData?.unitData?.chapterData?.subjectData
+                        ?.name || "list class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.name || "ten cau hoi"}

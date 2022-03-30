@@ -181,6 +181,7 @@ export const CreateMatrix = () => {
                 label={"Tên ma trận đề thi:"}
                 name={"name"}
                 onChange={func.handleChange}
+                placeholder={"Nhap ten ma tran"}
                 required
               />
             </Item>
@@ -189,6 +190,7 @@ export const CreateMatrix = () => {
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Class
                     onChange={func.handleChange}
+                    value={search.classId}
                     required
                   />
                 </Mui.Grid>
@@ -196,6 +198,7 @@ export const CreateMatrix = () => {
                   <Ex.ExDataSelect.Subject
                     onChange={func.handleChange}
                     id={search.classId}
+                    value={search.subjectId}
                     required
                   />
                 </Mui.Grid>

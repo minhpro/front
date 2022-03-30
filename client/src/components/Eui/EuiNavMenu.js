@@ -4,7 +4,7 @@ import { GrSystem } from "react-icons/gr";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 export const EuiNavMenu = ({ data, icon }) => {
@@ -26,7 +26,7 @@ export const EuiNavMenu = ({ data, icon }) => {
           {data.nav.map((nav, i) => {
             return (
               <Link key={i} to={nav.link || "/"}>
-                <EuiNavMenu.Chil linkName={nav.name} />
+                <EuiNavMenu.Chil linkName={nav.name} link={nav.link} />
               </Link>
             );
           })}
@@ -63,7 +63,10 @@ EuiNavMenu.Parent = function ({ name, open, icon, ...rest }) {
   );
 };
 
-EuiNavMenu.Chil = function ({ linkName, ...rest }) {
+EuiNavMenu.Chil = function Chil({ linkName, link, ...rest }) {
+  const location = useLocation().pathname;
+  const pathnames = location.split("/").filter((x) => x);
+
   return (
     <Style.SuiStack
       direction={"row"}
@@ -72,6 +75,7 @@ EuiNavMenu.Chil = function ({ linkName, ...rest }) {
       sx={{ cursor: "pointer" }}
       pr={1}
       {...rest}
+      isOpen={link === pathnames[0]}
     >
       <Mui.Stack
         direction={"row"}
