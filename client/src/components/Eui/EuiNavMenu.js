@@ -24,12 +24,15 @@ export const EuiNavMenu = ({ data, icon }) => {
   console.log("ads", pathnames[0], "sad");
 
   React.useEffect(() => {
-    data.nav.forEach((nav) => {
-      if (nav.link === pathnames[0]) {
+    for (let i = 0; i < data.nav.length; i++) {
+      if (data.nav[i].link === pathnames[0]) {
         handleOpen();
+        break;
+      } else {
+        handleClose();
       }
-    });
-  }, []);
+    }
+  }, [location]);
   return (
     <Mui.Stack>
       <EuiNavMenu.Parent

@@ -38,12 +38,22 @@ ExModalPoppup.Create = function Create({
       mw={700}
       title={"Xác nhận Tạo mới?"}
     >
-      <Mui.Stack direction={"column"} spacing={1.5}>
+      <Mui.Stack
+        direction={"column"}
+        spacing={1.5}
+        component={"form"}
+        onSubmit={handleCreate}
+      >
         {children}
-      </Mui.Stack>
-      <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
-        <Eui.EuiButton.Cancel onClick={handleClose} />
-        <Eui.EuiButton.Progress name={"Tạo mới"} onClick={handleCreate} />
+
+        <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
+          <Eui.EuiButton.Cancel onClick={handleClose} />
+          <Eui.EuiButton.Progress
+            component={"button"}
+            name={"Tạo mới"}
+            // onClick={handleCreate}
+          />
+        </Mui.Stack>
       </Mui.Stack>
     </Eui.EuiModal.Title>
   );

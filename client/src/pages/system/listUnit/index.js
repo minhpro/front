@@ -127,7 +127,8 @@ export const PageSystemListUnit = () => {
         .catch((error) => console.log(error));
     };
 
-    handleAdd = () => {
+    handleAdd = (e) => {
+      e.preventDefault();
       if (search.unitName && search.chapterId) {
         Function.handler
           .api(() =>
@@ -226,8 +227,7 @@ export const PageSystemListUnit = () => {
           </Mui.Grid>
           <Mui.Grid item xs={12} md={6}>
             <Mui.Stack
-              component={"form"}
-              onSubmit={func.onSubmitAddRequirement}
+              // onSubmit={func.onSubmitAddRequirement}
               placeholder={"Nhap yeu cau cua don vi kien thuc"}
             >
               <Ex.ExInputWrapper.Basic
@@ -238,6 +238,11 @@ export const PageSystemListUnit = () => {
                 onChange={(e) =>
                   setRequirements({ ...requirements, input: e.target.value })
                 }
+                // onSubmit={func.onSubmitAddRequirement}
+              />
+              <Eui.EuiButton.Progress
+                name="THem"
+                onClick={func.onSubmitAddRequirement}
               />
               {requirements.data.map((data, i) => {
                 return <p>{data.name}</p>;

@@ -2,6 +2,18 @@ import * as Mui from "@mui/material";
 import React from "react";
 
 export const ViewUnit = ({ data }) => {
+  return <>{data ? <View data={data} /> : null}</>;
+};
+
+const Item = ({ children, ...rest }) => {
+  return (
+    <Mui.Grid item {...rest} p={1} border={"solid 1px"}>
+      {children}
+    </Mui.Grid>
+  );
+};
+
+const View = ({ data }) => {
   return (
     <Mui.Grid container>
       <Mui.Grid item xs={12} pb={4}>
@@ -43,14 +55,6 @@ export const ViewUnit = ({ data }) => {
             );
           })
         : null}
-    </Mui.Grid>
-  );
-};
-
-const Item = ({ children, ...rest }) => {
-  return (
-    <Mui.Grid item {...rest} p={1} border={"solid 1px"}>
-      {children}
     </Mui.Grid>
   );
 };

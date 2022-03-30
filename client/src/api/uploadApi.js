@@ -1,8 +1,11 @@
 import axiosClient from "./axiosClient";
 
 class UploadApi {
-  uploadImage = (data) => {
-    const url = "/coedu/api/video/create";
+  constructor() {
+    this.api = "file/";
+  }
+  upload = (data) => {
+    const url = `${this.api}upload`;
 
     return axiosClient.post(url, data, {
       "Content-Type": "multipart/form-data",

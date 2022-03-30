@@ -39,7 +39,12 @@ export const PageSystemListChapter = () => {
         })
         .catch((error) => console.log(error));
     }
+    setSearch({ ...search, subjectId: null });
   }, [search.classId]);
+
+  React.useEffect(() => {
+    setAddingData({ ...addingData, subjectId: null });
+  }, [addingData.classId]);
 
   // redux
   const reduxClass = useSelector((state) => state.reduxClass);
@@ -105,7 +110,6 @@ export const PageSystemListChapter = () => {
 
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });
-      console.log(e.target.value);
     };
 
     handleInput = (e) => {
@@ -134,7 +138,8 @@ export const PageSystemListChapter = () => {
         .catch((error) => console.log(error));
     };
 
-    handleAdd = () => {
+    handleAdd = (e) => {
+      e.preventDefault();
       if (addingData.chapterName && addingData.subjectId) {
         Function.handler
           .api(() =>
@@ -236,20 +241,16 @@ export const PageSystemListChapter = () => {
               />
             </Item>
             <Item>
-              <Ex.ExInputWrapper.Select
-                label={"Chọn lớp:"}
-                name={"classId"}
-                data={reduxClass?.data}
+              <Ex.ExDataSelect.Class
                 onChange={func.handleChange}
-                placeHolder={"dsa"}
+                value={search.classId}
               />
             </Item>
             <Item>
-              <Ex.ExInputWrapper.Select
-                label={"Chọn môn:"}
-                name={"subjectId"}
-                data={subject?.data}
+              <Ex.ExDataSelect.Subject
+                id={search.classId}
                 onChange={func.handleChange}
+                value={search.subjectId}
               />
             </Item>
           </Mui.Grid>
