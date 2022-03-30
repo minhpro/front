@@ -7,45 +7,43 @@ import CodeMirror from "codemirror";
 import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/lib/codemirror.css";
 import * as Api from "api";
-
-const api = "http://18.179.5.86:8080/api/file/upload";
+import * as contants from "assets/contants";
 
 export const SuiRichTextEditor = ({ ...rest }) => {
-  // const handleImageUploadBefore = (files, info, uploadHandler) => {
-  //   let response = {};
+  const ref = React.useRef().current;
 
-  //   response = {
-  //     result: {
-  //       url: "sadsad",
-  //       name: files[0].name,
-  //       size: files[0].size,
-  //     },
-  //   };
-  //   uploadHandler(response);
-  //   return undefined;
-  // };
+  const [fileImage, setFileImage] = React.useState("");
 
-  const onImageUploadBefore = async (files, info, uploadHandler) => {
-    try {
-      let image = {
-        url: "ass",
-        name: files.name,
-        size: files.size,
-      };
+  const onImageUploadBefore = (files, info, uploadHandler) => {
+    if (!files[0]) return console.log("aaaaaaaa");
+    const formData = new FormData();
+    formData.append("image", files[0]);
+    formData.append("type", "QUESTION_IMAGE");
+    console.log(files, info);
 
-      const response = {
-        result: image,
-      };
-      console.log(uploadHandler(response));
-      // uploadHandler(response);
-    } catch (err) {
-      uploadHandler(err.toString());
-    }
+    Api.uploadApi
+      .upload(formData)
+      .then((res) => {
+        let path = res.path.substring(5);
+        let image = {
+          url: contants.ApiUrl.apiUrl + path,
+          name: files[0].name,
+          size: files[0].size,
+        };
 
-    return undefined;
+        let images = [image];
+        const response = {
+          result: images,
+        };
+        uploadHandler(response);
+      })
+
+      .catch((err) => console.log("There was an error:" + err));
   };
+
   return (
     <SunEditor
+      ref={ref}
       autoFocus={false}
       lang="en"
       onImageUploadBefore={onImageUploadBefore}

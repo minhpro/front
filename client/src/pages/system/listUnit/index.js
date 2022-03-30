@@ -152,7 +152,7 @@ export const PageSystemListUnit = () => {
       Function.handler
         .api(() => Api.unitApi.delete(deleteId))
         .then((res) => {
-          if (res?.response?.status == 400) {
+          if (res?.response?.status === 400) {
             setSnack({
               isOpen: true,
               message: res.response.data.message,
