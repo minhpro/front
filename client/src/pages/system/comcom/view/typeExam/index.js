@@ -54,7 +54,9 @@ export const TypeExam = () => {
       setPages({ ...pages, page: value });
     }
     getTotalPage(total) {
-      return total / pages.limit + 1;
+      const number = total / pages.limit + 1;
+
+      return parseInt(number);
     }
     update = () => {
       Function.handler

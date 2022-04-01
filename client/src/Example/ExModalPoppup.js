@@ -24,7 +24,7 @@ ExModalPoppup.Delete = function Delete({ open, handleClose, handleDelete }) {
   );
 };
 
-ExModalPoppup.Basic = function Delete({ open, handleClose, handleFunc }) {
+ExModalPoppup.Basic = function Basic({ open, name, handleClose, handleFunc }) {
   return (
     <Eui.EuiModal.Title
       open={open}
@@ -35,7 +35,7 @@ ExModalPoppup.Basic = function Delete({ open, handleClose, handleFunc }) {
     >
       <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
         <Eui.EuiButton.Cancel onClick={handleClose} />
-        <Eui.EuiButton.Progress name={"Xoá"} onClick={handleFunc} />
+        <Eui.EuiButton.AddNew name={name || "Tạo mới"} onClick={handleFunc} />
       </Mui.Stack>
     </Eui.EuiModal.Title>
   );
@@ -99,7 +99,7 @@ ExModalPoppup.ViewQuestion = function ViewQuestion({
       </Mui.Stack>
       <Mui.Stack direction={"row"} justifyContent={"center"} pt={5} spacing={5}>
         <Eui.EuiButton.Cancel onClick={handleClose} />
-        <Eui.EuiButton.Progress name={"Xoá"} onClick={handleDelete} />
+        <Eui.EuiButton.Delete name={"Xoá"} onClick={handleDelete} />
       </Mui.Stack>
     </Eui.EuiModal.Title>
   );

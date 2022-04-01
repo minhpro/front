@@ -23,7 +23,7 @@ export const OrganExam = () => {
     classId: null,
     subjectId: null,
     testName: "",
-    testMatrixId: null,
+    matrixId: null,
     testCode: "",
   });
 
@@ -67,7 +67,9 @@ export const OrganExam = () => {
       setPages({ ...pages, page: value });
     }
     getTotalPage(total) {
-      return total / pages.limit + 1;
+      const number = total / pages.limit + 1;
+
+      return parseInt(number);
     }
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });
@@ -80,7 +82,7 @@ export const OrganExam = () => {
           Api.examApi.search(
             search.testName,
             search.examTypeId,
-            search.testMatrixId,
+            search.matrixID,
             search.classId,
             search.subjectId,
             pages.page,
@@ -138,6 +140,13 @@ export const OrganExam = () => {
   React.useEffect(() => {
     func.handleSearch();
   }, [snack]);
+
+  React.useEffect(() => {
+    setSearch({ ...search, subjectId: null });
+  }, [search.classId]);
+  React.useEffect(() => {
+    setSearch({ ...search, matrixID: null });
+  }, [search.subjectId]);
   return (
     <Views.ViewContent title={"Quản lý đề thi"}>
       {/* thong bao */}
@@ -178,21 +187,18 @@ export const OrganExam = () => {
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
-              <Ex.ExInputWrapper.Basic
-                label={"Tên đề thi:"}
-                name={"testName"}
-                onChange={func.handleChange}
-              />
-            </Item>
-            <Item>
               <Mui.Grid container columnSpacing={5}>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Class onChange={func.handleChange} />
+                  <Ex.ExDataSelect.Class
+                    onChange={func.handleChange}
+                    value={search.classId}
+                  />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Subject
                     id={search.classId}
                     onChange={func.handleChange}
+                    value={search.subjectId}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -201,21 +207,31 @@ export const OrganExam = () => {
               <Ex.ExDataSelect.Matrix
                 id={search.subjectId}
                 onChange={func.handleChange}
+                value={search.matrixID}
               />
             </Item>
             <Item>
               <Mui.Grid container columnSpacing={5}>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.ExamType />
+                  <Ex.ExDataSelect.ExamType value={search.examTypeId} />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExInputWrapper.Basic
                     label={"Mã đề thi:"}
                     name={"testCode"}
                     onChange={func.handleChange}
+                    placeholder={"Nhập mã đề thi"}
                   />
                 </Mui.Grid>
               </Mui.Grid>
+            </Item>
+            <Item>
+              <Ex.ExInputWrapper.Basic
+                label={"Tên đề thi:"}
+                name={"testName"}
+                onChange={func.handleChange}
+                placeholder={"Nhập tên đề thi"}
+              />
             </Item>
           </Mui.Grid>
           <Mui.Stack
@@ -225,13 +241,10 @@ export const OrganExam = () => {
             borderTop={"solid 1px"}
             borderColor={"red"}
           >
-            <Eui.EuiButton.Progress
-              name={"Tim kiem"}
-              onClick={func.handleSearch}
-            />
+            <Eui.EuiButton.Search onClick={func.handleSearch} />
 
-            <Eui.EuiButton.Progress
-              name={"Tao moi"}
+            <Eui.EuiButton.OpenCreate
+              // name={"Tao moi"}
               onClick={() => handleOpenNew.open()}
             />
           </Mui.Stack>

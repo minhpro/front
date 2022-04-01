@@ -3,4 +3,4 @@ import { OrganExam } from "./organExam";
 import { CreateExams } from "./createExams";
 import { CreateMatrix } from "./createMatrix";
 
-export { OrganMatrix, OrganExam, CreateExams, CreateMatrix };
+export { OrganMatrix, OrganExam, CreateMatrix, CreateExams };

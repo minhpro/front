@@ -72,7 +72,9 @@ export const ListQuestion = () => {
       setPages({ ...pages, page: value });
     }
     getTotalPage(total) {
-      return total / pages.limit + 1;
+      const number = total / pages.limit + 1;
+
+      return parseInt(number);
     }
     onView(id) {
       setQuestionId(id);
@@ -167,13 +169,6 @@ export const ListQuestion = () => {
           <Mui.Stack>
             <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
               <ItemOne>
-                <Ex.ExInputWrapper.Basic
-                  label={"Tên câu hỏi"}
-                  name={"questionName"}
-                  onChange={func.handleChange}
-                />
-              </ItemOne>
-              <ItemOne>
                 <Mui.Grid container columnSpacing={2}>
                   <Mui.Grid item xs={6}>
                     <Ex.ExDataSelect.Class
@@ -202,6 +197,14 @@ export const ListQuestion = () => {
                   onChange={func.handleChange}
                   id={search.chapterId}
                   value={search.unitId}
+                />
+              </ItemOne>
+              <ItemOne>
+                <Ex.ExInputWrapper.Basic
+                  label={"Tên câu hỏi"}
+                  name={"questionName"}
+                  onChange={func.handleChange}
+                  placeholder={"Nhập tên câu hỏi"}
                 />
               </ItemOne>
             </Mui.Grid>

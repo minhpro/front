@@ -41,6 +41,11 @@ class ExamApi {
 
     return axiosClient.post(url, { id: id });
   };
+  gen = (id) => {
+    const url = `${this.api}generate-question-for-matrix`;
+    const body = { testMatrixId: id };
+    return axiosClient.post(url, body);
+  };
 }
 
 const examApi = new ExamApi();

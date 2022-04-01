@@ -98,11 +98,11 @@ class NavRouter {
             link: "tao-ma-tran-moi",
             element: <Pages.CreateExam.CreateMatrix />,
           },
-          // {
-          //   name: "Tạo đề thi mới",
-          //   link: "tao-de-thi-moi",
-          //   element: <Pages.CreateExam.CreateExams />,
-          // },
+          {
+            name: "Tạo đề thi mới",
+            link: "tao-de-thi-moi",
+            element: <Pages.CreateExam.CreateExams />,
+          },
         ],
       },
       {

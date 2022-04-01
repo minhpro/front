@@ -82,11 +82,21 @@ export const PageSystemListUnit = () => {
         })
         .catch((error) => console.log(error));
     }
-    onSubmitAddRequirement(e) {
-      e.preventDefault();
+    onSubmitAddRequirement() {
+      if (requirements.input === "") {
+        return null;
+      }
       let data = requirements.data;
       data.push({ name: requirements.input });
       setRequirements({ input: "", data: data });
+    }
+
+    onDeleteRequirement(name) {
+      const data = requirements.data;
+      console.log(name);
+      const datad = data.filter((item) => item.name !== name);
+      console.log(datad);
+      setRequirements({ ...requirements, data: datad.concat() });
     }
     handlePagination(event, value) {
       console.log(value);
@@ -118,7 +128,6 @@ export const PageSystemListUnit = () => {
           )
         )
         .then((res) => {
-          console.log(res);
           setPages({
             ...pages,
             total: this.getTotalPage(res.total),
@@ -183,10 +192,11 @@ export const PageSystemListUnit = () => {
       {/* view require */}
 
       <Ex.ExModalPoppup.ViewQuestion
+        title={"Chi tiết đơn vị kiến thức"}
         open={isOpenView}
         handleClose={() => handleOpenView.close()}
         // handleCreate={func.handleAdd}
-        title={handleOpenView.title}
+        // title={handleOpenView.title}
       >
         <View.ViewUnit data={data} />
       </Ex.ExModalPoppup.ViewQuestion>
@@ -202,7 +212,7 @@ export const PageSystemListUnit = () => {
               label={"Tên đơn vị kiến thức:"}
               name={"unitName"}
               onChange={func.handleChange}
-              placeholder={"Nhap ten don vi kien thuc"}
+              placeholder={"Nhập tên đơn vị kiến thức"}
               required
             />
             <Mui.Divider />
@@ -229,7 +239,7 @@ export const PageSystemListUnit = () => {
           <Mui.Grid item xs={12} md={6}>
             <Mui.Stack
               // onSubmit={func.onSubmitAddRequirement}
-              placeholder={"Nhap yeu cau cua don vi kien thuc"}
+
               spacing={2}
             >
               <Ex.ExInputWrapper.Basic
@@ -256,6 +266,11 @@ export const PageSystemListUnit = () => {
                         </Eui.EuiTable.StyledTableCell>
                         <Eui.EuiTable.StyledTableCell align="center">
                           {row.name || "name"}
+                        </Eui.EuiTable.StyledTableCell>
+                        <Eui.EuiTable.StyledTableCell align="center">
+                          <Ex.ExIconEditDelete.DeleteOnly
+                            onDelete={() => func.onDeleteRequirement(row.name)}
+                          />
                         </Eui.EuiTable.StyledTableCell>
                       </Eui.EuiTable.StyledTableRow>
                     ))
@@ -304,6 +319,7 @@ export const PageSystemListUnit = () => {
                 label={"Tên đơn vị kiến thức:"}
                 name={"unitName"}
                 onChange={func.handleChange}
+                placeholder={"Nhập tên đơn vị kiến thức"}
               />
             </Item>
           </Mui.Grid>
@@ -413,5 +429,9 @@ const dataColumn2 = [
   },
   {
     name: "Yêu cầu kiến thức",
+  },
+  {
+    name: "Xoá",
+    width: 50,
   },
 ];

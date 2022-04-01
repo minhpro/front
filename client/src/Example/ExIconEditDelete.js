@@ -38,3 +38,11 @@ ExIconEditDelete.ViewOnly = function ({ onEdit, onDelete, onView }) {
     </Stack>
   );
 };
+
+ExIconEditDelete.DeleteOnly = function ({ onDelete }) {
+  return (
+    <Stack direction={"row"} justifyContent="center" spacing={1}>
+      <DeleteIcon onClick={onDelete} sx={{ ...style }} />
+    </Stack>
+  );
+};

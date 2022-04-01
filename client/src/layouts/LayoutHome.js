@@ -17,32 +17,38 @@ export const LayoutHome = () => {
       .api(() => Api.testTypeApi.search())
       .then((res) => {
         dispatch(Slide.TestTypeSlide.setTestType(res));
-      })
-      .catch((error) => console.log(error));
+      });
+
+    Func.handler
+      .api(() => Api.scoreCalculationTypeApi.all())
+      .then((res) => {
+        dispatch(Slide.ScoreSlide.setScore(res));
+        console.log("hi", res);
+      });
+
     Func.handler
       .api(() => Api.testTimeApi.search())
       .then((res) => {
         dispatch(Slide.TimeExamSlide.setTimeExam(res));
-      })
-      .catch((error) => console.log(error));
+      });
+
     Func.handler
       .api(() => Api.questionTypeApi.search())
       .then((res) => {
         dispatch(Slide.QuestionTypeSilde.setQuestionType(res));
-      })
-      .catch((error) => console.log(error));
+      });
+
     Func.handler
       .api(() => Api.otherConfigApi.all())
       .then((res) => {
         dispatch(Slide.OtherConfigSlide.setOtherConfig(res));
-      })
-      .catch((error) => console.log(error));
+      });
+
     Func.handler
       .api(() => Api.classApi.search())
       .then((res) => {
         dispatch(Slide.ClassSlide.setClassName(res));
-      })
-      .catch((error) => console.log(error));
+      });
   }, [dispatch]);
   return (
     <>

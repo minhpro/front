@@ -136,6 +136,7 @@ export const AddMultiQuestion = () => {
                 name={"questionName"}
                 required
                 onChange={func.handleChange}
+                placeholder={"Nhập tên câu hỏi"}
               />
             </Item>
             <Item>

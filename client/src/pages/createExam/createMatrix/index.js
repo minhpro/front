@@ -15,7 +15,10 @@ export const CreateMatrix = () => {
     classId: null,
     subjectId: null,
     name: null,
+    target: "EXAM",
+    testTypeId: null,
     time: 0,
+    scoreCalculationTypeId: 1,
   });
 
   const [snack, setSnack] = React.useState({
@@ -69,6 +72,9 @@ export const CreateMatrix = () => {
         name: null,
         numberOfQuestions: dataNumber.total,
         questionSource: "EBD",
+        scoreCalculationTypeId: search.scoreCalculationTypeId,
+        target: search.target,
+        testTypeId: search.testTypeId,
         time: 0,
         questionDistributions: [],
         subjectId: search.subjectId,
@@ -177,15 +183,6 @@ export const CreateMatrix = () => {
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
-              <Ex.ExInputWrapper.Basic
-                label={"Tên ma trận đề thi:"}
-                name={"name"}
-                onChange={func.handleChange}
-                placeholder={"Nhap ten ma tran"}
-                required
-              />
-            </Item>
-            <Item>
               <Mui.Grid container columnSpacing={5}>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Class
@@ -205,39 +202,33 @@ export const CreateMatrix = () => {
               </Mui.Grid>
             </Item>
             <Item>
-              <Mui.Grid container columnSpacing={5}>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.MatrixTarget
-                    onChange={func.handleChange}
-                    required
-                  />
-                </Mui.Grid>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.ExamType
-                    onChange={func.handleChange}
-                    required
-                  />
-                </Mui.Grid>
-              </Mui.Grid>
+              <Ex.ExInputWrapper.Basic
+                label={"Tên ma trận đề thi:"}
+                name={"name"}
+                onChange={func.handleChange}
+                placeholder={"Nhap ten ma tran"}
+                required
+              />
             </Item>
             <Item>
               <Mui.Grid container columnSpacing={5}>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExInputWrapper.Basic
-                    label={"Số lượng câu hỏi:"}
-                    name={"numberQuestion"}
-                    type={"number"}
+                  <Ex.ExDataSelect.MatrixTarget
                     onChange={func.handleChange}
+                    value={search.target}
+                    required
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.ExamType
                     onChange={func.handleChange}
                     required
+                    value={search.testTypeId}
                   />
                 </Mui.Grid>
               </Mui.Grid>
             </Item>
+
             <Item>
               <Mui.Grid container columnSpacing={5}>
                 <Mui.Grid item xs={6}>
@@ -255,7 +246,11 @@ export const CreateMatrix = () => {
               </Mui.Grid>
             </Item>
             <Item>
-              <Ex.ExDataSelect.Score required />
+              <Ex.ExDataSelect.Score
+                required
+                onChange={func.handleChange}
+                value={search.scoreCalculationTypeId}
+              />
             </Item>
           </Mui.Grid>
           <Mui.Stack
@@ -265,10 +260,7 @@ export const CreateMatrix = () => {
             borderTop={"solid 1px"}
             borderColor={"red"}
           >
-            <Eui.EuiButton.Progress
-              name={"Tim kiem"}
-              onClick={func.handleSearch}
-            />
+            <Eui.EuiButton.Search onClick={func.handleSearch} />
           </Mui.Stack>
         </Views.ViewBoard>
 
@@ -285,10 +277,11 @@ export const CreateMatrix = () => {
         </Views.ViewBoard>
         <Views.ViewBoard>
           <Mui.Stack spacing={3}>
-            <Eui.EuiButton.Progress
+            <Eui.EuiButton.OpenCreate onClick={func.handleOpen} />
+            {/* <Eui.EuiButton.Progress
               name={"Tao moi"}
               onClick={func.handleOpen}
-            />
+            /> */}
           </Mui.Stack>
         </Views.ViewBoard>
       </Mui.Stack>

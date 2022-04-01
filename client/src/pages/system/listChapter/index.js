@@ -234,13 +234,6 @@ export const PageSystemListChapter = () => {
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
-              <Ex.ExInputWrapper.Basic
-                label={"Tên chủ đề:"}
-                name={"chapterName"}
-                onChange={func.handleChange}
-              />
-            </Item>
-            <Item>
               <Ex.ExDataSelect.Class
                 onChange={func.handleChange}
                 value={search.classId}
@@ -251,6 +244,14 @@ export const PageSystemListChapter = () => {
                 id={search.classId}
                 onChange={func.handleChange}
                 value={search.subjectId}
+              />
+            </Item>
+            <Item>
+              <Ex.ExInputWrapper.Basic
+                label={"Tên chủ đề:"}
+                name={"chapterName"}
+                placeholder={"Nhập tên chủ đề"}
+                onChange={func.handleChange}
               />
             </Item>
           </Mui.Grid>

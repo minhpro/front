@@ -30,7 +30,7 @@ ExDataSelect.ExamType = function ExamType({ ...rest }) {
   return (
     <Ex.ExInputWrapper.Select
       label={"Chọn dạng đề thi:"}
-      name={"examTypeId"}
+      name={"testTypeId"}
       data={reduxTestType?.data}
       {...rest}
     />
@@ -159,7 +159,7 @@ ExDataSelect.Matrix = function Matrix({ id, ...rest }) {
   return (
     <Ex.ExInputWrapper.Select
       label={"Chọn ma trận:"}
-      name={"matrixID"}
+      name={"matrixId"}
       data={matrix?.data}
       {...rest}
     />
@@ -213,12 +213,13 @@ ExDataSelect.Bank = function Bank({ ...rest }) {
 };
 
 ExDataSelect.Score = function Score({ ...rest }) {
+  const data = useSelector((state) => state.reduxScoreSlide);
   return (
     <Ex.ExInputWrapper.Select
       label={"Cách tính điểm:"}
-      name={"scoreId"}
-      defautValue={Contants.scoreData[0].id}
-      data={Contants.scoreData}
+      name={"scoreCalculationTypeId"}
+      defautValue={data[0].id}
+      data={data}
       {...rest}
     />
   );
@@ -227,11 +228,11 @@ ExDataSelect.Score = function Score({ ...rest }) {
 ExDataSelect.MatrixTarget = function MatrixTarget({ ...rest }) {
   const data = [
     {
-      id: 0,
+      id: "EXAM",
       name: "Kiểm tra",
     },
     {
-      id: 1,
+      id: "TESTING",
       name: "Khảo thí",
     },
   ];
@@ -239,7 +240,7 @@ ExDataSelect.MatrixTarget = function MatrixTarget({ ...rest }) {
   return (
     <Ex.ExInputWrapper.Select
       label={"Mục tiêu ma trận:"}
-      name={"matrixTargetId"}
+      name={"target"}
       data={data}
       {...rest}
     />
@@ -281,6 +282,29 @@ ExDataSelect.TypeQuestion = function TypeQuestion({ ...rest }) {
       label={"Mức độ câu hỏi:"}
       name={"typeQuestionId"}
       data={reduxQuestionType?.data}
+      {...rest}
+    />
+  );
+};
+
+ExDataSelect.Target = function Target({ ...rest }) {
+  const data = [
+    {
+      id: "EXAM",
+      name: "Khảo thí",
+    },
+    {
+      id: "TESTING",
+      name: "Kiểm tra",
+    },
+  ];
+
+  return (
+    <Ex.ExInputWrapper.Select
+      label={"Mục tiêu ma trận:"}
+      name={"target"}
+      defautValue={data[0].id}
+      data={data}
       {...rest}
     />
   );
