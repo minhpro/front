@@ -15,6 +15,7 @@ export const PageSystemListUnit = () => {
     total: 10,
     limit: 32,
   });
+
   // redux
 
   const [open, setIsOpen] = React.useState(false);
@@ -229,7 +230,7 @@ export const PageSystemListUnit = () => {
             <Mui.Stack
               // onSubmit={func.onSubmitAddRequirement}
               placeholder={"Nhap yeu cau cua don vi kien thuc"}
-              spacing={4}
+              spacing={2}
             >
               <Ex.ExInputWrapper.Basic
                 label={"Thêm yêu cầu kiến thức:"}
@@ -254,7 +255,7 @@ export const PageSystemListUnit = () => {
                           {i + 1}
                         </Eui.EuiTable.StyledTableCell>
                         <Eui.EuiTable.StyledTableCell align="center">
-                          {row.name || "code"}
+                          {row.name || "name"}
                         </Eui.EuiTable.StyledTableCell>
                       </Eui.EuiTable.StyledTableRow>
                     ))

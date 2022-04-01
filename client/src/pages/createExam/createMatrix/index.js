@@ -167,10 +167,10 @@ export const CreateMatrix = () => {
         severity={snack.severity}
       />
       {/* create */}
-      <Ex.ExModalPoppup.Create
+      <Ex.ExModalPoppup.Basic
         open={open}
         handleClose={func.handleClose}
-        handleCreate={func.handleAdd}
+        handleFunc={func.handleAdd}
       />
       <Mui.Stack spacing={0.5}>
         {/* nav */}

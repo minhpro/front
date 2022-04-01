@@ -24,6 +24,23 @@ ExModalPoppup.Delete = function Delete({ open, handleClose, handleDelete }) {
   );
 };
 
+ExModalPoppup.Basic = function Delete({ open, handleClose, handleFunc }) {
+  return (
+    <Eui.EuiModal.Title
+      open={open}
+      handleClose={handleClose}
+      w={"80%"}
+      mw={300}
+      title={"Xác nhận tạo mới?"}
+    >
+      <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
+        <Eui.EuiButton.Cancel onClick={handleClose} />
+        <Eui.EuiButton.Progress name={"Xoá"} onClick={handleFunc} />
+      </Mui.Stack>
+    </Eui.EuiModal.Title>
+  );
+};
+
 ExModalPoppup.Create = function Create({
   open,
   handleClose,
@@ -47,13 +64,15 @@ ExModalPoppup.Create = function Create({
       >
         {children}
 
-        <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
+        <Mui.Stack
+          direction={"row"}
+          justifyContent={"center"}
+          pt={5}
+          spacing={4}
+        >
           <Eui.EuiButton.Cancel onClick={handleClose} />
-          <Eui.EuiButton.Progress
-            component={"button"}
-            name={"Tạo mới"}
-            // onClick={handleCreate}
-          />
+
+          <Eui.EuiButton.AddNew name={"Tạo mới"} component={"button"} />
         </Mui.Stack>
       </Mui.Stack>
     </Eui.EuiModal.Title>
