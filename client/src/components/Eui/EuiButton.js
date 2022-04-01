@@ -1,6 +1,6 @@
 import * as Mui from "@mui/material";
 import React from "react";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { AddCircleOutline, Search, Create } from "@mui/icons-material";
 
 export const EuiButton = () => {
   return <div>ExButton</div>;
@@ -18,10 +18,14 @@ EuiButton.AddType = function ({ name, ...rest }) {
       px={2}
       py={1}
       borderRadius={2}
-      sx={{ cursor: "pointer" }}
+      sx={{
+        cursor: "pointer",
+        ":hover": { transform: "translateY(-3px) scale(1.02)" },
+      }}
+      boxShadow={"rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"}
       {...rest}
     >
-      <AddCircleOutlineIcon sx={{ fontSize: 20 }} />
+      <AddCircleOutline sx={{ fontSize: 20 }} />
       <p>{name || "name"}</p>
     </Mui.Stack>
   );
@@ -71,6 +75,61 @@ EuiButton.Progress = function ({ name, ...rest }) {
       {...rest}
     >
       {name || "name"}
+    </Mui.Stack>
+  );
+};
+
+EuiButton.Search = function ({ name, ...rest }) {
+  return (
+    <Mui.Stack
+      direction={"row"}
+      alignItems={"center"}
+      justifyContent="flex-start"
+      spacing={2}
+      bgcolor={"#7e8299"}
+      width={"fit-content"}
+      px={2}
+      py={1}
+      borderRadius={2}
+      sx={{
+        cursor: "pointer",
+        ":hover": { transform: "translateY(-3px) scale(1.02)" },
+      }}
+      boxShadow={"rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"}
+      {...rest}
+    >
+      <Search sx={{ fontSize: 20 }} />
+      <p>{name || "Tìm kiếm"}</p>
+    </Mui.Stack>
+  );
+};
+
+EuiButton.OpenCreate = function ({ name, ...rest }) {
+  return (
+    <Mui.Stack
+      direction={"row"}
+      alignItems={"center"}
+      justifyContent="flex-start"
+      spacing={2}
+      bgcolor={"#7e8299"}
+      width={"fit-content"}
+      px={2}
+      py={1}
+      borderRadius={2}
+      sx={{
+        cursor: "pointer",
+        ":hover": { transform: "translateY(-3px) scale(1.02)" },
+        backgroundColor: "#dc1928",
+        ":hover": {
+          backgroundColor: "#f43d41",
+          transform: "translateY(-3px) scale(1.02)",
+        },
+      }}
+      boxShadow={"rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"}
+      {...rest}
+    >
+      <Create sx={{ fontSize: 20 }} />
+      <p>{name || "Tạo mới"}</p>
     </Mui.Stack>
   );
 };

@@ -240,10 +240,11 @@ export const PageSystemListUnit = () => {
                 }
                 // onSubmit={func.onSubmitAddRequirement}
               />
-              <Eui.EuiButton.Progress
-                name="THem"
+              <Eui.EuiButton.OpenCreate
+                name={"Thêm yêu cầu kiến thức"}
                 onClick={func.onSubmitAddRequirement}
               />
+
               {requirements.data.map((data, i) => {
                 return <p>{data.name}</p>;
               })}
@@ -301,12 +302,9 @@ export const PageSystemListUnit = () => {
             pt={2}
             spacing={2}
           >
-            <Eui.EuiButton.Progress
-              name={"tìm kiếm"}
-              onClick={func.handleSearch}
-            />
-            <Eui.EuiButton.Progress
-              name={"thêm đơn vị kiến thức"}
+            <Eui.EuiButton.Search onClick={func.handleSearch} />
+            <Eui.EuiButton.OpenCreate
+              name={"Thêm đơn vị kiến thức"}
               onClick={() => handleOpenNew.open()}
             />
           </Mui.Stack>

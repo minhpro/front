@@ -255,15 +255,11 @@ export const PageSystemListChapter = () => {
             </Item>
           </Mui.Grid>
           <Mui.Stack direction={"row"} py={2} spacing={2}>
-            <Eui.EuiButton.Progress
-              name={"Thêm mới chương"}
-              onClick={() => {
-                handleOpenNew.open();
-              }}
-            />
-            <Eui.EuiButton.Progress
-              name={"tìm kiếm"}
-              onClick={func.handleSearch}
+            <Eui.EuiButton.Search onClick={func.handleSearch} />
+
+            <Eui.EuiButton.OpenCreate
+              name={"Thêm chủ đề"}
+              onClick={() => handleOpenNew.open()}
             />
           </Mui.Stack>
         </Views.ViewBoard>

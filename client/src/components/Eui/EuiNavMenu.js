@@ -121,6 +121,7 @@ EuiNavMenu.NavBoard = function ({ name, ...rest }) {
 const Style = {
   SuiStack: styled(Mui.Stack)`
     color: ${(props) => (props.isOpen ? "red" : null)};
+    font-weight: ${(props) => (props.isOpen ? 600 : 400)};
     :hover {
       color: red;
     }
@@ -130,7 +131,12 @@ const Style = {
     color: ${(props) => (props.isOpen ? "red" : null)};
     border-bottom-color: red;
     border-bottom: ${(props) => (props.isOpen ? "3px solid" : null)};
+
     cursor: pointer;
+
+    p {
+      font-weight: ${(props) => (props.isOpen ? "600" : "400")};
+    }
     :hover {
       color: red;
       border-bottom: 3px solid;
