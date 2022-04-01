@@ -229,11 +229,12 @@ export const PageSystemListUnit = () => {
             <Mui.Stack
               // onSubmit={func.onSubmitAddRequirement}
               placeholder={"Nhap yeu cau cua don vi kien thuc"}
+              spacing={4}
             >
               <Ex.ExInputWrapper.Basic
                 label={"Thêm yêu cầu kiến thức:"}
                 name={"requireName"}
-                placeholder={"Them yeu cau don vi kien thuc"}
+                placeholder={"Thêm yêu cầu kiến thức"}
                 value={requirements.input}
                 onChange={(e) =>
                   setRequirements({ ...requirements, input: e.target.value })
@@ -245,9 +246,20 @@ export const PageSystemListUnit = () => {
                 onClick={func.onSubmitAddRequirement}
               />
 
-              {requirements.data.map((data, i) => {
-                return <p>{data.name}</p>;
-              })}
+              <Eui.EuiTable dataColumn={dataColumn2}>
+                {requirements.data
+                  ? requirements.data.map((row, i) => (
+                      <Eui.EuiTable.StyledTableRow key={i}>
+                        <Eui.EuiTable.StyledTableCell align="center">
+                          {i + 1}
+                        </Eui.EuiTable.StyledTableCell>
+                        <Eui.EuiTable.StyledTableCell align="center">
+                          {row.name || "code"}
+                        </Eui.EuiTable.StyledTableCell>
+                      </Eui.EuiTable.StyledTableRow>
+                    ))
+                  : null}
+              </Eui.EuiTable>
             </Mui.Stack>
           </Mui.Grid>
         </Mui.Grid>
@@ -390,5 +402,15 @@ const dataColumn = [
   {
     name: "Thao tác",
     width: 100,
+  },
+];
+
+const dataColumn2 = [
+  {
+    name: "STT",
+    width: 50,
+  },
+  {
+    name: "Yêu cầu kiến thức",
   },
 ];

@@ -43,6 +43,7 @@ ExModalPoppup.Create = function Create({
         spacing={1.5}
         component={"form"}
         onSubmit={handleCreate}
+        sx={{ maxHeight: "70vh", overflowY: "scroll" }}
       >
         {children}
 
