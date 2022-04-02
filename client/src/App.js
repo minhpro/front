@@ -36,6 +36,10 @@ function App() {
               <Route key={index} path={router.path} element={router.element} />
             );
           })}
+          <Route
+            path="quan-ly-de-thi/:id"
+            element={<Pages.CreateExam.ViewExam />}
+          />
         </Route>
       </Route>
     </Routes>

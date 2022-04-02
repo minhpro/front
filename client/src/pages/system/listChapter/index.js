@@ -39,11 +39,11 @@ export const PageSystemListChapter = () => {
         })
         .catch((error) => console.log(error));
     }
-    setSearch({ ...search, subjectId: null });
+    setSearch((s) => ({ ...s, subjectId: null }));
   }, [search.classId]);
 
   React.useEffect(() => {
-    setAddingData({ ...addingData, subjectId: null });
+    setAddingData((s) => ({ ...s, subjectId: null }));
   }, [addingData.classId]);
 
   // redux
@@ -77,6 +77,10 @@ export const PageSystemListChapter = () => {
   );
 
   class Func {
+    getSTT(stt) {
+      let num = (pages.page - 1) * pages.limit + stt;
+      return num;
+    }
     handlePagination(event, value) {
       console.log(value);
       setPages({ ...pages, page: value });
@@ -93,7 +97,7 @@ export const PageSystemListChapter = () => {
         .api(() => Api.chapterApi.delete(deleteId))
         .then((res) => {
           console.log("on then");
-          if (res?.response?.status == 400) {
+          if (res?.response?.status === 400) {
             console.log("loi roi");
             console.log(res.response.data.message);
             handleSnack.error(res.response.data.message);
@@ -207,14 +211,6 @@ export const PageSystemListChapter = () => {
         handleClose={() => handleOpenNew.close()}
         handleCreate={func.handleAdd}
       >
-        <Ex.ExInputWrapper.Basic
-          label={"Tên chủ đề:"}
-          name={"chapterName"}
-          required
-          onChange={func.handleInput}
-        />
-        <Mui.Divider />
-
         <Ex.ExDataSelect.Class
           onChange={func.handleInput}
           required
@@ -227,6 +223,13 @@ export const PageSystemListChapter = () => {
           onChange={func.handleInput}
           value={addingData.subjectId}
           required
+        />
+        <Mui.Divider />
+        <Ex.ExInputWrapper.Basic
+          label={"Tên chủ đề:"}
+          name={"chapterName"}
+          required
+          onChange={func.handleInput}
         />
       </Ex.ExModalPoppup.Create>
 
@@ -272,7 +275,7 @@ export const PageSystemListChapter = () => {
               ? pages.data.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {i + 1}
+                      {func.getSTT(i + 1)}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.subjectData?.classs?.name || "code"}
@@ -316,13 +319,6 @@ const Item = ({ children }) => {
   );
 };
 
-const data = [
-  {
-    id: 21,
-    name: "asdads",
-  },
-];
-
 const dataColumn = [
   {
     name: "STT",
@@ -345,10 +341,3 @@ const dataColumn = [
     width: 200,
   },
 ];
-
-const rowData = {
-  data: [
-    { name: "dasasd", des: "adsasd", chapter: "chuong" },
-    { name: "dasasd", des: "adsasd", chapter: "chuong" },
-  ],
-};

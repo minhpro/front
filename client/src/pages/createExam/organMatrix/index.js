@@ -15,7 +15,7 @@ export const OrganMatrix = () => {
     total: 10,
     limit: 32,
   });
-  const [open, setIsOpen] = React.useState(false);
+
   const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
   const [deleteId, setDeleteId] = React.useState(null);
   const [search, setSearch] = React.useState({
@@ -31,8 +31,6 @@ export const OrganMatrix = () => {
     message: "",
     severity: null,
   });
-
-  const [matrix, setMatrix] = React.useState(null);
 
   const handleOpenDelete = new Class.HandlePopup(
     setIsDeleteOpen,
@@ -129,13 +127,6 @@ export const OrganMatrix = () => {
       console.log("submit");
     };
 
-    handleClose = () => {
-      setIsOpen(false);
-    };
-    handleOpen = () => {
-      setIsOpen(true);
-    };
-
     handleCloseSnack = () => {
       setSnack({
         isOpen: false,
@@ -146,12 +137,13 @@ export const OrganMatrix = () => {
     handlePagination(event, value) {
       setPages({ ...pages, page: value });
     }
+    getSTT(stt) {
+      let num = (pages.page - 1) * pages.limit + stt;
+      return num;
+    }
   }
 
   const func = new Func();
-  //   React.useEffect(() => {
-  //     func.handleSearch();
-  //   }, []);
 
   React.useEffect(() => {
     func.handleSearch();
@@ -232,7 +224,7 @@ export const OrganMatrix = () => {
               ? pages.data.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {i + 1}
+                      {func.getSTT(i + 1)}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center"></Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">

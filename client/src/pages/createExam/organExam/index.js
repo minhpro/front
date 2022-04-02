@@ -5,12 +5,13 @@ import * as Views from "views";
 import * as Ex from "Example";
 import * as Function from "functions";
 import * as Api from "api";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as Class from "Class";
 import { ViewCreateExam } from "./view/ViewCreateExam";
 import { ViewExam } from "./view/ViewExam";
 
 export const OrganExam = () => {
+  const navigate = useNavigate();
   const [pages, setPages] = React.useState({
     data: null,
     page: 1,
@@ -134,6 +135,15 @@ export const OrganExam = () => {
       handleOpenView.open();
       setDeleteId(id);
     }
+
+    onEdit(id) {
+      console.log(id);
+      navigate(`${id}`);
+    }
+    getSTT(stt) {
+      let num = (pages.page - 1) * pages.limit + stt;
+      return num;
+    }
   }
 
   const func = new Func();
@@ -256,7 +266,7 @@ export const OrganExam = () => {
               ? pages.data?.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {i + 1}
+                      {func.getSTT(i + 1)}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.code}
@@ -276,7 +286,7 @@ export const OrganExam = () => {
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete.View
                         onDelete={() => func.onOpenDelete(row.id)}
-                        onEdit={func.onEdit}
+                        onEdit={() => func.onEdit(row.id)}
                         onView={() => func.onOpenView(row.id)}
                       />
                     </Eui.EuiTable.StyledTableCell>

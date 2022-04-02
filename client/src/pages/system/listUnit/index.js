@@ -28,6 +28,13 @@ export const PageSystemListUnit = () => {
     unitName: "",
   });
 
+  const [add, setAdd] = React.useState({
+    chapterId: null,
+    classId: null,
+    subjectId: null,
+    unitName: "",
+  });
+
   const [requirements, setRequirements] = useState({
     input: "",
     data: [],
@@ -71,6 +78,10 @@ export const PageSystemListUnit = () => {
   );
   //   function
   class Func {
+    getSTT(stt) {
+      let num = (pages.page - 1) * pages.limit + stt;
+      return num;
+    }
     onView(id) {
       setDeleteId(id);
       handleOpenView.open();
@@ -110,6 +121,10 @@ export const PageSystemListUnit = () => {
       console.log(search);
     };
 
+    handleChangeAdd = (e) => {
+      setAdd({ ...add, [e.target.name]: e.target.value });
+    };
+
     openDelete(id) {
       handleOpenDelete.open();
       setDeleteId(id);
@@ -139,19 +154,15 @@ export const PageSystemListUnit = () => {
 
     handleAdd = (e) => {
       e.preventDefault();
-      if (search.unitName && search.chapterId) {
+      if (add.unitName && add.chapterId) {
         Function.handler
           .api(() =>
-            Api.unitApi.add(
-              search.unitName,
-              search.chapterId,
-              requirements.data
-            )
+            Api.unitApi.add(add.unitName, add.chapterId, requirements.data)
           )
           .then((res) => {
-            handleSnack.add(search.unitName);
+            handleSnack.add(add.unitName);
             this.handleSearch();
-            console.log(res);
+            setAdd({ ...add, unitName: "" });
           })
           .catch((error) => console.log(error));
         handleOpenNew.close();
@@ -208,31 +219,31 @@ export const PageSystemListUnit = () => {
       >
         <Mui.Grid container columnSpacing={2}>
           <Mui.Grid item xs={12} md={6}>
-            <Ex.ExInputWrapper.Basic
-              label={"Tên đơn vị kiến thức:"}
-              name={"unitName"}
-              onChange={func.handleChange}
-              placeholder={"Nhập tên đơn vị kiến thức"}
-              required
-            />
-            <Mui.Divider />
             <Ex.ExDataSelect.Class
-              onChange={func.handleChange}
-              value={search.classId}
+              onChange={func.handleChangeAdd}
+              value={add.classId}
               required
             />
             <Mui.Divider />
             <Ex.ExDataSelect.Subject
-              id={search.classId}
-              onChange={func.handleChange}
+              id={add.classId}
+              onChange={func.handleChangeAdd}
               value={search.subjectId}
               required
             />
             <Mui.Divider />
             <Ex.ExDataSelect.Chapter
-              id={search.subjectId}
-              onChange={func.handleChange}
+              id={add.subjectId}
+              onChange={func.handleChangeAdd}
               value={search.chapterId}
+              required
+            />
+            <Mui.Divider />
+            <Ex.ExInputWrapper.Basic
+              label={"Tên đơn vị kiến thức:"}
+              name={"unitName"}
+              onChange={func.handleChangeAdd}
+              placeholder={"Nhập tên đơn vị kiến thức"}
               required
             />
           </Mui.Grid>
@@ -347,7 +358,7 @@ export const PageSystemListUnit = () => {
               ? pages.data.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {i + 1}
+                      {func.getSTT(i + 1)}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.chapterData?.subjectData?.classs?.name || "code"}

@@ -38,7 +38,6 @@ class ExamApi {
   };
   detail = (id) => {
     const url = `${this.api}detail`;
-
     return axiosClient.post(url, { id: id });
   };
   gen = (id) => {

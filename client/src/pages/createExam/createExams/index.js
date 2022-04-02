@@ -3,11 +3,10 @@ import * as Eui from "components/Eui";
 import React from "react";
 import * as Views from "views";
 import * as Ex from "Example";
-import * as Function from "functions";
+import { ViewQuestion } from "pages/bankQuestion/listQuetion/view";
+
 import * as Api from "api";
-import { useDispatch } from "react-redux";
-import * as Slide from "redux/slide";
-import { useSelector } from "react-redux";
+
 import * as Class from "Class";
 export const CreateExams = () => {
   const [search, setSearch] = React.useState({
@@ -19,11 +18,12 @@ export const CreateExams = () => {
     testCode: "",
   });
 
+  const [questionId, setQuestionId] = React.useState(null);
   const [listQuestion, setListQuestion] = React.useState(null);
 
-  const [isView, setIsView] = React.useState(false);
   const [open, setIsOpen] = React.useState(false);
-  const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
+
+  const [isOpenViewQuestion, setIsOpenViewQuestion] = React.useState(false);
 
   const [snack, setSnack] = React.useState({
     isOpen: false,
@@ -42,6 +42,12 @@ export const CreateExams = () => {
     "Thêm mới thời gian làm bài"
   );
 
+  const handleOpenViewQuestion = new Class.HandlePopup(
+    setIsOpenViewQuestion,
+    "",
+    "Thêm mới thời gian làm bài"
+  );
+
   //   function
   class Func {
     handleChange = (e) => {
@@ -49,9 +55,14 @@ export const CreateExams = () => {
       console.log(search);
     };
 
+    handleViewQuestion(id) {
+      setQuestionId(id);
+      handleOpenViewQuestion.open();
+    }
+
     handleGen = async () => {
       if (search.matrixId === null) {
-        return handleSnack.delete("Chưa chọn ma trận đề thi");
+        return setListQuestion(null);
       }
       try {
         const res = await Api.examApi.gen(search.matrixId);
@@ -108,11 +119,11 @@ export const CreateExams = () => {
 
   React.useEffect(() => {
     setListQuestion(null);
-    setSearch({ ...search, matrixId: null });
+    setSearch((s) => ({ ...s, matrixId: null }));
   }, [search.subjectId]);
 
   React.useEffect(() => {
-    setSearch({ ...search, subjectId: null });
+    setSearch((s) => ({ ...s, subjectId: null }));
   }, [search.classId]);
 
   React.useEffect(() => {
@@ -135,6 +146,13 @@ export const CreateExams = () => {
         handleFunc={func.handleAddNew}
       />
       <Mui.Stack spacing={0.5} component={"form"} onSubmit={func.handleOpen}>
+        {/* view question */}
+        <Ex.ExModalPoppup.ViewQuestion
+          open={isOpenViewQuestion}
+          handleClose={() => handleOpenViewQuestion.close()}
+        >
+          <ViewQuestion id={questionId} />
+        </Ex.ExModalPoppup.ViewQuestion>
         {/* nav */}
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
@@ -192,10 +210,12 @@ export const CreateExams = () => {
             borderTop={"solid 1px"}
             borderColor={"red"}
           >
-            <Eui.EuiButton.AddType
-              name={"Tạo bộ câu hỏi"}
-              onClick={func.handleGen}
-            />
+            {search.matrixId ? (
+              <Eui.EuiButton.AddType
+                name={"Tạo bộ câu mới"}
+                onClick={func.handleGen}
+              />
+            ) : null}
           </Mui.Stack>
         </Views.ViewBoard>
 
@@ -220,7 +240,9 @@ export const CreateExams = () => {
                       {func.getNameTypeExam(row.type)}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      <Ex.ExIconEditDelete.ViewOnly />
+                      <Ex.ExIconEditDelete.ViewOnly
+                        onView={() => func.handleViewQuestion(row.id)}
+                      />
                     </Eui.EuiTable.StyledTableCell>
                   </Eui.EuiTable.StyledTableRow>
                 ))

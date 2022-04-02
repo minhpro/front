@@ -3,7 +3,7 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import React from "react";
 import * as Element from "../../element";
-import { useSelector } from "react-redux";
+
 import * as Function from "functions";
 import * as Api from "api";
 import { useDispatch } from "react-redux";
@@ -111,9 +111,9 @@ export const TypeTime = () => {
     };
 
     convertSecondToTimeWithUnit(value) {
-      if (value % 3600 == 0) {
+      if (value % 3600 === 0) {
         return value / 3600 + " giờ";
-      } else if (value % 60 == 0) {
+      } else if (value % 60 === 0) {
         return value / 60 + " phút";
       } else {
         return value + " giây";
@@ -252,10 +252,3 @@ const dataColumn = [
     width: 200,
   },
 ];
-
-const rowData = {
-  data: [
-    { name: "dasasd", des: "adsasd" },
-    { name: "dasasd", des: "adsasd" },
-  ],
-};
