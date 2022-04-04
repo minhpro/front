@@ -112,7 +112,12 @@ class NavRouter {
           {
             name: "Khảo thí",
             link: "khao-thi",
-            element: <Pages.OrganTest.OrganTest />,
+            element: <Pages.OrganTest.Home />,
+          },
+          {
+            name: "Tạo mới",
+            link: "khao-thi-tao-moi",
+            element: <Pages.OrganTest.Create />,
           },
         ],
       },

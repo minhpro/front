@@ -15,6 +15,7 @@ import scoreCalculationTypeApi from "./scoreCalculationTypeApi";
 import userApi from "./userApi";
 import memberApi from "./memberApi";
 import groupApi from "./groupApi";
+import testKitApi from "./testKitApi";
 
 export {
   testTypeApi,
@@ -34,4 +35,5 @@ export {
   userApi,
   memberApi,
   groupApi,
+  testKitApi,
 };

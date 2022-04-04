@@ -3,6 +3,7 @@ import React from "react";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { AddAlarmRounded } from "@mui/icons-material";
 
 export const ExIconEditDelete = ({ onEdit, onDelete }) => {
   return (
@@ -42,6 +43,24 @@ ExIconEditDelete.ViewOnly = function ({ onEdit, onDelete, onView }) {
 ExIconEditDelete.DeleteOnly = function ({ onDelete }) {
   return (
     <Stack direction={"row"} justifyContent="center" spacing={1}>
+      <DeleteIcon onClick={onDelete} sx={{ ...style }} />
+    </Stack>
+  );
+};
+
+ExIconEditDelete.Gen = function ({ onGen }) {
+  return (
+    <Stack direction={"row"} justifyContent="center" spacing={1}>
+      <AddAlarmRounded onClick={onGen} sx={{ ...style }} />
+    </Stack>
+  );
+};
+
+ExIconEditDelete.ViewDelete = function ({ onEdit, onDelete, onView }) {
+  return (
+    <Stack direction={"row"} justifyContent="center" spacing={1}>
+      <VisibilityIcon onClick={onView} sx={{ ...style }} />
+      {/* <ModeEditIcon onClick={onEdit} sx={{ ...style }} /> */}
       <DeleteIcon onClick={onDelete} sx={{ ...style }} />
     </Stack>
   );

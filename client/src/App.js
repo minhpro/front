@@ -40,6 +40,8 @@ function App() {
             path="quan-ly-de-thi/:id"
             element={<Pages.CreateExam.ViewExam />}
           />
+
+          <Route path="khao-thi/:id" element={<Pages.OrganTest.ViewTest />} />
         </Route>
       </Route>
     </Routes>
