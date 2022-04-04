@@ -9,7 +9,7 @@ import * as Api from "api";
 
 export const MemberType = () => {
   return (
-    <Views.ViewContent title={"Quản lý member > Loại thành viên"}>
+    <Views.ViewContent title={"Quản lý thành viên > Loại thành viên"}>
       <Mui.Stack spacing={2}>
         {/* button */}
         <Views.ViewBoard>

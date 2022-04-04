@@ -1,8 +1,8 @@
 import axiosClient from "./axiosClient";
 
-class UserApi {
+class MemberApi {
   constructor() {
-    this.api = "user/";
+    this.api = "member/";
   }
   search = (keyword, page, limit) => {
     const url = `${this.api}search`;
@@ -13,11 +13,7 @@ class UserApi {
     };
     return axiosClient.post(url, body);
   };
-  login = (username, password) => {
-    const url = `${this.api}login`;
-    const body = { username, password };
-    return axiosClient.post(url, body);
-  };
+
   detail = (id) => {
     const url = `${this.api}detail`;
     const body = { id: id };
@@ -25,6 +21,6 @@ class UserApi {
   };
 }
 
-const userApi = new UserApi();
+const memberApi = new MemberApi();
 
-export default userApi;
+export default memberApi;

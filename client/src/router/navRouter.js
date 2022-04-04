@@ -164,6 +164,16 @@ class NavRouter {
         icon: <GroupIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
+            name: "Danh sách thành viên",
+            link: "danh-sach-member",
+            element: <Pages.MemberManage.ListMember />,
+          },
+          {
+            name: "Danh sách nhóm thành viên",
+            link: "danh-sach-member-group",
+            element: <Pages.MemberManage.ListMemberGroup />,
+          },
+          {
             name: "Quản lý loại thành viên",
             link: "quan-ly-member",
             element: <Pages.MemberManage.MemberType />,

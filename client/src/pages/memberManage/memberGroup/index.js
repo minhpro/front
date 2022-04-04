@@ -9,7 +9,7 @@ import * as Api from "api";
 
 export const MemberGroup = () => {
   return (
-    <Views.ViewContent title={"Quản lý user > Danh sách nhóm"}>
+    <Views.ViewContent title={"Quản lý thành viên > Danh sách nhóm"}>
       <Mui.Stack spacing={3}>
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2}>

@@ -13,6 +13,8 @@ import authApi from "./authApi";
 import uploadApi from "./uploadApi";
 import scoreCalculationTypeApi from "./scoreCalculationTypeApi";
 import userApi from "./userApi";
+import memberApi from "./memberApi";
+import groupApi from "./groupApi";
 
 export {
   testTypeApi,
@@ -30,4 +32,6 @@ export {
   uploadApi,
   scoreCalculationTypeApi,
   userApi,
+  memberApi,
+  groupApi,
 };

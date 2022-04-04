@@ -19,7 +19,7 @@ export const EuiModal = ({ open, handleClose, w, mw, children }) => {
       }}
     >
       <Fade in={open}>
-        <Box sx={style} width={w || 400} maxWidth={mw || null}>
+        <Box sx={style} width={w || 400} maxWidth={mw || "95%"}>
           {children}
         </Box>
       </Fade>

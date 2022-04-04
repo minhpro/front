@@ -3,13 +3,11 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import React from "react";
 import * as Views from "views";
-
+import * as Class from "Class";
 import * as Function from "functions";
 import * as Api from "api";
-import * as Class from "Class";
 import * as View from "./View";
-
-export const ListUser = () => {
+export const ListMember = () => {
   const [pages, setPages] = React.useState({
     data: null,
     page: 1,
@@ -28,6 +26,7 @@ export const ListUser = () => {
   const handleOpen = new Class.HandlePopup(setIsOpen);
 
   const [detailId, setDetailId] = React.useState(null);
+
   class Func {
     handlePagination(event, value) {
       setPages({ ...pages, page: value });
@@ -36,7 +35,7 @@ export const ListUser = () => {
       setSearch({ ...search, [e.target.name]: e.target.value });
     };
     getData() {
-      Api.userApi
+      Api.memberApi
         .search("", pages.page, pages.limit)
         .then((res) => {
           console.log(res);
@@ -55,27 +54,23 @@ export const ListUser = () => {
     }
   }
 
-  const func = new Func();
-
   React.useEffect(() => {
     func.getData();
   }, [pages.page]);
 
+  const func = new Func();
   return (
     <>
       {/* poppup */}
-
       <Eui.EuiModal.Title
         open={isOpen}
         handleClose={() => handleOpen.close()}
-        title={"Thông tin User"}
+        title={"Thông tin Member"}
         mw={"100%"}
       >
         <View.UserInfor id={detailId} />
       </Eui.EuiModal.Title>
-      <Views.ViewContent title={"Quản lý user > Danh sách User"}>
-        {/* content */}
-
+      <Views.ViewContent title={"Quản lý thành viên > Danh sách thanh vien"}>
         <Mui.Stack spacing={3}>
           <Views.ViewBoard>
             <Mui.Grid container columnSpacing={5} rowSpacing={2}>
@@ -117,6 +112,9 @@ export const ListUser = () => {
             </Mui.Stack>
           </Views.ViewBoard>
 
+          {/* tablel */}
+
+          {/* bang du lieu */}
           <Views.ViewBoard>
             <Eui.EuiTable dataColumn={dataColumn}>
               {pages.data
@@ -154,16 +152,6 @@ export const ListUser = () => {
                   ))
                 : null}
             </Eui.EuiTable>
-
-            <Eui.EuiPagination
-              count={pages.total}
-              defaultPage={1}
-              siblingCount={0}
-              boundaryCount={2}
-              size={"large"}
-              shape={"rounded"}
-              onChange={func.handlePagination}
-            />
           </Views.ViewBoard>
         </Mui.Stack>
       </Views.ViewContent>

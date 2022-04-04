@@ -6,9 +6,8 @@ import * as Views from "views";
 
 import * as Function from "functions";
 import * as Api from "api";
-import { Pages } from "@mui/icons-material";
 
-export const ListUserGroup = () => {
+export const ListMemberGroup = () => {
   const [pages, setPages] = React.useState({
     data: null,
     page: 1,
@@ -31,7 +30,7 @@ export const ListUserGroup = () => {
     };
     getData() {
       Api.groupApi
-        .userSearch("", pages.page, pages.limit)
+        .memberSearch("", pages.page, pages.limit)
         .then((res) => {
           console.log(res);
           setPages({
@@ -41,11 +40,6 @@ export const ListUserGroup = () => {
           });
         })
         .catch((err) => console.log(err));
-    }
-
-    getSTT(i) {
-      const data = 0 * Pages.page;
-      return data + i + 1;
     }
 
     // onView(id) {
@@ -60,7 +54,7 @@ export const ListUserGroup = () => {
   }, [pages.page]);
 
   return (
-    <Views.ViewContent title={"Quản lý user > Danh sách nhóm"}>
+    <Views.ViewContent title={"Quản lý Thành viên > Danh sách nhóm"}>
       <Mui.Stack spacing={3}>
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2}>
