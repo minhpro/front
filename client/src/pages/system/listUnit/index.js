@@ -110,11 +110,10 @@ export const PageSystemListUnit = () => {
       setRequirements({ ...requirements, data: datad.concat() });
     }
     handlePagination(event, value) {
-      console.log(value);
       setPages({ ...pages, page: value });
     }
     getTotalPage(total) {
-      return total / pages.limit + 1;
+      return parseInt(total / pages.limit + 1);
     }
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });

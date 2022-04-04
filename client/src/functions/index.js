@@ -1,4 +1,5 @@
 import getImage from "./getImage";
 import handler from "./handler";
+import formatNumber from "./formatNumber";
 
-export { getImage, handler };
+export { getImage, handler, formatNumber };

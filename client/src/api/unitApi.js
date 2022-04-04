@@ -12,20 +12,15 @@ class UnitApi {
       limit: limit || 32,
       chapterId: chapterId,
       subjectId: subjectId,
-      classId: classId
+      classId: classId,
     };
     return axiosClient.post(url, body);
   };
   delete = async (id, set) => {
     const url = `${this.api}delete`;
     const body = { id: id };
-    try {
-      const res = await axiosClient.post(url, body);
-      set(res);
-      return res;
-    } catch (error) {
-      return error;
-    }
+
+    return axiosClient.post(url, body);
   };
   add = (name, chapterId, requirements) => {
     const url = `${this.api}add`;

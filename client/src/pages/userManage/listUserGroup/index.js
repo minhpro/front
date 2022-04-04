@@ -14,19 +14,27 @@ export const ListUserGroup = () => {
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2}>
             <Item>
-              <Ex.ExInputWrapper.Basic label={"Tên nhóm"} />
+              <Ex.ExInputWrapper.Basic
+                label={"Tên nhóm"}
+                placeholder={"Nhap ten nhom"}
+              />
             </Item>
             <Item>
-              <Ex.ExDataSelect.ExamType label={"Tên nhóm trưởng"} />
+              <Ex.ExInputWrapper.Basic
+                label={"Tên nhóm trưởng"}
+                placeholder={"Nhap ten nhom truong"}
+              />
             </Item>
             <Item>
-              <Ex.ExInputWrapper.Basic label={"Trạng thái"} />
+              <Ex.ExInputWrapper.Select
+                label={"Trạng thái"}
+              ></Ex.ExInputWrapper.Select>
             </Item>
           </Mui.Grid>
 
           <Mui.Stack pt={5} direction={"row"} spacing={3}>
-            <Eui.EuiButton.Progress name={"Thêm mới"} />
-            <Eui.EuiButton.Progress name={"Tìm kiếm"} />
+            <Eui.EuiButton.Search />
+            <Eui.EuiButton.AddNew />
           </Mui.Stack>
         </Views.ViewBoard>
         <Views.ViewBoard>

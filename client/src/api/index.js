@@ -12,6 +12,7 @@ import examApi from "./examApi";
 import authApi from "./authApi";
 import uploadApi from "./uploadApi";
 import scoreCalculationTypeApi from "./scoreCalculationTypeApi";
+import userApi from "./userApi";
 
 export {
   testTypeApi,
@@ -28,4 +29,5 @@ export {
   authApi,
   uploadApi,
   scoreCalculationTypeApi,
+  userApi,
 };

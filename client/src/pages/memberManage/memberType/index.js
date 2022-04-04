@@ -10,18 +10,16 @@ import * as Api from "api";
 export const MemberType = () => {
   return (
     <Views.ViewContent title={"Quản lý member > Loại thành viên"}>
-      <Mui.Stack spacing={3}>
+      <Mui.Stack spacing={2}>
+        {/* button */}
+        <Views.ViewBoard>
+          <Mui.Stack direction={"row"} spacing={3}>
+            <Eui.EuiButton.AddType name={"Thêm loại thành viên mới"} />
+          </Mui.Stack>
+        </Views.ViewBoard>
         {/* bang du lieu */}
         <Views.ViewBoard>
           <Eui.EuiTable dataColumn={dataColumn}></Eui.EuiTable>
-        </Views.ViewBoard>
-
-        {/* button */}
-        <Views.ViewBoard>
-          <Mui.Stack pt={5} direction={"row"} spacing={3}>
-            <Eui.EuiButton.Progress name={"Thêm mới"} />
-            <Eui.EuiButton.Progress name={"Tìm kiếm"} />
-          </Mui.Stack>
         </Views.ViewBoard>
       </Mui.Stack>
     </Views.ViewContent>

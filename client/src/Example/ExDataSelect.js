@@ -309,3 +309,93 @@ ExDataSelect.Target = function Target({ ...rest }) {
     />
   );
 };
+
+ExDataSelect.Role = function Role({ id, ...rest }) {
+  // const [matrix, setMatrix] = React.useState(null);
+  // // life cirle
+  // React.useEffect(() => {
+  //   if (id) {
+  //     Function.handler
+  //       .api(() =>
+  //         Api.matrixApi.search({
+  //           keyword: "",
+  //           subjectId: id,
+  //         })
+  //       )
+  //       .then((res) => {
+  //         console.log(res);
+  //         setMatrix(res);
+  //       })
+  //       .catch((error) => console.log(error));
+  //   } else setMatrix(null);
+  // }, [id]);
+
+  const data = [
+    {
+      id: 0,
+      name: "Admin",
+    },
+    {
+      id: 1,
+      name: "Thanh vien",
+    },
+    {
+      id: 2,
+      name: "nhom truong",
+    },
+  ];
+
+  return (
+    <Ex.ExInputWrapper.Select
+      label={"Vai tro:"}
+      name={"roleId"}
+      data={data}
+      {...rest}
+    />
+  );
+};
+
+ExDataSelect.Group = function Group({ id, ...rest }) {
+  // const [matrix, setMatrix] = React.useState(null);
+  // // life cirle
+  // React.useEffect(() => {
+  //   if (id) {
+  //     Function.handler
+  //       .api(() =>
+  //         Api.matrixApi.search({
+  //           keyword: "",
+  //           subjectId: id,
+  //         })
+  //       )
+  //       .then((res) => {
+  //         console.log(res);
+  //         setMatrix(res);
+  //       })
+  //       .catch((error) => console.log(error));
+  //   } else setMatrix(null);
+  // }, [id]);
+
+  const data = [
+    {
+      id: 0,
+      name: "Quan tri",
+    },
+    {
+      id: 1,
+      name: "Quan ly",
+    },
+    {
+      id: 2,
+      name: "Thanh vien",
+    },
+  ];
+
+  return (
+    <Ex.ExInputWrapper.Select
+      label={"Nhom:"}
+      name={"groupId"}
+      data={data}
+      {...rest}
+    />
+  );
+};
