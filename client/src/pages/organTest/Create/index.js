@@ -39,7 +39,7 @@ const Create = () => {
     candidateIds: [],
     // kits: [],
   });
-  const [isOpenDelete, setIsOpenDelete] = React.useState(false);
+
   const [isOpen, setIsOpen] = React.useState(false);
   const [exam, setExam] = React.useState({
     name: null,
@@ -67,11 +67,7 @@ const Create = () => {
     "Thêm mới thời gian làm bài"
   );
 
-  const handleOpenDelete = new Class.HandlePopup(
-    setIsOpenDelete,
-    "",
-    "Thêm mới thời gian làm bài"
-  );
+
 
   //   function
   class Func {
@@ -95,10 +91,7 @@ const Create = () => {
       handleOpenNew.open();
     }
 
-    onOpenDelete(id, name) {
-      setExam({ name, id });
-      handleOpenDelete.open();
-    }
+  
 
     async handleGen() {
       try {
@@ -189,10 +182,7 @@ const Create = () => {
     <>
       {/* poppup */}
 
-      <Ex.ExModalPoppup.Delete
-        handleClose={() => handleOpenDelete.close()}
-        open={isOpenDelete}
-      />
+    
 
       <Eui.EuiModal.Title
         title={"Trộn đề thi: " + exam.name}
