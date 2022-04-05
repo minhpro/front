@@ -7,8 +7,9 @@ import * as Class from "Class";
 import * as Function from "functions";
 import * as Api from "api";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 export const Home = () => {
+  const navigate = useNavigate();
   const [pages, setPages] = React.useState({
     data: null,
     page: 1,
@@ -176,7 +177,7 @@ export const Home = () => {
                       <Eui.EuiTable.StyledTableCell align="center">
                         <Ex.ExIconEditDelete.ViewDelete
                           onDelete={() => func.onOpenDelete(row.id)}
-                          onView={() => func.onView(row.id)}
+                          onView={() => navigate(`${row.id}`)}
                         />
                       </Eui.EuiTable.StyledTableCell>
                     </Eui.EuiTable.StyledTableRow>
