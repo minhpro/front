@@ -39,6 +39,8 @@ function App() {
             element={<Pages.CreateExam.ViewExam />}
           />
 
+          <Route path="lam-bai/:id" element={<Pages.DoTest.DoTest />} />
+
           <Route path="khao-thi/:id" element={<Pages.OrganTest.ViewTest />} />
         </Route>
       </Route>

@@ -1,12 +1,22 @@
 import React from "react";
 import * as Mui from "@mui/material";
 import * as Co from "components";
-
+import * as Sui from "components/Sui";
+import { useDispatch } from "react-redux";
+import * as Slide from "redux/slide";
 export const ViewQuestion = () => {
   return <Mui.Stack>ViewQuestion</Mui.Stack>;
 };
 
-ViewQuestion.Constructed = function ({ index, code, question }) {
+ViewQuestion.Constructed = function Constructed({
+  index,
+  code,
+  question,
+  exam,
+  id,
+  ...rest
+}) {
+  const dispatch = useDispatch();
   return (
     <Mui.Stack direction={"column"}>
       <Co.Text.Body.Caption>
@@ -18,11 +28,36 @@ ViewQuestion.Constructed = function ({ index, code, question }) {
       <Mui.Divider />
       <Co.Text.Normal.Medium>Tự luận</Co.Text.Normal.Medium>
       <Mui.Divider />
+      {exam ? (
+        <Sui.SuiRichTextEditor
+          placeholder="Nhập đáp án D tại đây..."
+          onChange={(e) =>
+            dispatch(
+              Slide.checkingSlice.request({
+                type: "constructedResponseQuestions",
+                id: id,
+                answer: e,
+              })
+            )
+          }
+        />
+      ) : null}
     </Mui.Stack>
   );
 };
 
-ViewQuestion.MultiChoice = function ({ index, code, question, A, B, C, D }) {
+ViewQuestion.MultiChoice = function MultiChoice({
+  index,
+  code,
+  question,
+  A,
+  B,
+  C,
+  D,
+  id,
+  exam,
+}) {
+  const dispatch = useDispatch();
   return (
     <Mui.Stack direction={"column"}>
       <Co.Text.Body.Caption>
@@ -56,6 +91,49 @@ ViewQuestion.MultiChoice = function ({ index, code, question, A, B, C, D }) {
         <Co.Text.Normal.Medium>
           <div dangerouslySetInnerHTML={{ __html: D }} />
         </Co.Text.Normal.Medium>
+      </Mui.Stack>
+      <Mui.Divider />
+      <Mui.Stack my={2}>
+        {exam ? (
+          <Mui.FormControl>
+            <Mui.FormLabel sx={{ paddingBottom: 2 }}>
+              <Co.Text.Body.Medium>Chọn đáp án</Co.Text.Body.Medium>
+            </Mui.FormLabel>
+            <Mui.RadioGroup
+              row
+              onChange={(e) =>
+                dispatch(
+                  Slide.checkingSlice.request({
+                    type: "multiChoiceQuestions",
+                    id: id,
+                    answer: parseInt(e.target.value),
+                  })
+                )
+              }
+            >
+              <Mui.FormControlLabel
+                value={0}
+                control={<Mui.Radio />}
+                label="A"
+              />
+              <Mui.FormControlLabel
+                value={1}
+                control={<Mui.Radio />}
+                label="B"
+              />
+              <Mui.FormControlLabel
+                value={2}
+                control={<Mui.Radio />}
+                label="C"
+              />
+              <Mui.FormControlLabel
+                value={3}
+                control={<Mui.Radio />}
+                label="D"
+              />
+            </Mui.RadioGroup>
+          </Mui.FormControl>
+        ) : null}
       </Mui.Stack>
 
       <Mui.Divider />

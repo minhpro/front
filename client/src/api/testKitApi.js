@@ -56,6 +56,10 @@ class TestKitApi {
     const url = `${this.api}get-exam-questions`;
     return axiosClient.get(url, { params: { id: id } });
   };
+  checking = (body) => {
+    const url = `${this.api}checking`;
+    return axiosClient.post(url, body);
+  };
 }
 
 const testKitApi = new TestKitApi();

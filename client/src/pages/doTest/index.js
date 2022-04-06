@@ -1,5 +1,4 @@
-import { DoTest } from "./DoText";
-import { Create } from "./create";
 import { Home } from "./home";
+import { DoTest } from "./doTest";
 
-export { DoTest, Create, Home };
+export { Home, DoTest };

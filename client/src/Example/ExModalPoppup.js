@@ -24,14 +24,20 @@ ExModalPoppup.Delete = function Delete({ open, handleClose, handleDelete }) {
   );
 };
 
-ExModalPoppup.Basic = function Basic({ open, name, handleClose, handleFunc }) {
+ExModalPoppup.Basic = function Basic({
+  title,
+  open,
+  name,
+  handleClose,
+  handleFunc,
+}) {
   return (
     <Eui.EuiModal.Title
       open={open}
       handleClose={handleClose}
       w={"80%"}
-      mw={300}
-      title={"Xác nhận tạo mới?"}
+      mw={"100%"}
+      title={title || "Xác nhận tạo mới?"}
     >
       <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
         <Eui.EuiButton.Cancel onClick={handleClose} />

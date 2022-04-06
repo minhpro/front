@@ -8,6 +8,7 @@ import * as TimeExamSlide from "./timeExamSlide";
 import * as OtherConfigSlide from "./otherConfigSlide";
 import * as questionDistributionsSlide from "./questionDistributionsSlide";
 import * as authSlide from "./authSlide";
+import * as checkingSlice from "./checkingSlice";
 
 export {
   SubjectSlide,
@@ -20,4 +21,5 @@ export {
   OtherConfigSlide,
   questionDistributionsSlide,
   authSlide,
+  checkingSlice,
 };

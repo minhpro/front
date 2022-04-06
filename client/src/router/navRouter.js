@@ -128,7 +128,7 @@ class NavRouter {
           {
             name: "làm bài",
             link: "lam-bai",
-            element: <Pages.DoTest.DoTest />,
+            element: <Pages.DoTest.Home />,
           },
         ],
       },
