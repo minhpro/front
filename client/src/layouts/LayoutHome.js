@@ -12,6 +12,46 @@ import * as Func from "functions";
 export const LayoutHome = () => {
   const dispatch = useDispatch();
 
+  // React.useEffect(() => {
+  //   if (!!window.EventSource) {
+  //     var source = new EventSource(
+  //       "http://18.179.5.86:8080/api/event/register"
+  //     );
+
+  //     source.addEventListener(
+  //       "upComingTest",
+  //       function (e) {
+  //         console.log(e);
+  //       },
+  //       false
+  //     );
+
+  //     source.addEventListener(
+  //       "open",
+  //       function (e) {
+  //         console.log(e);
+  //       },
+  //       false
+  //     );
+
+  //     source.addEventListener(
+  //       "error",
+  //       function (e) {
+  //         const id_state = document.getElementById("state");
+  //         if (e.eventPhase == EventSource.CLOSED) source.close();
+  //         if (e.target.readyState == EventSource.CLOSED) {
+  //           id_state.innerHTML = "Disconnected";
+  //         } else if (e.target.readyState == EventSource.CONNECTING) {
+  //           id_state.innerHTML = "Connecting...";
+  //         }
+  //       },
+  //       false
+  //     );
+  //   } else {
+  //     console.log("Your browser doesn't support SSE");
+  //   }
+  // }, []);
+
   React.useEffect(() => {
     Func.handler
       .api(() => Api.testTypeApi.search())

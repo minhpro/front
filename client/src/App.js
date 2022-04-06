@@ -14,8 +14,6 @@ const ROLES = {
 };
 
 function App() {
-  console.log(navRouter.getRouters());
-
   return (
     <Routes>
       {/* public routes */}

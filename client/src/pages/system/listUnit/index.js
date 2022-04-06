@@ -227,14 +227,14 @@ export const PageSystemListUnit = () => {
             <Ex.ExDataSelect.Subject
               id={add.classId}
               onChange={func.handleChangeAdd}
-              value={search.subjectId}
+              value={add.subjectId}
               required
             />
             <Mui.Divider />
             <Ex.ExDataSelect.Chapter
               id={add.subjectId}
               onChange={func.handleChangeAdd}
-              value={search.chapterId}
+              value={add.chapterId}
               required
             />
             <Mui.Divider />
