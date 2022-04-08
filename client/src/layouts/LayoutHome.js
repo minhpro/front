@@ -9,48 +9,37 @@ import navRouter from "router/navRouter";
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
 import * as Func from "functions";
+import * as Co from "components";
+
+import { useLocation } from "react-router-dom";
 export const LayoutHome = () => {
   const dispatch = useDispatch();
 
-  // React.useEffect(() => {
-  //   if (!!window.EventSource) {
-  //     var source = new EventSource(
-  //       "http://18.179.5.86:8080/api/event/register"
-  //     );
+  const [exam, setExam] = React.useState({
+    id: null,
+    start: null,
+    end: null,
+  });
 
-  //     source.addEventListener(
-  //       "upComingTest",
-  //       function (e) {
-  //         console.log(e);
-  //       },
-  //       false
-  //     );
+  function set(e) {
+    let data = JSON.parse(e.data);
+    if (exam.id === null) {
+      // setExam({ ...exam, id: data.id });
+    } else return;
+  }
 
-  //     source.addEventListener(
-  //       "open",
-  //       function (e) {
-  //         console.log(e);
-  //       },
-  //       false
-  //     );
+  React.useEffect(() => {
+    var source = new EventSource("http://18.179.5.86:8080/api/event/register");
 
-  //     source.addEventListener(
-  //       "error",
-  //       function (e) {
-  //         const id_state = document.getElementById("state");
-  //         if (e.eventPhase == EventSource.CLOSED) source.close();
-  //         if (e.target.readyState == EventSource.CLOSED) {
-  //           id_state.innerHTML = "Disconnected";
-  //         } else if (e.target.readyState == EventSource.CONNECTING) {
-  //           id_state.innerHTML = "Connecting...";
-  //         }
-  //       },
-  //       false
-  //     );
-  //   } else {
-  //     console.log("Your browser doesn't support SSE");
-  //   }
-  // }, []);
+    if (!exam.id) {
+      source.addEventListener("upComingTest", set, false);
+    } else {
+      console.log("remove");
+      source.removeEventListener("upComingTest", set);
+    }
+
+    return () => source.removeEventListener("upComingTest", set);
+  }, []);
 
   React.useEffect(() => {
     Func.handler
@@ -92,15 +81,13 @@ export const LayoutHome = () => {
   }, [dispatch]);
   return (
     <>
+      {/* {exam.id ? <Co.Notification.Exam open={true} id={exam.id} /> : null} */}
+      {/* <ThongBao /> */}
       <Ex.Header />
       <Style.Main className="container">
         <Mui.Stack direction={{ xs: "column", md: "row" }}>
           <Style.Nav>
-            <Mui.Stack spacing={2}>
-              {navRouter.data.map((data, i) => {
-                return <EuiNavMenu data={data} key={i} icon={data.icon} />;
-              })}
-            </Mui.Stack>
+            <Nav />
           </Style.Nav>
           <Mui.Box width={"100%"}>
             <Outlet />
@@ -121,4 +108,62 @@ const Style = {
   Nav: styled.nav`
     min-width: 300px;
   `,
+};
+
+const Nav = () => {
+  return (
+    <Mui.Stack spacing={2}>
+      {navRouter.data.map((data, i) => {
+        return <EuiNavMenu data={data} key={i} icon={data.icon} />;
+      })}
+    </Mui.Stack>
+  );
+};
+
+const ThongBao = () => {
+  const [exam, setExam] = React.useState({
+    id: null,
+    start: null,
+    end: null,
+  });
+
+  const location = useLocation().pathname;
+  const pathnames = location.split("/").filter((x) => x);
+  console.log(pathnames);
+  function set(e) {
+    let data = JSON.parse(e.data);
+    if (exam.id === null) {
+      console.log(data);
+
+      setExam({ ...exam, id: data.id });
+    }
+    if (pathnames[0] !== "lam-bai") {
+      console.log("lambai");
+      setExam({ ...exam, id: null });
+    }
+  }
+
+  React.useEffect(() => {
+    var source = new EventSource("http://18.179.5.86:8080/api/event/register");
+
+    if (!exam.id) {
+      source.addEventListener("upComingTest", set, false);
+    } else {
+      console.log("remove");
+      source.removeEventListener("upComingTest", function () {
+        console.log("fdfdfdfd");
+      });
+    }
+
+    return () =>
+      source.removeEventListener("upComingTest", function () {
+        console.log("ads");
+      });
+  }, []);
+
+  return (
+    <>
+      <Co.Notification.Exam open={exam.id} id={exam.id} />{" "}
+    </>
+  );
 };

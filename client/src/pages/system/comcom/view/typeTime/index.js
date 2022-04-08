@@ -3,7 +3,7 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import React from "react";
 import * as Element from "../../element";
-
+import { Update } from "./Update";
 import * as Function from "functions";
 import * as Api from "api";
 import { useDispatch } from "react-redux";
@@ -37,6 +37,10 @@ export const TypeTime = () => {
   });
 
   // class
+
+  const [isOpenUpdate, setIsOpenUpdate] = React.useState(false);
+
+  const handleOpenUpdate = new Class.HandlePopup(setIsOpenUpdate);
 
   const handleSnack = new Class.HandleSnack(setSnack);
   handleSnack.setMessage(
@@ -119,13 +123,17 @@ export const TypeTime = () => {
         return value + " giây";
       }
     }
+    onEdit(id) {
+      setDeleteId(id);
+      handleOpenUpdate.open();
+    }
   }
 
   const func = new Func();
 
   React.useEffect(() => {
     func.update();
-  }, [snack, pages.page]);
+  }, [snack, pages.page, isOpenUpdate]);
   return (
     <>
       {/* thong bao */}
@@ -134,6 +142,13 @@ export const TypeTime = () => {
         handleClose={() => handleSnack.close()}
         message={snack.message}
         severity={snack.severity}
+      />
+
+      {/* modal update */}
+      <Update
+        open={isOpenUpdate}
+        handleClose={() => handleOpenUpdate.close()}
+        id={deleteId}
       />
       {/* modal */}
       <Eui.EuiModal.Title
@@ -213,7 +228,7 @@ export const TypeTime = () => {
                         setDeleteId(row.id);
                         handleOpenDelete.open();
                       }}
-                      onEdit={func.onEdit}
+                      onEdit={() => func.onEdit(row.id)}
                     />
                   </Eui.EuiTable.StyledTableCell>
                 </Eui.EuiTable.StyledTableRow>

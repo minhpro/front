@@ -31,6 +31,17 @@ class ChapterApi {
     const body = { subjectId: subjectId, name: name, code: code, units: units };
     return await axiosClient.post(url, body);
   };
+
+  detail = (id) => {
+    const url = `${this.api}detail`;
+    const body = { id: id };
+    return axiosClient.post(url, body);
+  };
+  update = (id, name) => {
+    const url = `${this.api}update`;
+    const body = { id: id, name: name };
+    return axiosClient.post(url, body);
+  };
 }
 
 const chapterApi = new ChapterApi();

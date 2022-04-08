@@ -9,6 +9,7 @@ import * as Api from "api";
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
 import * as Class from "Class";
+import { Update } from "./Update";
 export const TypeQuestion = () => {
   const [pages, setPages] = React.useState({
     data: null,
@@ -22,6 +23,7 @@ export const TypeQuestion = () => {
   const [data, setData] = React.useState({
     TypeQuestion: "",
     des: "",
+    code: "",
   });
 
   const dispatch = useDispatch();
@@ -54,6 +56,10 @@ export const TypeQuestion = () => {
     "",
     "Xác nhận xoá?"
   );
+
+  const [isOpenUpdate, setIsOpenUpdate] = React.useState(false);
+
+  const handleOpenUpdate = new Class.HandlePopup(setIsOpenUpdate);
 
   //  func
 
@@ -94,7 +100,9 @@ export const TypeQuestion = () => {
     onSubmit = (e) => {
       e.preventDefault();
       Function.handler
-        .api(() => Api.questionTypeApi.add(data.TypeQuestion, data.des))
+        .api(() =>
+          Api.questionTypeApi.add(data.TypeQuestion, data.des, data.code)
+        )
         .then((res) => {
           handleSnack.add(res.id);
           handleOpenNew.close();
@@ -112,13 +120,17 @@ export const TypeQuestion = () => {
 
       handleOpenDelete.close();
     };
+    onEdit(id) {
+      setDeleteId(id);
+      handleOpenUpdate.open();
+    }
   }
 
   const func = new Func();
 
   React.useEffect(() => {
     func.handleSearch();
-  }, [snack, pages.page]);
+  }, [snack, pages.page, isOpenUpdate]);
   return (
     <>
       {/* thong bao */}
@@ -127,6 +139,13 @@ export const TypeQuestion = () => {
         handleClose={() => handleSnack.close()}
         message={snack.message}
         severity={snack.severity}
+      />
+
+      {/* modal update */}
+      <Update
+        open={isOpenUpdate}
+        handleClose={() => handleOpenUpdate.close()}
+        id={deleteId}
       />
 
       {/* modal delete */}
@@ -158,6 +177,14 @@ export const TypeQuestion = () => {
             placeholder="Nhập loại câu hỏi"
             onChange={func.handleChange}
           />
+
+          <Ex.ExInputWrapper.Basic
+            label={"Mã câu hỏi"}
+            name={"code"}
+            required
+            placeholder="Nhập mã câu hỏi"
+            onChange={func.handleChange}
+          />
           <Ex.ExInputWrapper.Multiline
             label={"Mô tả"}
             name={"des"}
@@ -172,7 +199,7 @@ export const TypeQuestion = () => {
             borderTop="solid 2px"
             py={2}
           >
-            <button>Thêm mới</button>
+            <Eui.EuiButton.AddNew name={"Thêm mới"} component={"button"} />
           </Mui.Stack>
         </Mui.Stack>
       </Eui.EuiModal.Title>
@@ -194,7 +221,10 @@ export const TypeQuestion = () => {
                     {i + 1}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {row.name || "code"}
+                    {row.name || "name"}
+                  </Eui.EuiTable.StyledTableCell>
+                  <Eui.EuiTable.StyledTableCell align="center">
+                    {row.code || "code"}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     {row.description || ""}
@@ -202,7 +232,7 @@ export const TypeQuestion = () => {
                   <Eui.EuiTable.StyledTableCell align="center">
                     <Ex.ExIconEditDelete
                       onDelete={() => func.openDelete(row.id)}
-                      onEdit={func.onEdit}
+                      onEdit={() => func.onEdit(row.id)}
                     />
                   </Eui.EuiTable.StyledTableCell>
                 </Eui.EuiTable.StyledTableRow>
@@ -230,6 +260,10 @@ const dataColumn = [
   },
   {
     name: "Loại câu hỏi",
+    width: 200,
+  },
+  {
+    name: "Mã câu hỏi",
     width: 200,
   },
   {

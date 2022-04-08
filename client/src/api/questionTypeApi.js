@@ -14,9 +14,20 @@ class QuestionTypeApi {
     const body = { id: id };
     return axiosClient.post(url, body);
   };
-  add = (name, description) => {
+  add = (name, description, code) => {
     const url = `${this.api}add`;
-    const body = { name: name, description: description };
+    const body = { name: name, description: description, code };
+    return axiosClient.post(url, body);
+  };
+
+  detail = (id) => {
+    const url = `${this.api}detail`;
+    const body = { id: id };
+    return axiosClient.post(url, body);
+  };
+  update = (id, name, description, code) => {
+    const url = `${this.api}update`;
+    const body = { id: id, name: name, description: description, code };
     return axiosClient.post(url, body);
   };
 }

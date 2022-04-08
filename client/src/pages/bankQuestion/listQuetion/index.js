@@ -7,21 +7,17 @@ import * as Class from "Class";
 import * as Function from "functions";
 import * as Api from "api";
 import * as View from "./view";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const ListQuestion = () => {
   // redux
-
+  const navigate = useNavigate();
   const [questionList, setQuestionList] = React.useState(null);
   const [pages, setPages] = React.useState({
     page: 1,
     total: 10,
     limit: 32,
   });
-  // const [page, setPage] = React.useState(1);
-  // const handleChange = (event, value) => {
-  //   setPage(value);
-  // };
 
   const [search, setSearch] = React.useState({
     chapterId: null,
@@ -122,6 +118,9 @@ export const ListQuestion = () => {
         .catch((error) => console.log(error));
       handleOpenDelete.close();
     };
+    onEdit(id) {
+      navigate(`chinh-sua/${id}`);
+    }
   }
 
   const func = new Func();
@@ -212,21 +211,24 @@ export const ListQuestion = () => {
               pt={2}
               borderColor={"primary.main"}
               borderTop={"solid 2px"}
-              direction={"row"}
+              direction={"column"}
               spacing={2}
+              justifyContent={"flex-start"}
+              alignItems={"flex-start"}
+              flexWrap={"wrap"}
             >
-              <Eui.EuiButton.Progress
+              <Eui.EuiButton.Search
                 name={"Tìm kiếm"}
                 onClick={func.handleSearch}
               />
               <Link to="/them-cau-tu-luan-EBD">
-                <Eui.EuiButton.Progress
+                <Eui.EuiButton.AddNew
                   name={"Thêm mới câu tự luận"}
                   onClick={func.handleSearch}
                 />
               </Link>
               <Link to={"/them-cau-trac-nghiem-EDB"}>
-                <Eui.EuiButton.Progress
+                <Eui.EuiButton.AddNew
                   name={"Thêm mới câu trắc nghiệm"}
                   onClick={func.handleSearch}
                 />
@@ -263,7 +265,7 @@ export const ListQuestion = () => {
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete.View
                         onDelete={() => func.openDelete(row.id)}
-                        onEdit={func.onEdit}
+                        onEdit={() => func.onEdit(row.id)}
                         onView={() => func.onView(row.id)}
                       />
                     </Eui.EuiTable.StyledTableCell>

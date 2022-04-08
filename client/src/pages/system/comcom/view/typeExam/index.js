@@ -9,6 +9,7 @@ import * as Api from "api";
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
 import * as Class from "Class";
+import { Update } from "./Update";
 
 export const TypeExam = () => {
   const [pages, setPages] = React.useState({
@@ -18,6 +19,10 @@ export const TypeExam = () => {
     limit: 32,
   });
   // redux
+
+  const [isOpenUpdate, setIsOpenUpdate] = React.useState(false);
+
+  const handleOpenUpdate = new Class.HandlePopup(setIsOpenUpdate);
 
   const [open, setIsOpen] = React.useState(false);
   const dispatch = useDispatch();
@@ -96,13 +101,17 @@ export const TypeExam = () => {
         .catch((error) => handleSnack.error());
       handleOpenDelete.close();
     };
+    onEdit(id) {
+      setDeleteId(id);
+      handleOpenUpdate.open();
+    }
   }
 
   const func = new Func();
 
   React.useEffect(() => {
     func.update();
-  }, [snack, pages.page]);
+  }, [snack, pages.page, isOpenUpdate]);
   return (
     <>
       {/* thong bao */}
@@ -142,11 +151,17 @@ export const TypeExam = () => {
             borderTop="solid 2px"
             py={2}
           >
-            <button>Thêm mới</button>
+            <Eui.EuiButton.AddNew component={"button"} />
           </Mui.Stack>
         </Mui.Stack>
       </Eui.EuiModal.Title>
 
+      {/* modal update */}
+      <Update
+        open={isOpenUpdate}
+        handleClose={() => handleOpenUpdate.close()}
+        id={deleteId}
+      />
       {/* modal delete */}
       <Eui.EuiModal.Title
         open={deleteState}
@@ -189,7 +204,7 @@ export const TypeExam = () => {
                         setDeleteId(row.id);
                         handleOpenDelete.open();
                       }}
-                      onEdit={func.onEdit}
+                      onEdit={() => func.onEdit(row.id)}
                     />
                   </Eui.EuiTable.StyledTableCell>
                 </Eui.EuiTable.StyledTableRow>

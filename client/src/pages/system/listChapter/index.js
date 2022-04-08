@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import * as Function from "functions";
 import * as Api from "api";
 import * as Class from "Class";
+import { Update } from "./Update";
 export const PageSystemListChapter = () => {
   const [pages, setPages] = React.useState({
     data: null,
@@ -27,6 +28,10 @@ export const PageSystemListChapter = () => {
   });
 
   const [subject, setSubject] = React.useState(null);
+
+  const [isOpenUpdate, setIsOpenUpdate] = React.useState(false);
+
+  const handleOpenUpdate = new Class.HandlePopup(setIsOpenUpdate);
 
   // life cirle
   React.useEffect(() => {
@@ -180,19 +185,25 @@ export const PageSystemListChapter = () => {
         return reduxClass?.data[index]?.name;
       }
     };
+    onEdit(id) {
+      setDeleteId(id);
+      handleOpenUpdate.open();
+    }
   }
 
   const func = new Func();
   React.useEffect(() => {
     func.handleSearch();
-  }, [snack]);
-
-  React.useEffect(() => {
-    console.log(search);
-  });
+  }, [snack, isOpenUpdate]);
 
   return (
     <Views.ViewContent title={"Danh sách chủ đề"}>
+      {/* modal update */}
+      <Update
+        open={isOpenUpdate}
+        handleClose={() => handleOpenUpdate.close()}
+        id={deleteId}
+      />
       {/* thong bao */}
       <Eui.EuiSnackbar
         open={snack.isOpen}
@@ -287,9 +298,12 @@ export const PageSystemListChapter = () => {
                       {row.name || "name class"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
+                      {row.code || "code"}
+                    </Eui.EuiTable.StyledTableCell>
+                    <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete
                         onDelete={() => func.openDelete(row.id)}
-                        onEdit={func.onEdit}
+                        onEdit={() => func.onEdit(row.id)}
                       />
                     </Eui.EuiTable.StyledTableCell>
                   </Eui.EuiTable.StyledTableRow>
@@ -326,18 +340,21 @@ const dataColumn = [
   },
   {
     name: "Lớp",
-    width: 200,
+    width: 100,
   },
   {
     name: "Môn",
-    width: 200,
+    width: 100,
   },
   {
     name: "Tên chủ đề",
-    width: 200,
+  },
+  {
+    name: "Mã chủ đề",
+    width: 100,
   },
   {
     name: "Thao tác",
-    width: 200,
+    width: 100,
   },
 ];

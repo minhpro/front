@@ -26,6 +26,8 @@ export default createGlobalStyle`
     @media ${(props) => props.theme.breakpoints.md} {
       font-size: 55%;
     }
+    --color-title: ${(props) => props.theme.palette.text.main};
+
   }
   body {
 

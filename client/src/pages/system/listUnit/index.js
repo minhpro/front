@@ -7,6 +7,7 @@ import * as Class from "Class";
 import * as Function from "functions";
 import * as Api from "api";
 import * as View from "./view";
+import { Update } from "./Update";
 
 export const PageSystemListUnit = () => {
   const [pages, setPages] = React.useState({
@@ -17,6 +18,10 @@ export const PageSystemListUnit = () => {
   });
 
   // redux
+
+  const [isOpenUpdate, setIsOpenUpdate] = React.useState(false);
+
+  const handleOpenUpdate = new Class.HandlePopup(setIsOpenUpdate);
 
   const [open, setIsOpen] = React.useState(false);
   const [isOpenView, setIsOpenView] = React.useState(false);
@@ -190,15 +195,26 @@ export const PageSystemListUnit = () => {
         });
       handleOpenDelete.close();
     };
+    onEdit(id) {
+      setDeleteId(id);
+      handleOpenUpdate.open();
+    }
   }
 
   const func = new Func();
   React.useEffect(() => {
     func.handleSearch();
-  }, [pages.page, isDeteteOpen]);
+  }, [pages.page, isDeteteOpen, isOpenUpdate]);
 
   return (
     <Views.ViewContent title={"Danh sách đơn vị kiến thức"}>
+      {/* modal update */}
+      <Update
+        open={isOpenUpdate}
+        handleClose={() => handleOpenUpdate.close()}
+        id={deleteId}
+      />
+
       {/* view require */}
 
       <Ex.ExModalPoppup.ViewQuestion
@@ -374,7 +390,7 @@ export const PageSystemListUnit = () => {
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete.View
                         onDelete={() => func.openDelete(row.id)}
-                        onEdit={func.onEdit}
+                        onEdit={() => func.onEdit(row.id)}
                         onView={() => func.onView(row.id)}
                       />
                     </Eui.EuiTable.StyledTableCell>

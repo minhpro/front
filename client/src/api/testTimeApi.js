@@ -23,6 +23,16 @@ class TestTypeApi {
     const body = { time: time, description: description };
     return axiosClient.post(url, body);
   };
+  update = (id, time, description) => {
+    const url = `${this.api}update`;
+    const body = { id, time: time, description: description };
+    return axiosClient.post(url, body);
+  };
+  detail = (id) => {
+    const url = `${this.api}detail`;
+    const body = { id: id };
+    return axiosClient.post(url, body);
+  };
 }
 
 const testTimeApi = new TestTypeApi();

@@ -4,7 +4,16 @@ class QuestionApi {
   constructor() {
     this.api = "question/";
   }
-  search = (unitId, chapterId, subjectId, classId, keyword, type, page, limit) => {
+  search = (
+    unitId,
+    chapterId,
+    subjectId,
+    classId,
+    keyword,
+    type,
+    page,
+    limit
+  ) => {
     const url = `${this.api}search`;
     const body = {
       unitId: unitId,
@@ -43,6 +52,11 @@ class QuestionApi {
     const url = `${this.api}detail`;
     const body = { id: id };
     return axiosClient.post(url, id);
+  };
+  update = (body) => {
+    const url = `${this.api}update`;
+    // const body = { id: id };
+    return axiosClient.post(url, body);
   };
 }
 
