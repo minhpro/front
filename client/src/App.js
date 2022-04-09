@@ -10,6 +10,7 @@ import AddSchool from "pages/schoolManagement/AddSchool";
 import EditSchool from "pages/schoolManagement/EditSchool";
 import SchoolUserList from "pages/schoolUserManagement/SchoolUserList";
 import AddSchoolUser from "pages/schoolUserManagement/AddSchoolUser";
+import OAuth2RedirectHandler from "auth/OAuth2RedirectHandler"
 
 const ROLES = {
   User: "USER",
@@ -97,6 +98,7 @@ function App() {
         <Route path="schools/:schoolId/users/add-user" element={<AddSchoolUser />} />
         <Route path="schools/:schoolId/users/edit-user/:id" element={<EditSchool />} />
       </Route>
+      <Route path="oauth2/redirect" element={<OAuth2RedirectHandler />}></Route>  
     </Routes>
   );
 }

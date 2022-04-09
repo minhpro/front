@@ -6,6 +6,7 @@ import * as Api from "api";
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
 import { useNavigate, useLocation } from "react-router-dom";
+import { ApiUrl } from "assets/contants";
 import {
   AccountCircle,
   Visibility,
@@ -141,6 +142,7 @@ export const LoginPage = () => {
       />
       <Mui.Stack direction={"row"} justifyContent={"space-between"}>
         <Eui.EuiButton.Progress name={"Đăng nhập"} component={"button"} />
+        <span><a href={ApiUrl.OAUTH2_AUTH_URL}>Đăng nhập qua LMS</a></span>
         <h3>Quên mật khẩu?</h3>
       </Mui.Stack>
 

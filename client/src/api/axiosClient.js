@@ -4,10 +4,19 @@ import * as contants from "assets/contants";
 
 import { getLocalToken } from "utils/token/getLocalToken";
 
+function getLocalAccessToken() {
+  const accessToken = window.localStorage.getItem("token");
+  return accessToken;
+}
+function getLocalRefreshToken() {
+  const refreshToken = window.localStorage.getItem("refresh_token");
+  return refreshToken;
+}
+
 const axiosClient = axios.create({
   baseURL: `${contants.ApiUrl.apiUrl}`,
   headers: {
-    "content-type": "application/json",
+    "Content-Type": "application/json",
   },
   paramsSerializer: (params) => querySting.stringify(params),
 });
@@ -22,8 +31,16 @@ axiosClient.interceptors.request.use(async (config) => {
   config.headers["Access-Control-Allow-Origin"] = "*";
   // config.headers["Access-Control-Allow-Methods"] =
   //   "GET, PUT, POST, DELETE, OPTIONS";
+  const token = getLocalAccessToken();
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
+  }
   return config;
-});
+},
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 axiosClient.interceptors.response.use(
   (response) => {
@@ -32,7 +49,7 @@ axiosClient.interceptors.response.use(
     }
     return response;
   },
-  (error) => {
+  async (error) => {
     // Handle errors
     throw error;
   }

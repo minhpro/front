@@ -12,6 +12,16 @@ class AuthApi {
     };
     return axiosClient.post(url, body);
   };
+
+  loginWithProvider = (code, state) => {
+    const url = "auth/oauth2/login";
+    const body = {
+      code,
+      state
+    };
+    
+    return axiosClient.post(url, body);
+  };
 }
 
 const authApi = new AuthApi();
