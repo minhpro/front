@@ -217,7 +217,7 @@ export const OrganExam = () => {
               <Ex.ExDataSelect.Matrix
                 id={search.subjectId}
                 onChange={func.handleChange}
-                value={search.matrixID}
+                value={search.matrixId}
               />
             </Item>
             <Item>

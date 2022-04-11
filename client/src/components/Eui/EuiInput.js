@@ -69,7 +69,6 @@ EuiInput.Select = function ({ data, ...rest }) {
         <Mui.MenuItem value={null}>
           <em>Chưa chọn</em>
         </Mui.MenuItem>
-
         {data
           ? data.map((data, i) => {
               return (

@@ -268,7 +268,6 @@ export const EditEssay = ({ data }) => {
               onChange={(e) => setQuestion((pre) => ({ ...pre, answer: e }))}
               defaultValue={question.answer}
             />
-
             <Mui.Stack>
               <Eui.EuiButton.AddNew name={"Cập nhật"} component={"button"} />
             </Mui.Stack>

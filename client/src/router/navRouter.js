@@ -53,32 +53,32 @@ class NavRouter {
           },
         ],
       },
-      // {
-      //   name: "Quản lý dữ liệu riêng",
-      //   icon: <DataUsageIcon sx={{ fontSize: 30 }} />,
-      //   nav: [
-      //     {
-      //       name: "Danh sách câu hỏi",
-      //       link: "danh-sach-cau-hoi",
-      //       element: <Pages.BankQuestion.ListQuestion />,
-      //     },
-      //     {
-      //       name: "Ngân hàng câu hỏi",
-      //       link: "ngan-hang-cau-hoi",
-      //       element: <Pages.BankQuestion.ListQuestion />,
-      //     },
-      //     {
-      //       name: "Thêm câu hỏi trắc nghiệm",
-      //       link: "them-cau-trac-nghiem",
-      //       element: <Pages.BankQuestion.ListQuestion />,
-      //     },
-      //     {
-      //       name: "Thêm câu hỏi tự luận",
-      //       link: "them-cau-tu-luan",
-      //       element: <Pages.BankQuestion.ListQuestion />,
-      //     },
-      //   ],
-      // },
+      {
+        name: "Quản lý dữ liệu riêng",
+        icon: <DataUsageIcon sx={{ fontSize: 30 }} />,
+        nav: [
+          {
+            name: "Danh sách câu hỏi",
+            link: "danh-sach-cau-hoi",
+            element: <Pages.BankQuestion.ListQuestion />,
+          },
+          // {
+          //   name: "Ngân hàng câu hỏi",
+          //   link: "ngan-hang-cau-hoi",
+          //   element: <Pages.BankQuestion.ListQuestion />,
+          // },
+          {
+            name: "Thêm câu hỏi trắc nghiệm",
+            link: "them-cau-trac-nghiem",
+            element: <Pages.BankQuestion.AddMultiQuestion />,
+          },
+          {
+            name: "Thêm câu hỏi tự luận",
+            link: "them-cau-tu-luan",
+            element: <Pages.BankQuestion.AddMultiQuestion />,
+          },
+        ],
+      },
       {
         name: "Khởi tạo đề thi",
         icon: <ArticleIcon sx={{ fontSize: 30 }} />,
