@@ -82,7 +82,7 @@ export const LayoutHome = () => {
   return (
     <>
       {/* {exam.id ? <Co.Notification.Exam open={true} id={exam.id} /> : null} */}
-      <ThongBao />
+      {/* <ThongBao /> */}
       <Ex.Header.Nav />
       <Ex.Header />
       <Style.Main className="container">

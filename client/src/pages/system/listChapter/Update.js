@@ -76,12 +76,13 @@ export const Update = ({ open, handleClose, id }) => {
             placeholder="Nhập tên chủ đề"
             value={data.name}
           />
-          <Ex.ExInputWrapper.Multiline
+          <Ex.ExInputWrapper.Basic
             label={"Mã chủ đề"}
             name={"code"}
             onChange={func.handleChange}
             placeholder="Nhập mã chủ đề"
             value={data.code}
+            disabled
           />
 
           <Mui.Stack

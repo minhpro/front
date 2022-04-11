@@ -8,6 +8,7 @@ import * as Function from "functions";
 import * as Api from "api";
 import * as Class from "Class";
 import { Update } from "./Update";
+import moment from "moment";
 export const PageSystemListChapter = () => {
   const [pages, setPages] = React.useState({
     data: null,
@@ -25,6 +26,7 @@ export const PageSystemListChapter = () => {
     chapterName: "",
     classId: null,
     subjectId: null,
+    code: "",
   });
 
   const [subject, setSubject] = React.useState(null);
@@ -155,7 +157,7 @@ export const PageSystemListChapter = () => {
             Api.chapterApi.add(
               addingData.subjectId,
               addingData.chapterName,
-              "code",
+              addingData.code,
               []
             )
           )
@@ -242,6 +244,13 @@ export const PageSystemListChapter = () => {
           required
           onChange={func.handleInput}
         />
+        <Mui.Divider />
+        <Ex.ExInputWrapper.Basic
+          label={"Mã chủ đề:"}
+          name={"code"}
+          required
+          onChange={func.handleInput}
+        />
       </Ex.ExModalPoppup.Create>
 
       <Mui.Stack spacing={0.5}>
@@ -270,12 +279,11 @@ export const PageSystemListChapter = () => {
             </Item>
           </Mui.Grid>
           <Mui.Stack direction={"row"} py={2} spacing={2}>
-            <Eui.EuiButton.Search onClick={func.handleSearch} />
-
             <Eui.EuiButton.OpenCreate
               name={"Thêm chủ đề"}
               onClick={() => handleOpenNew.open()}
             />
+            <Eui.EuiButton.Search onClick={func.handleSearch} />
           </Mui.Stack>
         </Views.ViewBoard>
 
@@ -299,6 +307,9 @@ export const PageSystemListChapter = () => {
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.code || "code"}
+                    </Eui.EuiTable.StyledTableCell>
+                    <Eui.EuiTable.StyledTableCell align="center">
+                      {moment(row.createdAt).format("DD-MM-YYYY h:mm:ss")}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete
@@ -352,6 +363,10 @@ const dataColumn = [
   {
     name: "Mã chủ đề",
     width: 100,
+  },
+  {
+    name: "Thời gian tạo",
+    width: 150,
   },
   {
     name: "Thao tác",

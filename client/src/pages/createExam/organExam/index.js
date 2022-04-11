@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import * as Class from "Class";
 import { ViewCreateExam } from "./view/ViewCreateExam";
 import { ViewExam } from "./view/ViewExam";
-
+import moment from "moment";
 export const OrganExam = () => {
   const navigate = useNavigate();
   const [pages, setPages] = React.useState({
@@ -251,12 +251,8 @@ export const OrganExam = () => {
             borderTop={"solid 1px"}
             borderColor={"red"}
           >
+            <Eui.EuiButton.OpenCreate onClick={() => handleOpenNew.open()} />{" "}
             <Eui.EuiButton.Search onClick={func.handleSearch} />
-
-            <Eui.EuiButton.OpenCreate
-              // name={"Tao moi"}
-              onClick={() => handleOpenNew.open()}
-            />
           </Mui.Stack>
         </Views.ViewBoard>
 
@@ -282,6 +278,9 @@ export const OrganExam = () => {
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row?.testMatrixData?.subjectData?.name}
+                    </Eui.EuiTable.StyledTableCell>
+                    <Eui.EuiTable.StyledTableCell align="center">
+                      {moment(row.createdAt).format("DD-MM-YYYY h:mm:ss")}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete.View
@@ -343,7 +342,11 @@ const dataColumn = [
     width: 200,
   },
   {
-    name: "Thao tác",
+    name: "Thời gian tạo",
     width: 200,
+  },
+  {
+    name: "Thao tác",
+    width: 100,
   },
 ];

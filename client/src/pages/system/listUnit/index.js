@@ -8,6 +8,7 @@ import * as Function from "functions";
 import * as Api from "api";
 import * as View from "./view";
 import { Update } from "./Update";
+import moment from "moment";
 
 export const PageSystemListUnit = () => {
   const [pages, setPages] = React.useState({
@@ -383,11 +384,17 @@ export const PageSystemListUnit = () => {
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.chapterData?.subjectData.name || "name class"}
                     </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="left">
+                    <Eui.EuiTable.StyledTableCell align="center">
                       {row.chapterData?.name || "list class"}
                     </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="left">
+                    <Eui.EuiTable.StyledTableCell align="center">
                       {row.name || "list class"}
+                    </Eui.EuiTable.StyledTableCell>
+                    <Eui.EuiTable.StyledTableCell align="center">
+                      {row.code || "code"}
+                    </Eui.EuiTable.StyledTableCell>
+                    <Eui.EuiTable.StyledTableCell align="center">
+                      {moment(row.createdAt).format("DD-MM-YYYY h:mm:ss")}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete.View
@@ -430,19 +437,27 @@ const dataColumn = [
   },
   {
     name: "Lớp",
-    width: 100,
+    width: 60,
   },
   {
     name: "Môn",
-    width: 100,
+    width: 60,
   },
   {
     name: "Chủ đề",
-    width: 200,
+    width: 150,
   },
   {
     name: "Đơn vị kiến thức",
-    width: 200,
+    width: 150,
+  },
+  {
+    name: "Mã ĐVKT",
+    width: 50,
+  },
+  {
+    name: "Thời gian tạo",
+    width: 150,
   },
   {
     name: "Thao tác",

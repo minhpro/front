@@ -271,7 +271,6 @@ export const CreateMatrix = () => {
               dataNumber.data?.map((data, i) => {
                 return (
                   <Mui.Stack key={i}>
-                    <h3>Chủ đề: {i + 1} </h3>
                     <Eui.EuiMatrix data={data} />
                   </Mui.Stack>
                 );

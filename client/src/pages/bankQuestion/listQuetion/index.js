@@ -243,7 +243,7 @@ export const ListQuestion = () => {
               ? questionList.data.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {i + 1}
+                      {Function.formatNumber.getSTT(i, pages.page, pages.limit)}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row?.code || "code"}

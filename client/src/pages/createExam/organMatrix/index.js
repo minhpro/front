@@ -7,7 +7,7 @@ import * as Function from "functions";
 import * as Api from "api";
 import { Link } from "react-router-dom";
 import * as Class from "Class";
-
+import moment from "moment";
 export const OrganMatrix = () => {
   const [pages, setPages] = React.useState({
     data: null,
@@ -24,7 +24,8 @@ export const OrganMatrix = () => {
     classId: null,
     subjectId: null,
     unitName: "",
-    ExamTypeId: null,
+    testTypeId: null,
+    target: "EXAM",
   });
   const [snack, setSnack] = React.useState({
     isOpen: false,
@@ -178,6 +179,7 @@ export const OrganMatrix = () => {
                   <Ex.ExDataSelect.Subject
                     onChange={func.handleChange}
                     value={search.subjectId}
+                    id={search.classId}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -185,13 +187,13 @@ export const OrganMatrix = () => {
             <Item>
               <Ex.ExDataSelect.MatrixTarget
                 onChange={func.handleChange}
-                value={search.classId}
+                value={search.target}
               />
             </Item>
             <Item>
               <Ex.ExDataSelect.ExamType
                 onChange={func.handleChange}
-                value={search.ExamTypeId}
+                value={search.testTypeId}
               />
             </Item>
             <Item>
@@ -210,11 +212,10 @@ export const OrganMatrix = () => {
             borderTop={"solid 1px"}
             borderColor={"red"}
           >
-            <Eui.EuiButton.Search onClick={func.handleSearch} />
-
             <Link to={"/tao-ma-tran-moi"}>
               <Eui.EuiButton.OpenCreate />
             </Link>
+            <Eui.EuiButton.Search onClick={func.handleSearch} />
           </Mui.Stack>
         </Views.ViewBoard>
 
@@ -238,6 +239,9 @@ export const OrganMatrix = () => {
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row?.subjectData?.name || ""}
+                    </Eui.EuiTable.StyledTableCell>
+                    <Eui.EuiTable.StyledTableCell align="center">
+                      {moment(row.createdAt).format("DD-MM-YYYY h:mm:ss")}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete.View
@@ -279,11 +283,11 @@ const dataColumn = [
     width: 50,
   },
   {
-    name: "Mã đề",
+    name: "Mã Ma trận",
     width: 200,
   },
   {
-    name: "Tên đề",
+    name: "Tên Ma trận",
     width: 200,
   },
   {
@@ -296,6 +300,10 @@ const dataColumn = [
   },
   {
     name: "Môn",
+    width: 200,
+  },
+  {
+    name: "Thời gian tạo",
     width: 200,
   },
   {

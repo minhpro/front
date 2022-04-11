@@ -8,15 +8,6 @@ import styled from "styled-components";
 import * as Eui from "./";
 
 export const EuiMatrix = ({ data, icon }) => {
-  const dispatch = useDispatch();
-
-  function handChange(e) {
-    console.log("asd");
-    const payload = { requireID: data.id, number: parseInt(e.target.value) };
-    dispatch(
-      Slide.questionDistributionsSlide.updateQuestionDistributions(payload)
-    );
-  }
   return (
     <Mui.Stack spacing={2}>
       <EuiMatrix.Parent
@@ -24,35 +15,43 @@ export const EuiMatrix = ({ data, icon }) => {
         icon={icon}
         number={data.numberOfQuestions}
       >
-        <p>Danh sách Đơn vị kiến thức</p>
-        {data.unitData.map((unit, i) => {
-          return (
-            <EuiMatrix.Parent
-              name={unit.name}
-              key={i}
-              number={unit.numberOfQuestions}
-            >
-              <p>Yêu cầu kiến thức</p>
-
-              <Eui.EuiTable dataColumn={dataColumn}>
-                {unit.requirements
-                  ? unit.requirements?.map((row, i) => (
-                      <EuiMatrix.Chil2 data={row} i={i + 1} key={i} />
-                    ))
-                  : null}
-              </Eui.EuiTable>
-              {unit.requirements?.map((require, i) => {
-                return <EuiMatrix.Chil data={require} key={i} />;
-              })}
-            </EuiMatrix.Parent>
-          );
-        })}
+        <Mui.Stack ml={2}>
+          <p>Danh sách Đơn vị kiến thức:</p>
+          {data.unitData.map((unit, i) => {
+            return (
+              <EuiMatrix.Parent
+                name={unit.name}
+                key={i}
+                number={unit.numberOfQuestions}
+                nameType={`ĐVKT ${i + 1}`}
+              >
+                <Mui.Stack ml={2}>
+                  <p>Yêu cầu cần đạt:</p>
+                  <Eui.EuiTable dataColumn={dataColumn}>
+                    {unit.requirements
+                      ? unit.requirements?.map((row, i) => (
+                          <EuiMatrix.Chil2 data={row} i={i + 1} key={i} />
+                        ))
+                      : null}
+                  </Eui.EuiTable>
+                </Mui.Stack>
+              </EuiMatrix.Parent>
+            );
+          })}
+        </Mui.Stack>
       </EuiMatrix.Parent>
     </Mui.Stack>
   );
 };
 
-EuiMatrix.Parent = function Parent({ name, number, icon, children, ...rest }) {
+EuiMatrix.Parent = function Parent({
+  name,
+  number,
+  icon,
+  nameType,
+  children,
+  ...rest
+}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -71,14 +70,15 @@ EuiMatrix.Parent = function Parent({ name, number, icon, children, ...rest }) {
         {...rest}
       >
         <Mui.Stack
-          direction={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-          spacing={2}
+          direction={"column"}
+          justifyContent={"flex-start"}
+          alignItems={"flex-start"}
+          spacing={0.5}
         >
-          <p> {number || 0}</p>
-
-          <h3>{name || "name"}</h3>
+          <h3>
+            {nameType || "Tên chủ đề"}: {name || "name"}
+          </h3>
+          <p> Số câu hỏi: {number || 0}</p>
         </Mui.Stack>
 
         {open ? <ExpandLess /> : <ExpandMore />}
@@ -94,10 +94,17 @@ EuiMatrix.Chil2 = function Chil({ data, i, ...rest }) {
   const dispatch = useDispatch();
 
   function handChange(e) {
-    const payload = { requireID: data.id, number: parseInt(e.target.value) };
-    dispatch(
-      Slide.questionDistributionsSlide.updateQuestionDistributions(payload)
-    );
+    if (e.target.value) {
+      const payload = { requireID: data.id, number: parseInt(e.target.value) };
+      dispatch(
+        Slide.questionDistributionsSlide.updateQuestionDistributions(payload)
+      );
+    } else {
+      const payload = { requireID: data.id, number: parseInt(0) };
+      dispatch(
+        Slide.questionDistributionsSlide.updateQuestionDistributions(payload)
+      );
+    }
   }
   return (
     <>
@@ -113,7 +120,7 @@ EuiMatrix.Chil2 = function Chil({ data, i, ...rest }) {
           {data.numberOfQuestions}
         </Eui.EuiTable.StyledTableCell>
         <Eui.EuiTable.StyledTableCell align="center">
-          <input
+          <Style.Input
             type={"number"}
             value={data.numberOfQuestions}
             onChange={handChange}
@@ -147,7 +154,7 @@ EuiMatrix.Chil = function Chil({ data, ...rest }) {
         alignItems={"center"}
         spacing={2}
       >
-        <input
+        <Style.Input
           {...rest}
           type={"number"}
           value={data.numberOfQuestions}
@@ -170,9 +177,10 @@ EuiMatrix.NavBoard = function ({ name, ...rest }) {
 
 const Style = {
   SuiStack: styled(Mui.Stack)`
-    color: ${(props) => (props.isOpen ? "red" : null)};
+    /* color: ${(props) => (props.isOpen ? "red" : null)}; */
+    transform-origin: left;
     :hover {
-      color: red;
+      transform: translateY(-5px) scale(1.05);
     }
   `,
 
@@ -186,6 +194,10 @@ const Style = {
       border-bottom: 3px solid;
     }
   `,
+  Input: styled.input`
+    text-align: center;
+    width: 100%;
+  `,
 };
 
 const dataColumn = [
@@ -195,7 +207,7 @@ const dataColumn = [
   },
   {
     name: "Tên yêu cầu kiến thức",
-    // width: 200,
+    width: 200,
   },
   {
     name: "Số câu",

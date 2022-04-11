@@ -157,7 +157,7 @@ export const CreateExams = () => {
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
-              <Mui.Grid container columnSpacing={5}>
+              <Mui.Grid container columnSpacing={{ xs: 2, lg: 5 }}>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Class
                     onChange={func.handleChange}
@@ -184,11 +184,24 @@ export const CreateExams = () => {
               />
             </Item>
             <Item>
-              <Ex.ExDataSelect.ExamType
-                onChange={func.handleChange}
-                required
-                value={search.testTypeId}
-              />
+              <Mui.Grid container columnSpacing={{ xs: 2, lg: 5 }}>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExDataSelect.ExamType
+                    onChange={func.handleChange}
+                    required
+                    value={search.testTypeId}
+                  />
+                </Mui.Grid>
+                <Mui.Grid item xs={6}>
+                  <Ex.ExInputWrapper.Basic
+                    label={"Mã đề thi:"}
+                    name={"testCode"}
+                    placeholder={"Nhập mã đề thi mới"}
+                    onChange={func.handleChange}
+                    required
+                  />
+                </Mui.Grid>
+              </Mui.Grid>
             </Item>
 
             <Item>
@@ -212,7 +225,7 @@ export const CreateExams = () => {
           >
             {search.matrixId ? (
               <Eui.EuiButton.AddType
-                name={"Tạo bộ câu mới"}
+                name={"Trộn câu hỏi trong ma trận"}
                 onClick={func.handleGen}
               />
             ) : null}
