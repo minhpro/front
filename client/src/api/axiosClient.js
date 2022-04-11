@@ -2,7 +2,7 @@ import axios from "axios";
 import querySting from "query-string";
 import * as contants from "assets/contants";
 
-// import { getLocalToken } from "utils/token/getLocalToken";
+import { getLocalToken } from "utils/token/getLocalToken";
 
 const axiosClient = axios.create({
   baseURL: `${contants.ApiUrl.apiUrl}`,
@@ -15,9 +15,9 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(async (config) => {
   // Handle token here ...
 
-  // if (getLocalToken()) {
-  //   config.headers.common["Authorization"] = `Bearer ${getLocalToken()}`;
-  // }
+  if (getLocalToken()) {
+    config.headers.common["Authorization"] = `Bearer ${getLocalToken()}`;
+  }
 
   config.headers["Access-Control-Allow-Origin"] = "*";
   // config.headers["Access-Control-Allow-Methods"] =
