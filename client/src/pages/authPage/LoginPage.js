@@ -83,8 +83,9 @@ export const LoginPage = () => {
       component={"form"}
       onSubmit={func.login}
     >
-      <h2>Đăng nhập hệ thống EBD</h2>
+      <h3>Đăng nhập hệ thống EBD</h3>
       <Eui.EuiInput.Icon
+        placeholder={"Nhập địa chỉ email"}
         name="username"
         label="username"
         type="text"
@@ -102,7 +103,8 @@ export const LoginPage = () => {
       <Eui.EuiInput.Icon
         name="password"
         label="password"
-        type="password"
+        type={authInput.showPassword ? "text" : "password"}
+        placeholder={"Nhập mật khẩu"}
         InputProps={{
           startAdornment: (
             <Mui.InputAdornment position="start">
@@ -128,7 +130,11 @@ export const LoginPage = () => {
         // error={true}
         // error={usernameErr}
       />
-      <Eui.EuiButton.Progress name={"Đăng nhập"} component={"button"} />
+      <Mui.Stack direction={"row"} justifyContent={"space-between"}>
+        <Eui.EuiButton.Progress name={"Đăng nhập"} component={"button"} />
+        <h3>Quên mật khẩu?</h3>
+      </Mui.Stack>
+
       {/* thong bao */}
       <Eui.EuiSnackbar
         open={snack.isOpen}

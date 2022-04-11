@@ -27,6 +27,7 @@ export default createGlobalStyle`
       font-size: 55%;
     }
     --color-title: ${(props) => props.theme.palette.text.main};
+    --bs-primary: #dc1928;
 
   }
   body {
@@ -73,6 +74,22 @@ h1,h2,h3,h4,h5,h6,button {
     }
     @media ${(props) => props.theme.breakpoint.sm} {
       font-size: 28px;
+    }
+  }
+
+  h2 {
+    font-size: 48px;
+    @media ${(props) => props.theme.breakpoint.xl} {
+      font-size: 38px;
+    }
+    @media ${(props) => props.theme.breakpoint.lg} {
+      font-size: 32px;
+    }
+    @media ${(props) => props.theme.breakpoint.md} {
+      font-size: 28px;
+    }
+    @media ${(props) => props.theme.breakpoint.sm} {
+      font-size: 24px;
     }
   }
 

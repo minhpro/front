@@ -14,7 +14,7 @@ export const EuiSnackbar = ({ open, handleClose, message, severity }) => {
         severity={severity || "success"}
         sx={{ width: "100%" }}
       >
-        <h2> {message || "   This is a success message!"}</h2>
+        <h3> {message || "   This is a success message!"}</h3>
       </Mui.Alert>
     </Mui.Snackbar>
   );

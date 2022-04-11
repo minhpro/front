@@ -6,6 +6,7 @@ import * as DoTest from "./doTest";
 import * as UserManage from "./userManage";
 import * as MemberManage from "./memberManage";
 import * as AnswerCheck from "./answerCheck";
+import * as Home from "./Home";
 
 import * as AuthPage from "./authPage";
 export {
@@ -18,4 +19,5 @@ export {
   MemberManage,
   AnswerCheck,
   AuthPage,
+  Home,
 };

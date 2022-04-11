@@ -5,6 +5,7 @@ import * as Mui from "@mui/material";
 import * as Sui from "components/Sui";
 import { Link } from "react-router-dom";
 import * as Hook from "hook";
+import * as Contants from "assets/contants";
 
 export const Header = () => {
   return (
@@ -43,11 +44,18 @@ Header.Nav = function Nav() {
             <Sui.SuiLogo.Basic src={Func.getImage.getPng("logo")} />
           </Link>
         </Mui.Stack>
-        <Mui.Stack direction={"row"} spacing={2}>
-          <p>nav</p>
-          <p>nav</p>
-          <p>nav</p>
-          <p>nav</p>
+        <Mui.Stack
+          direction={"row"}
+          spacing={2}
+          sx={{ display: { xs: "none", md: "flex" } }}
+        >
+          {Contants.navData.header.map((item, i) => {
+            return (
+              <Style.NavLink to={item.link} key={i} className={"ad"}>
+                <h3 style={{ color: "white" }}>{item.name}</h3>
+              </Style.NavLink>
+            );
+          })}
         </Mui.Stack>
       </Mui.Stack>
     </Style.Nav>
@@ -78,5 +86,32 @@ const Style = {
     z-index: 10;
     box-shadow: 0px -3px 21px rgba(0, 0, 0, 0.25);
     color: white;
+  `,
+
+  NavLink: styled(Link)`
+    display: inline-block;
+    position: relative;
+    color: white;
+    cursor: pointer;
+
+    ::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 3px;
+      bottom: 0;
+      left: 0;
+      background-color: white;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+
+    :hover {
+      ::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+    }
   `,
 };

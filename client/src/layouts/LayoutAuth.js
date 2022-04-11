@@ -2,7 +2,7 @@ import * as Mui from "@mui/material";
 import { SuiLogo } from "components/Sui";
 import { getImage } from "functions";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 export const LayoutAuth = () => {
   return (
     <Mui.Grid container sx={{ height: "100vh" }}>
@@ -13,8 +13,11 @@ export const LayoutAuth = () => {
           sx={{ height: "100%" }}
         >
           <Mui.Stack>
-            <img src={getImage.getPng("logo")} style={{ width: "300px" }} />
-            <h1>Hệ thống khảo thí EBD</h1>
+            <Link to={"/"} style={{ width: "fit-content" }}>
+              <img src={getImage.getPng("logo")} style={{ width: "300px" }} />
+            </Link>
+
+            <h2>Hệ thống quản lý Học và thi trực tuyến EBD MLS</h2>
           </Mui.Stack>
         </Mui.Stack>
       </Item>
