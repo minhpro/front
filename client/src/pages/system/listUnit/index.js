@@ -103,8 +103,10 @@ export const PageSystemListUnit = () => {
         return null;
       }
       let data = requirements.data;
-      data.push({ name: requirements.input });
-      setRequirements({ input: "", data: data });
+
+      const newData = data.filter((e) => e.name !== requirements.input);
+      newData.push({ name: requirements.input });
+      setRequirements({ input: "", data: newData });
     }
 
     onDeleteRequirement(name) {

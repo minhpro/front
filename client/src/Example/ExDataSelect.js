@@ -218,7 +218,7 @@ ExDataSelect.Score = function Score({ ...rest }) {
     <Ex.ExInputWrapper.Select
       label={"Cách tính điểm:"}
       name={"scoreCalculationTypeId"}
-      defautValue={data[0].id}
+      defautValue={data ? data[0].id : null}
       data={data}
       {...rest}
     />

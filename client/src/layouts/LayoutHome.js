@@ -82,7 +82,8 @@ export const LayoutHome = () => {
   return (
     <>
       {/* {exam.id ? <Co.Notification.Exam open={true} id={exam.id} /> : null} */}
-      {/* <ThongBao /> */}
+      <ThongBao />
+      <Ex.Header.Nav />
       <Ex.Header />
       <Style.Main className="container">
         <Mui.Stack direction={{ xs: "column", md: "row" }}>
@@ -122,6 +123,7 @@ const Nav = () => {
 
 const ThongBao = () => {
   const [exam, setExam] = React.useState({
+    open: false,
     id: null,
     start: null,
     end: null,
@@ -137,7 +139,7 @@ const ThongBao = () => {
 
       setExam({ ...exam, id: data.id });
     }
-    if (pathnames[0] !== "lam-bai") {
+    if (pathnames[0] === "lam-bai") {
       console.log("lambai");
       setExam({ ...exam, id: null });
     }
@@ -163,7 +165,7 @@ const ThongBao = () => {
 
   return (
     <>
-      <Co.Notification.Exam open={exam.id} id={exam.id} />{" "}
+      <Co.Notification.Exam open={exam.open} id={exam.id} />{" "}
     </>
   );
 };

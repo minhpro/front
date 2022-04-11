@@ -266,22 +266,24 @@ export const CreateMatrix = () => {
 
         <Views.ViewBoard>
           <Mui.Stack spacing={3}>
+            <h3>Danh sách chủ đề</h3>
             {dataNumber.data ? (
               dataNumber.data?.map((data, i) => {
-                return <Eui.EuiMatrix data={data} />;
+                return (
+                  <Mui.Stack key={i}>
+                    <h3>Chủ đề: {i + 1} </h3>
+                    <Eui.EuiMatrix data={data} />
+                  </Mui.Stack>
+                );
               })
             ) : (
-              <h4> Chưa chọn môn học</h4>
+              <p> Chưa chọn môn học</p>
             )}
           </Mui.Stack>
         </Views.ViewBoard>
         <Views.ViewBoard>
           <Mui.Stack spacing={3}>
             <Eui.EuiButton.OpenCreate onClick={func.handleOpen} />
-            {/* <Eui.EuiButton.Progress
-              name={"Tao moi"}
-              onClick={func.handleOpen}
-            /> */}
           </Mui.Stack>
         </Views.ViewBoard>
       </Mui.Stack>

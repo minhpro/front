@@ -295,8 +295,8 @@ export const AddMultiQuestion = () => {
                       ...question,
                       answer: parseInt(e.target.value),
                     });
-                    console.log(question);
                   }}
+                  value={question.answer}
                 >
                   <Mui.FormControlLabel
                     value={0}
@@ -354,7 +354,7 @@ export const AddMultiQuestion = () => {
               </Mui.FormControl>
             </Mui.Stack>
             <Mui.Stack>
-              <Eui.EuiButton.Progress name={"Thêm mới"} component={"button"} />
+              <Eui.EuiButton.AddNew name={"Thêm mới"} component={"button"} />
             </Mui.Stack>
           </Mui.Stack>
         </Views.ViewBoard>

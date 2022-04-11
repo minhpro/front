@@ -22,6 +22,11 @@ export const Update = ({ open, handleClose, id }) => {
     data: [],
   });
 
+  const [oldRequirements, setOldRequirements] = React.useState({
+    input: "",
+    data: [],
+  });
+
   const handleSnack = new Class.HandleSnack(setSnack);
   handleSnack.setMessage(
     "Cập nhật đơn vị kiến thức thành công",
@@ -37,7 +42,7 @@ export const Update = ({ open, handleClose, id }) => {
         const res = await Api.unitApi.detail(id);
         console.log(res);
         setData(res);
-        setRequirements({ ...requirements, data: res.requirementData });
+        setOldRequirements({ ...oldRequirements, data: res.requirementData });
       } catch (error) {}
     };
     onSubmit = async (e) => {
@@ -137,8 +142,8 @@ export const Update = ({ open, handleClose, id }) => {
                 />
 
                 <Eui.EuiTable dataColumn={dataColumn2}>
-                  {requirements.data
-                    ? requirements.data.map((row, i) => (
+                  {oldRequirements.data
+                    ? oldRequirements.data.map((row, i) => (
                         <Eui.EuiTable.StyledTableRow key={i}>
                           <Eui.EuiTable.StyledTableCell align="center">
                             {i + 1}
@@ -148,9 +153,9 @@ export const Update = ({ open, handleClose, id }) => {
                           </Eui.EuiTable.StyledTableCell>
                           <Eui.EuiTable.StyledTableCell align="center">
                             <Ex.ExIconEditDelete.DeleteOnly
-                              onDelete={() =>
-                                func.onDeleteRequirement(row.name)
-                              }
+                            // onDelete={() =>
+                            //   func.onDeleteRequirement(row.name)
+                            // }
                             />
                           </Eui.EuiTable.StyledTableCell>
                         </Eui.EuiTable.StyledTableRow>

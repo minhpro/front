@@ -189,7 +189,7 @@ export const EditMulti = ({ data }) => {
                   <Ex.ExDataSelect.Require
                     required
                     id={data.requirementData.unitData.id}
-                    onChange={func.handleChange}
+                    // onChange={func.handleChange}
                     value={search.requirementId}
                   />
                 </Mui.Grid>

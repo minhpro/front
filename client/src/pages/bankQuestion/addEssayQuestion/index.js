@@ -259,7 +259,7 @@ export const AddEssayQuestion = () => {
             />
 
             <Mui.Stack>
-              <Eui.EuiButton.Progress name={"Thêm mới"} component={"button"} />
+              <Eui.EuiButton.AddNew name={"Thêm mới"} component={"button"} />
             </Mui.Stack>
           </Mui.Stack>
         </Views.ViewBoard>

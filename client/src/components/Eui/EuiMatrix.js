@@ -5,8 +5,18 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import * as Slide from "redux/slide";
 import styled from "styled-components";
+import * as Eui from "./";
 
 export const EuiMatrix = ({ data, icon }) => {
+  const dispatch = useDispatch();
+
+  function handChange(e) {
+    console.log("asd");
+    const payload = { requireID: data.id, number: parseInt(e.target.value) };
+    dispatch(
+      Slide.questionDistributionsSlide.updateQuestionDistributions(payload)
+    );
+  }
   return (
     <Mui.Stack spacing={2}>
       <EuiMatrix.Parent
@@ -14,6 +24,7 @@ export const EuiMatrix = ({ data, icon }) => {
         icon={icon}
         number={data.numberOfQuestions}
       >
+        <p>Danh sách Đơn vị kiến thức</p>
         {data.unitData.map((unit, i) => {
           return (
             <EuiMatrix.Parent
@@ -21,6 +32,15 @@ export const EuiMatrix = ({ data, icon }) => {
               key={i}
               number={unit.numberOfQuestions}
             >
+              <p>Yêu cầu kiến thức</p>
+
+              <Eui.EuiTable dataColumn={dataColumn}>
+                {unit.requirements
+                  ? unit.requirements?.map((row, i) => (
+                      <EuiMatrix.Chil2 data={row} i={i + 1} key={i} />
+                    ))
+                  : null}
+              </Eui.EuiTable>
               {unit.requirements?.map((require, i) => {
                 return <EuiMatrix.Chil data={require} key={i} />;
               })}
@@ -67,6 +87,40 @@ EuiMatrix.Parent = function Parent({ name, number, icon, children, ...rest }) {
         <Mui.Stack spacing={1}>{children}</Mui.Stack>
       </Mui.Collapse>
     </Mui.Stack>
+  );
+};
+
+EuiMatrix.Chil2 = function Chil({ data, i, ...rest }) {
+  const dispatch = useDispatch();
+
+  function handChange(e) {
+    const payload = { requireID: data.id, number: parseInt(e.target.value) };
+    dispatch(
+      Slide.questionDistributionsSlide.updateQuestionDistributions(payload)
+    );
+  }
+  return (
+    <>
+      <Eui.EuiTable.StyledTableRow>
+        <Eui.EuiTable.StyledTableCell align="center">
+          {i}
+        </Eui.EuiTable.StyledTableCell>
+        <Eui.EuiTable.StyledTableCell align="center">
+          {data.name}
+        </Eui.EuiTable.StyledTableCell>
+
+        <Eui.EuiTable.StyledTableCell align="center">
+          {data.numberOfQuestions}
+        </Eui.EuiTable.StyledTableCell>
+        <Eui.EuiTable.StyledTableCell align="center">
+          <input
+            type={"number"}
+            value={data.numberOfQuestions}
+            onChange={handChange}
+          />
+        </Eui.EuiTable.StyledTableCell>
+      </Eui.EuiTable.StyledTableRow>
+    </>
   );
 };
 
@@ -133,3 +187,22 @@ const Style = {
     }
   `,
 };
+
+const dataColumn = [
+  {
+    name: "STT",
+    width: 50,
+  },
+  {
+    name: "Tên yêu cầu kiến thức",
+    // width: 200,
+  },
+  {
+    name: "Số câu",
+    width: 50,
+  },
+  {
+    name: "Thao tác",
+    width: 50,
+  },
+];

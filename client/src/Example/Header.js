@@ -4,28 +4,53 @@ import * as Func from "functions";
 import * as Mui from "@mui/material";
 import * as Sui from "components/Sui";
 import { Link } from "react-router-dom";
+import * as Hook from "hook";
 
 export const Header = () => {
   return (
-    <Style.Wrapper className="container">
+    <Style.Wrapper>
+      <Mui.Stack
+        sx={{ height: "100%" }}
+        justifyContent={"center"}
+        my={10}
+        className="container"
+      >
+        <h1>Khảo thí</h1>
+      </Mui.Stack>
+    </Style.Wrapper>
+  );
+};
+
+Header.Nav = function Nav() {
+  const scrollPosition = Hook.useScrollPostion();
+  return (
+    <Style.Nav c={scrollPosition > 200}>
       <Mui.Stack
         direction={"row"}
         width={"100%"}
         justifyContent={"space-between"}
         alignItems={"center"}
-        py={2}
+        className="container"
+        sx={{ minHeight: 70 }}
       >
-        <Link to={"/"}>
-          <Sui.SuiLogo.Basic src={Func.getImage.getPng("logo")} />
-        </Link>
-
-        <p>nav</p>
+        <Mui.Stack
+          alignItems={"center"}
+          direction={"row"}
+          height={"100%"}
+          sx={{ transform: "translateY(-10px)" }}
+        >
+          <Link to={"/"}>
+            <Sui.SuiLogo.Basic src={Func.getImage.getPng("logo")} />
+          </Link>
+        </Mui.Stack>
+        <Mui.Stack direction={"row"} spacing={2}>
+          <p>nav</p>
+          <p>nav</p>
+          <p>nav</p>
+          <p>nav</p>
+        </Mui.Stack>
       </Mui.Stack>
-
-      <Mui.Stack sx={{ height: "100%" }} justifyContent={"center"} py={10}>
-        <h1>Khảo thí</h1>
-      </Mui.Stack>
-    </Style.Wrapper>
+    </Style.Nav>
   );
 };
 
@@ -42,5 +67,16 @@ const Style = {
     h1 {
       color: white;
     }
+  `,
+
+  Nav: styled.div`
+    display: block;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: ${(props) => (props.c ? "#91959F" : "none")};
+    z-index: 10;
+    box-shadow: 0px -3px 21px rgba(0, 0, 0, 0.25);
+    color: white;
   `,
 };
