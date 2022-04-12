@@ -15,9 +15,13 @@ const authSlide = createSlice({
 
       return data;
     },
+
+    logOut(state, action) {
+      state.loading = true;
+    },
   },
 });
 
-export const { setAuth } = authSlide.actions;
+export const { setAuth, logOut } = authSlide.actions;
 
 export default authSlide.reducer;
