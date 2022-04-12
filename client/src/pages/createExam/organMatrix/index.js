@@ -227,7 +227,7 @@ export const OrganMatrix = () => {
                     <Eui.EuiTable.StyledTableCell align="center">
                       {func.getSTT(i + 1)}
                     </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center"></Eui.EuiTable.StyledTableCell>
+
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.name || "name class"}
                     </Eui.EuiTable.StyledTableCell>
@@ -281,10 +281,6 @@ const dataColumn = [
   {
     name: "STT",
     width: 50,
-  },
-  {
-    name: "Mã Ma trận",
-    width: 200,
   },
   {
     name: "Tên Ma trận",

@@ -19,6 +19,7 @@ export const CreateMatrix = () => {
     testTypeId: null,
     time: 0,
     scoreCalculationTypeId: 1,
+    code: "",
   });
 
   const [snack, setSnack] = React.useState({
