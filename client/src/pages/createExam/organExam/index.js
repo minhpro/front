@@ -5,7 +5,7 @@ import * as Views from "views";
 import * as Ex from "Example";
 import * as Function from "functions";
 import * as Api from "api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Class from "Class";
 import { ViewCreateExam } from "./view/ViewCreateExam";
 import { ViewExam } from "./view/ViewExam";
@@ -251,7 +251,10 @@ export const OrganExam = () => {
             borderTop={"solid 1px"}
             borderColor={"red"}
           >
-            <Eui.EuiButton.OpenCreate onClick={() => handleOpenNew.open()} />{" "}
+            <Link to={"/khao-thi/tao-de-thi-moi"}>
+              <Eui.EuiButton.OpenCreate />
+            </Link>
+
             <Eui.EuiButton.Search onClick={func.handleSearch} />
           </Mui.Stack>
         </Views.ViewBoard>
