@@ -112,12 +112,29 @@ const Style = {
   `,
 };
 
+// const Nav = () => {
+//   const auth = useSelector((s) => s.reduxAuth);
+//   return (
+//     <Mui.Stack spacing={2}>
+//       {navRouter.data.map((data, i) => {
+//         if (auth.auth.roles[0] === data.role) {
+//           return <EuiNavMenu data={data} key={i} icon={data.icon} />;
+//         } else {
+//           return null;
+//         }
+//       })}
+//     </Mui.Stack>
+//   );
+// };
+
 const Nav = () => {
-  const auth = useSelector((s) => s.reduxAuth);
+  const auth = useSelector((s) => s.reduxAuth.auth);
   return (
     <Mui.Stack spacing={2}>
       {navRouter.data.map((data, i) => {
-        if (auth.auth.roles[0] === data.role) {
+        console.log(data.role);
+        console.log(auth.roles);
+        if (auth?.roles?.find((role) => data.role?.includes(role))) {
           return <EuiNavMenu data={data} key={i} icon={data.icon} />;
         } else {
           return null;

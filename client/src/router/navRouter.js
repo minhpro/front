@@ -33,7 +33,7 @@ class NavRouter {
             element: <Pages.System.PageSystemListUnit />,
           },
         ],
-        role: Contants.authContants.ROLES.Admin,
+        role: [Contants.authContants.ROLES.Admin],
       },
       {
         name: "Ngân hàng câu hỏi EBD",
@@ -55,7 +55,7 @@ class NavRouter {
             element: <Pages.BankQuestion.AddEssayQuestion />,
           },
         ],
-        role: Contants.authContants.ROLES.Admin,
+        role: [Contants.authContants.ROLES.Admin],
       },
       {
         name: "Quản lý dữ liệu riêng",
@@ -78,7 +78,10 @@ class NavRouter {
             element: <Pages.BankPrivateQuestion.AddEssayQuestion />,
           },
         ],
-        role: Contants.authContants.ROLES.teacher,
+        role: [
+          Contants.authContants.ROLES.teacher,
+          Contants.authContants.ROLES.Admin,
+        ],
       },
       {
         name: "Khởi tạo đề thi",
@@ -105,7 +108,10 @@ class NavRouter {
             element: <Pages.CreateExam.CreateExams />,
           },
         ],
-        role: Contants.authContants.ROLES.teacher,
+        role: [
+          Contants.authContants.ROLES.teacher,
+          Contants.authContants.ROLES.Admin,
+        ],
       },
       {
         name: "Tổ chức khảo thí",
@@ -122,7 +128,10 @@ class NavRouter {
             element: <Pages.OrganTest.Create />,
           },
         ],
-        role: Contants.authContants.ROLES.teacher,
+        role: [
+          Contants.authContants.ROLES.teacher,
+          Contants.authContants.ROLES.Admin,
+        ],
       },
       {
         name: "Làm bài thi / Kiểm tra",
@@ -146,7 +155,10 @@ class NavRouter {
             element: <Pages.AnswerCheck.AnswerCheck />,
           },
         ],
-        role: Contants.authContants.ROLES.Student,
+        role: [
+          Contants.authContants.ROLES.Student,
+          Contants.authContants.ROLES.Admin,
+        ],
       },
       {
         name: "Quản lý user",
@@ -168,7 +180,7 @@ class NavRouter {
             element: <Pages.UserManage.ListUserGroup />,
           },
         ],
-        role: Contants.authContants.ROLES.Admin,
+        role: [Contants.authContants.ROLES.Admin],
       },
       {
         name: "Quản lý member",
@@ -195,7 +207,7 @@ class NavRouter {
             element: <Pages.MemberManage.MemberGroup />,
           },
         ],
-        role: Contants.authContants.ROLES.Admin,
+        role: [Contants.authContants.ROLES.Admin],
       },
     ];
   }
@@ -213,9 +225,7 @@ class NavRouter {
         routers.push(route);
       })
     );
-    // getBreadcrumbs = () => {
-    //   let data = this.getRouters();
-    // };
+
     return routers;
   };
 }
