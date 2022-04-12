@@ -7,6 +7,8 @@ import * as UserManage from "./userManage";
 import * as MemberManage from "./memberManage";
 import * as AnswerCheck from "./answerCheck";
 import * as Home from "./Home";
+import { LMSSelect } from "./LMSSelect";
+import * as BankPrivateQuestion from "./bankPrivateQuestion";
 
 import * as AuthPage from "./authPage";
 export {
@@ -20,4 +22,6 @@ export {
   AnswerCheck,
   AuthPage,
   Home,
+  LMSSelect,
+  BankPrivateQuestion,
 };

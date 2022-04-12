@@ -30,7 +30,7 @@ ViewQuestion.Constructed = function Constructed({
       <Mui.Divider />
       {exam ? (
         <Sui.SuiRichTextEditor
-          placeholder="Nhập đáp án D tại đây..."
+          placeholder="Nhập đáp án tại đây..."
           onChange={(e) =>
             dispatch(
               Slide.checkingSlice.request({

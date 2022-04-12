@@ -2,13 +2,14 @@ import React from "react";
 import * as Function from "functions";
 import * as Api from "api";
 import * as Mui from "@mui/material";
+import styled from "styled-components";
 import { Card } from "components";
 
 export const ViewQuestion = (id) => {
   const [data, setData] = React.useState(null);
   React.useEffect(() => {
     Function.handler
-      .api(() => Api.questionApi.detail(id || null))
+      .api(() => Api.privateQuestionApi.detail(id || null))
       .then((res) => {
         console.log(res);
         setData(res);

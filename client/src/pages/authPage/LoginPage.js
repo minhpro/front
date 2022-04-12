@@ -13,6 +13,9 @@ import {
   Key,
 } from "@mui/icons-material";
 import * as Class from "Class";
+import { authContants } from "assets/contants";
+import * as LocalStorage from "utils/token/LocalStorage";
+
 export const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,11 +39,12 @@ export const LoginPage = () => {
   );
 
   React.useEffect(() => {
-    if (window.localStorage.getItem("token")) {
+    console.log(LocalStorage.auth.getLocalToken());
+    if (LocalStorage.auth.getLocalToken()) {
       dispatch(
         Slide.authSlide.setAuth({
-          username: "admin",
-          roles: ["ADMIN"],
+          username: LocalStorage.auth.getLocalToken().role,
+          roles: [LocalStorage.auth.getLocalToken().role],
         })
       );
       return navigate(from, { replace: true });
@@ -62,10 +66,11 @@ export const LoginPage = () => {
         handleSnack.add("");
 
         window.localStorage.setItem("token", res.token);
+        LocalStorage.auth.setLocalToken(res);
         dispatch(
           Slide.authSlide.setAuth({
-            username: "admin",
-            roles: ["ADMIN"],
+            username: res.role,
+            roles: [res.role],
           })
         );
         console.log(res);

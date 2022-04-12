@@ -57,7 +57,7 @@ EuiTable.Body = function body({ children }) {
 EuiTable.BodyCell = function body({ children, ...restProps }) {
   return (
     <EuiTable.StyledTableCell {...restProps}>
-      <h2> {children}</h2>
+      <h4> {children}</h4>
     </EuiTable.StyledTableCell>
   );
 };
@@ -79,7 +79,7 @@ EuiTable.Footer = function footer({ children }) {
 EuiTable.StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: grey[400],
-    color: theme.palette.primary.focus,
+    color: theme.palette.primary.main,
     padding: "20px 0px",
   },
   [`&.${tableCellClasses.body}`]: {

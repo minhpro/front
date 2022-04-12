@@ -20,4 +20,10 @@ export const header = [
     link: "/lien-he",
     element: <div>adsads</div>,
   },
+  {
+    id: 4,
+    name: "LMS",
+    link: "/LMS",
+    element: <Pages.LMSSelect />,
+  },
 ];

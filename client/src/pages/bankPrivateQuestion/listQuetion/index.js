@@ -90,7 +90,7 @@ export const ListQuestion = () => {
     handleSearch = () => {
       Function.handler
         .api(() =>
-          Api.questionApi.search(
+          Api.privateQuestionApi.search(
             search.unitId,
             search.chapterId,
             search.subjectId,
@@ -111,7 +111,7 @@ export const ListQuestion = () => {
 
     onDelete = () => {
       Function.handler
-        .api(() => Api.questionApi.delete(deleteId))
+        .api(() => Api.privateQuestionApi.delete(deleteId))
         .then((res) => {
           handleSnack.delete("");
         })
@@ -221,13 +221,13 @@ export const ListQuestion = () => {
                 name={"Tìm kiếm"}
                 onClick={func.handleSearch}
               />
-              <Link to="/khao-thi/them-cau-tu-luan-EBD">
+              <Link to="/khao-thi/them-cau-tu-luan-rieng">
                 <Eui.EuiButton.AddNew
                   name={"Thêm mới câu tự luận"}
                   onClick={func.handleSearch}
                 />
               </Link>
-              <Link to={"/khao-thi/them-cau-trac-nghiem-EDB"}>
+              <Link to={"/khao-thi/them-cau-trac-nghiem-rieng"}>
                 <Eui.EuiButton.AddNew
                   name={"Thêm mới câu trắc nghiệm"}
                   onClick={func.handleSearch}

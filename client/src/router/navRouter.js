@@ -8,6 +8,8 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import GroupIcon from "@mui/icons-material/Group";
 import PersonIcon from "@mui/icons-material/Person";
 import * as Pages from "pages";
+
+import * as Contants from "assets/contants";
 class NavRouter {
   constructor() {
     this.data = [
@@ -31,13 +33,14 @@ class NavRouter {
             element: <Pages.System.PageSystemListUnit />,
           },
         ],
+        role: Contants.authContants.ROLES.Admin,
       },
       {
         name: "Ngân hàng câu hỏi EBD",
         icon: <AccountBalanceIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
-            name: "Danh sach câu hỏi",
+            name: "Danh sách câu hỏi",
             link: "danh-sach-cau-hoi-EBD",
             element: <Pages.BankQuestion.ListQuestion />,
           },
@@ -52,6 +55,7 @@ class NavRouter {
             element: <Pages.BankQuestion.AddEssayQuestion />,
           },
         ],
+        role: Contants.authContants.ROLES.Admin,
       },
       {
         name: "Quản lý dữ liệu riêng",
@@ -59,25 +63,22 @@ class NavRouter {
         nav: [
           {
             name: "Danh sách câu hỏi",
-            link: "danh-sach-cau-hoi",
-            element: <Pages.BankQuestion.ListQuestion />,
+            link: "danh-sach-cau-hoi-rieng",
+            element: <Pages.BankPrivateQuestion.ListQuestion />,
           },
-          // {
-          //   name: "Ngân hàng câu hỏi",
-          //   link: "ngan-hang-cau-hoi",
-          //   element: <Pages.BankQuestion.ListQuestion />,
-          // },
+
           {
             name: "Thêm câu hỏi trắc nghiệm",
-            link: "them-cau-trac-nghiem",
-            element: <Pages.BankQuestion.AddMultiQuestion />,
+            link: "them-cau-trac-nghiem-rieng",
+            element: <Pages.BankPrivateQuestion.AddMultiQuestion />,
           },
           {
             name: "Thêm câu hỏi tự luận",
-            link: "them-cau-tu-luan",
-            element: <Pages.BankQuestion.AddMultiQuestion />,
+            link: "them-cau-tu-luan-rieng",
+            element: <Pages.BankPrivateQuestion.AddEssayQuestion />,
           },
         ],
+        role: Contants.authContants.ROLES.teacher,
       },
       {
         name: "Khởi tạo đề thi",
@@ -94,7 +95,7 @@ class NavRouter {
             element: <Pages.CreateExam.OrganExam />,
           },
           {
-            name: "Tạo đề ma trận mới",
+            name: "Tạo ma trận mới",
             link: "tao-ma-tran-moi",
             element: <Pages.CreateExam.CreateMatrix />,
           },
@@ -104,6 +105,7 @@ class NavRouter {
             element: <Pages.CreateExam.CreateExams />,
           },
         ],
+        role: Contants.authContants.ROLES.teacher,
       },
       {
         name: "Tổ chức khảo thí",
@@ -120,6 +122,7 @@ class NavRouter {
             element: <Pages.OrganTest.Create />,
           },
         ],
+        role: Contants.authContants.ROLES.teacher,
       },
       {
         name: "Làm bài thi / Kiểm tra",
@@ -131,6 +134,7 @@ class NavRouter {
             element: <Pages.DoTest.Home />,
           },
         ],
+        role: "STUDENT",
       },
       {
         name: "Xem đáp án",
@@ -142,6 +146,7 @@ class NavRouter {
             element: <Pages.AnswerCheck.AnswerCheck />,
           },
         ],
+        role: Contants.authContants.ROLES.Student,
       },
       {
         name: "Quản lý user",
@@ -163,6 +168,7 @@ class NavRouter {
             element: <Pages.UserManage.ListUserGroup />,
           },
         ],
+        role: Contants.authContants.ROLES.Admin,
       },
       {
         name: "Quản lý member",
@@ -189,6 +195,7 @@ class NavRouter {
             element: <Pages.MemberManage.MemberGroup />,
           },
         ],
+        role: Contants.authContants.ROLES.Admin,
       },
     ];
   }

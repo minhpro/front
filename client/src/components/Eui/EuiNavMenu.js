@@ -25,7 +25,7 @@ export const EuiNavMenu = ({ data, icon }) => {
 
   React.useEffect(() => {
     for (let i = 0; i < data.nav.length; i++) {
-      if (data.nav[i].link === pathnames[0]) {
+      if (data.nav[i].link === pathnames[1]) {
         handleOpen();
         break;
       } else {
@@ -95,7 +95,7 @@ EuiNavMenu.Chil = function Chil({ linkName, link, ...rest }) {
       sx={{ cursor: "pointer" }}
       pr={1}
       {...rest}
-      isOpen={link === pathnames[0]}
+      isOpen={link === pathnames[1]}
     >
       <Mui.Stack
         direction={"row"}

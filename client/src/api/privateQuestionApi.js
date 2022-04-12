@@ -1,0 +1,65 @@
+import axiosClient from "./axiosClient";
+
+class PrivateQuestionApi {
+  constructor() {
+    this.api = "private-question/";
+  }
+  search = (
+    unitId,
+    chapterId,
+    subjectId,
+    classId,
+    keyword,
+    type,
+    page,
+    limit
+  ) => {
+    const url = `${this.api}search`;
+    const body = {
+      unitId: unitId,
+      chapterId: chapterId,
+      subjectId: subjectId,
+      classId: classId,
+      keyword: keyword,
+      page: page || 1,
+      limit: limit || 32,
+      type: type || null,
+    };
+    return axiosClient.post(url, body);
+  };
+  delete = async (id, set) => {
+    try {
+      const url = `${this.api}delete`;
+      const body = { id: id };
+      const res = await axiosClient.post(url, body);
+      set(res);
+      return res;
+    } catch (error) {
+      return error;
+    }
+
+    // const url = `${this.api}delete`;
+    // const body = { id: id };
+    // return axiosClient.post(url, body);
+  };
+
+  add = (data) => {
+    const url = `${this.api}add`;
+
+    return axiosClient.post(url, data);
+  };
+  detail = (id) => {
+    const url = `${this.api}detail`;
+    const body = { id: id };
+    return axiosClient.post(url, id);
+  };
+  update = (body) => {
+    const url = `${this.api}update`;
+    // const body = { id: id };
+    return axiosClient.post(url, body);
+  };
+}
+
+const privateQuestionApi = new PrivateQuestionApi();
+
+export default privateQuestionApi;

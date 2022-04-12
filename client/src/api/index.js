@@ -16,6 +16,7 @@ import userApi from "./userApi";
 import memberApi from "./memberApi";
 import groupApi from "./groupApi";
 import testKitApi from "./testKitApi";
+import privateQuestionApi from "./privateQuestionApi";
 
 export {
   testTypeApi,
@@ -36,4 +37,5 @@ export {
   memberApi,
   groupApi,
   testKitApi,
+  privateQuestionApi,
 };

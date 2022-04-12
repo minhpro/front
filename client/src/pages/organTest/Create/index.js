@@ -22,6 +22,7 @@ const Create = () => {
     testName: "",
     matrixId: null,
     testCode: "",
+    testId: null,
   });
 
   const [kits, setKits] = React.useState(null);
@@ -56,8 +57,8 @@ const Create = () => {
 
   const handleSnack = new Class.HandleSnack(setSnack);
   handleSnack.setMessage(
-    "Đã thêm đề thi mới ",
-    "Đã xoá đề thi, id: ",
+    "Đã thêm bộ đề mới",
+    "Đã trộn bộ đề",
     "Lỗi hệ thống, chưa thể thêm đề thi mới"
   );
 
@@ -66,8 +67,6 @@ const Create = () => {
     "",
     "Thêm mới thời gian làm bài"
   );
-
-
 
   //   function
   class Func {
@@ -86,23 +85,23 @@ const Create = () => {
       console.log(search);
     };
 
-    onOpenGen(id, name) {
-      setExam({ name, id });
-      handleOpenNew.open();
+    onOpenGen() {
+      if (search.testId) {
+        handleOpenNew.open();
+      }
     }
-
-  
 
     async handleGen() {
       try {
         const res = await Api.testKitApi.generate(
-          exam.id,
+          search.testId,
           add.numberOfQuestions,
           add.numberOfTests
         );
         console.log(res);
 
         setKits(res);
+        handleSnack.delete("");
       } catch (error) {
         console.log(error);
       }
@@ -116,7 +115,7 @@ const Create = () => {
       }
       let body = {
         ...add,
-        testId: exam.id,
+        testId: search.testId,
         kits: [],
       };
 
@@ -137,6 +136,8 @@ const Create = () => {
       try {
         const res = await Api.testKitApi.add(body);
         console.log(res);
+        handleSnack.add("");
+        handleOpenNew.close();
       } catch (error) {
         console.log(error);
       }
@@ -178,11 +179,21 @@ const Create = () => {
   React.useEffect(() => {
     setSearch({ ...search, matrixId: null });
   }, [search.subjectId]);
+
+  React.useEffect(() => {
+    func.handleSearch();
+  }, [search.subjectId]);
+
   return (
     <>
       {/* poppup */}
-
-    
+      {/* thong bao */}
+      <Eui.EuiSnackbar
+        open={snack.isOpen}
+        handleClose={() => handleSnack.close()}
+        message={snack.message}
+        severity={snack.severity}
+      />
 
       <Eui.EuiModal.Title
         title={"Trộn đề thi: " + exam.name}
@@ -304,22 +315,16 @@ const Create = () => {
                   <Ex.ExDataSelect.ExamType value={search.examTypeId} />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExInputWrapper.Basic
-                    label={"Mã đề thi:"}
-                    name={"testCode"}
+                  <Ex.ExInputWrapper.Select
+                    label={"Đề thi:"}
+                    name={"testId"}
                     onChange={func.handleChange}
-                    placeholder={"Nhập mã đề thi"}
+                    data={pages?.data}
+                    value={search.testId}
+                    required
                   />
                 </Mui.Grid>
               </Mui.Grid>
-            </Item>
-            <Item>
-              <Ex.ExInputWrapper.Basic
-                label={"Tên đề thi:"}
-                name={"testName"}
-                onChange={func.handleChange}
-                placeholder={"Nhập tên đề thi"}
-              />
             </Item>
           </Mui.Grid>
           <Mui.Stack
@@ -329,53 +334,11 @@ const Create = () => {
             borderTop={"solid 1px"}
             borderColor={"red"}
           >
-            <Eui.EuiButton.Search onClick={func.handleSearch} />
+            <Eui.EuiButton.AddType
+              onClick={func.onOpenGen}
+              name={"Trộn câu hỏi"}
+            />
           </Mui.Stack>
-        </Views.ViewBoard>
-
-        {/* asddsa */}
-
-        <Views.ViewBoard>
-          <Eui.EuiTable dataColumn={dataColumn}>
-            {pages.data
-              ? pages.data?.map((row, i) => (
-                  <Eui.EuiTable.StyledTableRow key={i}>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {Function.formatNumber.getSTT(i, pages.page, pages.limit)}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {row.code}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {row.name || "name class"}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {row?.testMatrixData?.name}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {row?.testMatrixData?.subjectData?.classs?.name}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {row?.testMatrixData?.subjectData?.name}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      <Ex.ExIconEditDelete.Gen
-                        onGen={() => func.onOpenGen(row.id, row.name)}
-                      />
-                    </Eui.EuiTable.StyledTableCell>
-                  </Eui.EuiTable.StyledTableRow>
-                ))
-              : null}
-          </Eui.EuiTable>
-          <Eui.EuiPagination
-            count={pages.total}
-            defaultPage={1}
-            siblingCount={0}
-            boundaryCount={2}
-            size={"large"}
-            shape={"rounded"}
-            onChange={func.handlePagination}
-          />
         </Views.ViewBoard>
       </Views.ViewContent>
     </>

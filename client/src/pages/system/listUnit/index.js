@@ -39,6 +39,7 @@ export const PageSystemListUnit = () => {
     classId: null,
     subjectId: null,
     unitName: "",
+    code: "",
   });
 
   const [requirements, setRequirements] = useState({
@@ -360,11 +361,11 @@ export const PageSystemListUnit = () => {
             pt={2}
             spacing={2}
           >
-            <Eui.EuiButton.Search onClick={func.handleSearch} />
             <Eui.EuiButton.OpenCreate
               name={"Thêm đơn vị kiến thức"}
               onClick={() => handleOpenNew.open()}
             />
+            <Eui.EuiButton.Search onClick={func.handleSearch} />
           </Mui.Stack>
         </Views.ViewBoard>
 

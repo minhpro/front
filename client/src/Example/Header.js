@@ -6,6 +6,7 @@ import * as Sui from "components/Sui";
 import { Link } from "react-router-dom";
 import * as Hook from "hook";
 import * as Contants from "assets/contants";
+import * as Co from "components";
 
 export const Header = () => {
   return (
@@ -22,7 +23,7 @@ export const Header = () => {
   );
 };
 
-Header.Nav = function Nav() {
+Header.Nav = function Nav({ c }) {
   const scrollPosition = Hook.useScrollPostion();
   return (
     <Style.Nav c={scrollPosition > 200}>
@@ -48,14 +49,16 @@ Header.Nav = function Nav() {
           direction={"row"}
           spacing={2}
           sx={{ display: { xs: "none", md: "flex" } }}
+          alignItems={"center"}
         >
           {Contants.navData.header.map((item, i) => {
             return (
               <Style.NavLink to={item.link} key={i} className={"ad"}>
-                <h3 style={{ color: "white" }}>{item.name}</h3>
+                <h3 style={{ color: `${c || "width"}` }}>{item.name}</h3>
               </Style.NavLink>
             );
           })}
+          <Co.Auth.AuthHeader />
         </Mui.Stack>
       </Mui.Stack>
     </Style.Nav>

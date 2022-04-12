@@ -10,7 +10,7 @@ import * as Pages from "pages";
 const ROLES = {
   User: "USER",
   Admin: "ADMIN",
-  Edit: "CEDITOR",
+  teacher: "TEACHER",
 };
 
 function App() {
@@ -32,7 +32,16 @@ function App() {
 
       {/* admin */}
 
-      <Route element={<Auth.RequireAuth allowedRoles={[ROLES.Admin]} />}>
+      <Route
+        element={
+          <Auth.RequireAuth
+            allowedRoles={[
+              Contants.authContants.ROLES.Admin,
+              Contants.authContants.ROLES.teacher,
+            ]}
+          />
+        }
+      >
         <Route path="/khao-thi" element={<Layout.LayoutTest />}>
           <Route
             index
@@ -51,6 +60,10 @@ function App() {
           <Route
             path="danh-sach-cau-hoi-EBD/chinh-sua/:id"
             element={<Pages.BankQuestion.EditQuestion />}
+          />
+          <Route
+            path="danh-sach-cau-hoi-rieng/chinh-sua/:id"
+            element={<Pages.BankPrivateQuestion.EditQuestion />}
           />
           <Route path="lam-bai/:id" element={<Pages.DoTest.DoTest />} />
 

@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
 import * as Func from "functions";
 import * as Co from "components";
+import { useSelector } from "react-redux";
 
 import { useLocation } from "react-router-dom";
 export const LayoutTest = () => {
@@ -83,7 +84,7 @@ export const LayoutTest = () => {
     <>
       {/* {exam.id ? <Co.Notification.Exam open={true} id={exam.id} /> : null} */}
       {/* <ThongBao /> */}
-      <Ex.Header.Nav />
+      <Ex.Header.Nav c={"white"} />
       <Ex.Header />
       <Style.Main className="container">
         <Mui.Stack direction={{ xs: "column", md: "row" }}>
@@ -112,10 +113,15 @@ const Style = {
 };
 
 const Nav = () => {
+  const auth = useSelector((s) => s.reduxAuth);
   return (
     <Mui.Stack spacing={2}>
       {navRouter.data.map((data, i) => {
-        return <EuiNavMenu data={data} key={i} icon={data.icon} />;
+        if (auth.auth.roles[0] === data.role) {
+          return <EuiNavMenu data={data} key={i} icon={data.icon} />;
+        } else {
+          return null;
+        }
       })}
     </Mui.Stack>
   );

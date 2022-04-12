@@ -240,7 +240,9 @@ export const PageSystemListChapter = () => {
         <Mui.Divider />
         <Ex.ExInputWrapper.Basic
           label={"Tên chủ đề:"}
+          placeholder={"Nhập tên chủ đề"}
           name={"chapterName"}
+          value={addingData.chapterName}
           required
           onChange={func.handleInput}
         />
@@ -248,6 +250,8 @@ export const PageSystemListChapter = () => {
         <Ex.ExInputWrapper.Basic
           label={"Mã chủ đề:"}
           name={"code"}
+          placeholder={"Nhập mã chủ đề"}
+          value={addingData.code}
           required
           onChange={func.handleInput}
         />

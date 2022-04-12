@@ -91,8 +91,11 @@ h1,h2,h3,h4,h5,h6,button {
     @media ${(props) => props.theme.breakpoint.sm} {
       font-size: 24px;
     }
+    
   }
-
+  h4 {
+      font-size: 16px;
+    }
 
     .container{
       padding: 0 30rem;

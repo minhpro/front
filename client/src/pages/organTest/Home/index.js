@@ -9,6 +9,20 @@ import * as Api from "api";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 export const Home = () => {
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
+  });
+
+  // class
+
+  const handleSnack = new Class.HandleSnack(setSnack);
+  handleSnack.setMessage(
+    "Đã thêm bộ đề mới",
+    "Đã Xoá bộ đề",
+    "Lỗi hệ thống, chưa thể thêm đề thi mới"
+  );
   const navigate = useNavigate();
   const [pages, setPages] = React.useState({
     data: null,
@@ -51,6 +65,7 @@ export const Home = () => {
       try {
         const res = await Api.testKitApi.delete(exam);
         console.log(res);
+        handleSnack.delete("");
       } catch (error) {
         console.log(error);
       }
@@ -83,9 +98,16 @@ export const Home = () => {
   const func = new Func();
   React.useEffect(() => {
     func.handleSearch();
-  }, []);
+  }, [snack.isOpen]);
   return (
     <>
+      {/* thong bao */}
+      <Eui.EuiSnackbar
+        open={snack.isOpen}
+        handleClose={() => handleSnack.close()}
+        message={snack.message}
+        severity={snack.severity}
+      />
       {/* poppup */}
       <Ex.ExModalPoppup.Delete
         handleClose={() => handleOpenDelete.close()}
@@ -139,7 +161,6 @@ export const Home = () => {
             <Mui.Stack pt={5} direction={"row"} spacing={3}>
               <Eui.EuiButton.Search onClick={func.handleSearch} />
               <Link to="/khao-thi-tao-moi">
-                {" "}
                 <Eui.EuiButton.AddNew onClick={func.handleSearch} />
               </Link>
             </Mui.Stack>

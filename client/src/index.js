@@ -5,10 +5,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { StoreProvider } from "redux/store/StoreProvider";
 import App from "./App";
 import * as Layout from "layouts";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 
 ReactDOM.render(
   <React.StrictMode>

@@ -212,7 +212,7 @@ export const OrganMatrix = () => {
             borderTop={"solid 1px"}
             borderColor={"red"}
           >
-            <Link to={"/tao-ma-tran-moi"}>
+            <Link to={"/khao-thi/tao-ma-tran-moi"}>
               <Eui.EuiButton.OpenCreate />
             </Link>
             <Eui.EuiButton.Search onClick={func.handleSearch} />
@@ -244,7 +244,7 @@ export const OrganMatrix = () => {
                       {moment(row.createdAt).format("DD-MM-YYYY h:mm:ss")}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      <Ex.ExIconEditDelete.View
+                      <Ex.ExIconEditDelete.DeleteOnly
                         onDelete={() => func.openDelete(row.id)}
                         onEdit={func.onEdit}
                         onView={() => func.onView(row.id)}
