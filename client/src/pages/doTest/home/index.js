@@ -25,8 +25,6 @@ export const Home = () => {
   });
   // hook
 
-  const navigate = useNavigate();
-
   // Funcion
 
   async function getData() {
@@ -122,7 +120,11 @@ const Method = ({ status, id }) => {
       return <Ex.ExIconEditDelete.Wait onWait={() => navigate(`${id}`)} />;
 
     case 2:
-      return <Ex.ExIconEditDelete.ViewOnly onView={() => navigate(`${id}`)} />;
+      return (
+        <Ex.ExIconEditDelete.ViewOnly
+          onView={() => navigate(`ket-qua/${id}`)}
+        />
+      );
     default:
       return <Ex.ExIconEditDelete.Work onWork={() => navigate(`${id}`)} />;
   }

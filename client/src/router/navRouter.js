@@ -148,21 +148,21 @@ class NavRouter {
           Contants.authContants.ROLES.Admin,
         ],
       },
-      {
-        name: "Xem đáp án",
-        icon: <RemoveRedEyeIcon sx={{ fontSize: 30 }} />,
-        nav: [
-          {
-            name: "Đáp án",
-            link: "dap-an",
-            element: <Pages.AnswerCheck.AnswerCheck />,
-          },
-        ],
-        role: [
-          Contants.authContants.ROLES.Student,
-          Contants.authContants.ROLES.Admin,
-        ],
-      },
+      // {
+      //   name: "Xem đáp án",
+      //   icon: <RemoveRedEyeIcon sx={{ fontSize: 30 }} />,
+      //   nav: [
+      //     {
+      //       name: "Đáp án",
+      //       link: "dap-an",
+      //       element: <Pages.AnswerCheck.AnswerCheck />,
+      //     },
+      //   ],
+      //   role: [
+      //     Contants.authContants.ROLES.Student,
+      //     Contants.authContants.ROLES.Admin,
+      //   ],
+      // },
       {
         name: "Quản lý user",
         icon: <PersonIcon sx={{ fontSize: 30 }} />,

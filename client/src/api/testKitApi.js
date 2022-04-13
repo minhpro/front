@@ -57,7 +57,7 @@ class TestKitApi {
     return axiosClient.get(url, { params: { id: id } });
   };
   checking = (body) => {
-    const url = `${this.api}checking`;
+    const url = `${this.api}submit`;
     return axiosClient.post(url, body);
   };
 }

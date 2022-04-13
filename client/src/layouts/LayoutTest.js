@@ -12,7 +12,7 @@ import * as Func from "functions";
 import * as Co from "components";
 import { useSelector } from "react-redux";
 import { apiNofi } from "assets/contants/apiContant";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
+
 import { useLocation } from "react-router-dom";
 export const LayoutTest = () => {
   const dispatch = useDispatch();

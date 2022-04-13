@@ -28,6 +28,11 @@ class MemberApi {
     const body = { id: id };
     return axiosClient.post(url, body);
   };
+  getResult = (id) => {
+    const url = `${this.api}test-kit/get-result`;
+    const body = { id: id };
+    return axiosClient.post(url, body);
+  };
 }
 
 const memberApi = new MemberApi();

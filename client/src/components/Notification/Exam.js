@@ -4,7 +4,7 @@ import * as Co from "components";
 import { EuiButton } from "components/Eui";
 import { Link } from "react-router-dom";
 import { apiNofi } from "assets/contants/apiContant";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
+
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";

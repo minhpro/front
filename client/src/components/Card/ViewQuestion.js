@@ -20,7 +20,7 @@ ViewQuestion.Constructed = function Constructed({
   return (
     <Mui.Stack direction={"column"}>
       <Co.Text.Body.Caption>
-        Cau {index} - {code}:
+        Câu {index} - {code || "code"}:
       </Co.Text.Body.Caption>
       <Co.Text.Body.Medium>
         <div dangerouslySetInnerHTML={{ __html: question }} />
