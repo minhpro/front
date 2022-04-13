@@ -138,12 +138,15 @@ class NavRouter {
         icon: <WorkOutlineIcon sx={{ fontSize: 30 }} />,
         nav: [
           {
-            name: "làm bài",
-            link: "lam-bai",
+            name: "Danh sách bài thi",
+            link: "danh-sach-bai-thi",
             element: <Pages.DoTest.Home />,
           },
         ],
-        role: "STUDENT",
+        role: [
+          Contants.authContants.ROLES.Student,
+          Contants.authContants.ROLES.Admin,
+        ],
       },
       {
         name: "Xem đáp án",

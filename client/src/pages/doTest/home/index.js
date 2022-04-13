@@ -3,15 +3,52 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import React from "react";
 import * as Views from "views";
-
+import moment from "moment";
 import * as Function from "functions";
 import * as Api from "api";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
+  // State
+  const [pages, setPages] = React.useState({
+    data: null,
+    page: 1,
+    total: 10,
+    limit: 32,
+  });
+
+  const [snack, setSnack] = React.useState({
+    isOpen: false,
+    message: "",
+    severity: null,
+  });
+  // hook
+
+  const navigate = useNavigate();
+
+  // Funcion
+
+  async function getData() {
+    try {
+      const res = await Api.memberApi.myTest("", pages.page, pages.limit);
+
+      setPages({ ...pages, data: res.data, total: res.total });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // Life circle
+
+  React.useEffect(() => {
+    getData();
+  }, []);
+
   return (
-    <Views.ViewContent title={"Làm bài thi"}>
+    <Views.ViewContent title={"Danh sách bài thi"}>
       <Mui.Stack spacing={3}>
-        <Views.ViewBoard>
+        {/* <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2}>
             <Item>
               <Ex.ExInputWrapper.Basic label={"Đề thi đã khởi tạo"} />
@@ -33,43 +70,42 @@ export const Home = () => {
           <Mui.Stack pt={5}>
             <Eui.EuiButton.Progress name={"Tim kiem"} />
           </Mui.Stack>
-        </Views.ViewBoard>
+        </Views.ViewBoard> */}
 
         {/* bang du lieu */}
         <Views.ViewBoard>
           <Eui.EuiTable dataColumn={dataColumn}>
-            {/* {questionList
-              ? questionList.data.map((row, i) => (
+            {pages.data
+              ? pages.data.map((row, i) => (
                   <Eui.EuiTable.StyledTableRow key={i}>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {i + 1}
+                      {Function.formatNumber.getSTT(i, pages.page, pages.limit)}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.code || "code"}
+                      {row.name || "name"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.unitData.chapterData.subjectData.classs?.name ||
-                        "name class"}
+                      {moment(row.start).format("DD-MM-YYYY h:mm:ss")}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.unitData?.chapterData.subjectData.name ||
-                        "list class"}
+                      {moment(row.end).format("DD-MM-YYYY h:mm:ss")}
                     </Eui.EuiTable.StyledTableCell>
+
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.name || "ten cau hoi"}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {row.questionTypeData.name || "do kho"}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      <Ex.ExIconEditDelete
-                      // onDelete={() => func.onDelete(row.id)}
-                      // onEdit={func.onEdit}
-                      />
+                      {row.worked ? (
+                        <Ex.ExIconEditDelete.ViewOnly
+                        // onDelete={() => func.onDelete(row.id)}
+                        // onEdit={func.onEdit}
+                        />
+                      ) : (
+                        <Ex.ExIconEditDelete.Work
+                          onWork={() => navigate(`${row.id}`)}
+                        />
+                      )}
                     </Eui.EuiTable.StyledTableCell>
                   </Eui.EuiTable.StyledTableRow>
                 ))
-              : null} */}
+              : null}
           </Eui.EuiTable>
         </Views.ViewBoard>
       </Mui.Stack>
@@ -91,25 +127,19 @@ const dataColumn = [
     width: 50,
   },
   {
-    name: "Tên bộ đề",
+    name: "Tên bài thi",
+    width: 200,
+  },
+
+  {
+    name: "Thời gian bắt đầu ",
     width: 200,
   },
   {
-    name: "Số câu hỏi",
+    name: "Thời gian kết thúc",
     width: 200,
   },
-  {
-    name: "Hình thức thi",
-    width: 200,
-  },
-  {
-    name: "Số thí sinh",
-    width: 200,
-  },
-  {
-    name: "Thời gian",
-    width: 200,
-  },
+
   {
     name: "Thao tác",
     width: 200,

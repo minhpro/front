@@ -65,7 +65,10 @@ function App() {
             path="danh-sach-cau-hoi-rieng/chinh-sua/:id"
             element={<Pages.BankPrivateQuestion.EditQuestion />}
           />
-          <Route path="lam-bai/:id" element={<Pages.DoTest.DoTest />} />
+          <Route
+            path="danh-sach-bai-thi/:id"
+            element={<Pages.DoTest.DoTest />}
+          />
 
           <Route path="khao-thi/:id" element={<Pages.OrganTest.ViewTest />} />
         </Route>

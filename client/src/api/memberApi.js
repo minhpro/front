@@ -13,6 +13,15 @@ class MemberApi {
     };
     return axiosClient.post(url, body);
   };
+  myTest = (keyword, page, limit) => {
+    const url = `${this.api}my-test`;
+    const body = {
+      keyword: keyword,
+      page: page || 1,
+      limit: limit || 32,
+    };
+    return axiosClient.post(url, body);
+  };
 
   detail = (id) => {
     const url = `${this.api}detail`;

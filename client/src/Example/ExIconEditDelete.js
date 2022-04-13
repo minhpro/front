@@ -4,6 +4,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { AddAlarmRounded } from "@mui/icons-material";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 
 export const ExIconEditDelete = ({ onEdit, onDelete }) => {
   return (
@@ -62,6 +63,14 @@ ExIconEditDelete.ViewDelete = function ({ onEdit, onDelete, onView }) {
       <VisibilityIcon onClick={onView} sx={{ ...style }} />
       {/* <ModeEditIcon onClick={onEdit} sx={{ ...style }} /> */}
       <DeleteIcon onClick={onDelete} sx={{ ...style }} />
+    </Stack>
+  );
+};
+
+ExIconEditDelete.Work = function ({ onWork }) {
+  return (
+    <Stack direction={"row"} justifyContent="center" spacing={1}>
+      <AppRegistrationIcon onClick={onWork} sx={{ ...style }} />
     </Stack>
   );
 };
