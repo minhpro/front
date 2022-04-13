@@ -6,6 +6,7 @@ import * as Views from "views";
 
 import * as Function from "functions";
 import * as Api from "api";
+import * as Co from "components";
 
 export const AddMultiQuestion = () => {
   const [open, setIsOpen] = React.useState(false);
@@ -219,7 +220,7 @@ export const AddMultiQuestion = () => {
               />
             </Item>
             <Item>
-              <Mui.Grid container columnSpacing={2}>
+              {/* <Mui.Grid container columnSpacing={2}>
                 <Mui.Grid item xs={6}>
                   <Ex.ExInputWrapper.Basic
                     label={"Thời gian trả lời"}
@@ -236,7 +237,14 @@ export const AddMultiQuestion = () => {
                     required
                   />
                 </Mui.Grid>
-              </Mui.Grid>
+              </Mui.Grid> */}
+              <Co.Time.TimeWrapper
+                setTime={(time) => {
+                  setSearch({ ...search, timeAnswer: time });
+                }}
+                p={0.3}
+                label={"Thơi gian làm bài"}
+              />
             </Item>
           </Mui.Grid>
         </Views.ViewBoard>

@@ -8,6 +8,7 @@ import * as Api from "api";
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
 import { useSelector } from "react-redux";
+import * as Co from "components";
 
 export const CreateMatrix = () => {
   const [open, setIsOpen] = React.useState(false);
@@ -232,20 +233,11 @@ export const CreateMatrix = () => {
             </Item>
 
             <Item>
-              <Mui.Grid container columnSpacing={5}>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExInputWrapper.Basic
-                    label={"Thoi gian:"}
-                    name={"time"}
-                    type={"number"}
-                    onChange={func.handleChange}
-                    required
-                  />
-                </Mui.Grid>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.TimeType required />
-                </Mui.Grid>
-              </Mui.Grid>
+              <Co.Time.TimeWrapper
+                label={"Thời gian làm bài"}
+                p={0.3}
+                setTime={(time) => setSearch({ ...search, time: time })}
+              />
             </Item>
             <Item>
               <Ex.ExDataSelect.Score

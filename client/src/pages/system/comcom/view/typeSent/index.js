@@ -106,8 +106,10 @@ export const TypeSent = () => {
 
       {/* content */}
 
-      <p>Thời gian hệ thống gửi link trước thời gian bắt đầu thi/ kiểm tra: </p>
-      <p> {timeDisplay}</p>
+      <p>
+        Thời gian hệ thống gửi link trước thời gian bắt đầu thi/ kiểm tra:{" "}
+        <strong> {timeDisplay} </strong>
+      </p>
 
       <p>Chỉnh sửa: </p>
       <Mui.Stack width={{ xs: "90%", sm: "70%", md: "40%", lg: "40%" }}>

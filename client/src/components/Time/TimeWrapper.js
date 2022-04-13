@@ -5,7 +5,7 @@ import * as Ex from "Example";
 import { TimeFormat } from "utils";
 import { SecondFormat } from "utils/timeFormat/secondFormat";
 
-export const TimeWrapper = ({ setTime }) => {
+export const TimeWrapper = ({ setTime, label, p }) => {
   const [data, setData] = React.useState({
     hour: 0,
     minute: 0,
@@ -51,31 +51,56 @@ export const TimeWrapper = ({ setTime }) => {
   console.log(data);
   //   console.log(second);
   return (
-    <Mui.Grid container columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
-      <Item>
-        <Ex.ExInputWrapper.Time
+    <Mui.Stack alignItems={"flex-start"} justifyContent={"flex-start"}>
+      <p>{label || "Thời gian"}</p>
+      <Mui.Stack py={p || 1} />
+      <Mui.Grid container columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
+        <Item>
+          {/* <Ex.ExInputWrapper.Time
           name={"hour"}
           label={"Giờ"}
           value={data.hour}
           onChange={onChange}
-        />
-      </Item>
-      <Item>
-        <Ex.ExInputWrapper.Time
+        /> */}
+          <Mui.TextField
+            name={"hour"}
+            label={"giờ"}
+            value={data.hour}
+            onChange={onChange}
+            type={"number"}
+          />
+        </Item>
+        <Item>
+          {/* <Ex.ExInputWrapper.Time
           name={"minute"}
           label={"Phút"}
           value={data.minute}
           onChange={onChange}
-        />
-      </Item>
-      <Item>
-        <Ex.ExInputWrapper.Time
+        /> */}
+          <Mui.TextField
+            name={"minute"}
+            label={"phút"}
+            value={data.minute}
+            onChange={onChange}
+            type={"number"}
+          />
+        </Item>
+        <Item>
+          {/* <Ex.ExInputWrapper.Time
           name={"second"}
           value={data.second}
           onChange={onChange}
-        />
-      </Item>
-    </Mui.Grid>
+        /> */}
+          <Mui.TextField
+            name={"second"}
+            label={"giây"}
+            value={data.second}
+            onChange={onChange}
+            type={"number"}
+          />
+        </Item>
+      </Mui.Grid>
+    </Mui.Stack>
   );
 };
 

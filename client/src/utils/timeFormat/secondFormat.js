@@ -1,3 +1,5 @@
+import { formatNumber } from "functions";
+
 export class SecondFormat {
   constructor(second) {
     this.second = second;
@@ -18,7 +20,11 @@ export class SecondFormat {
     return data;
   }
   getString() {
-    let data = `${this.getHour()} h ${this.getMinute()} p ${this.getSecond()} s`;
+    let data = `${formatNumber.getMinTwoDigits(
+      this.getHour()
+    )} : ${formatNumber.getMinTwoDigits(
+      this.getMinute()
+    )} : ${formatNumber.getMinTwoDigits(this.getSecond())}`;
     return data;
   }
 }

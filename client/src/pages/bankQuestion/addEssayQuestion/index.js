@@ -3,7 +3,7 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import React from "react";
 import * as Views from "views";
-
+import * as Co from "components";
 import * as Function from "functions";
 import * as Api from "api";
 
@@ -217,24 +217,13 @@ export const AddEssayQuestion = () => {
               />
             </Item>
             <Item>
-              <Mui.Grid container columnSpacing={2}>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExInputWrapper.Basic
-                    label={"Thời gian trả lời"}
-                    name={"timeAnswer"}
-                    type={"number"}
-                    required
-                    onChange={func.handleChange}
-                  />
-                </Mui.Grid>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.TimeType
-                    label={"Loại thời gian"}
-                    onChange={func.handleChange}
-                    required
-                  />
-                </Mui.Grid>
-              </Mui.Grid>
+              <Co.Time.TimeWrapper
+                setTime={(time) => {
+                  setSearch({ ...search, timeAnswer: time });
+                }}
+                p={0.3}
+                label={"Thơi gian làm bài"}
+              />
             </Item>
           </Mui.Grid>
         </Views.ViewBoard>

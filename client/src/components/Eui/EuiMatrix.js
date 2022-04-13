@@ -6,6 +6,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import * as Slide from "redux/slide";
 import styled from "styled-components";
 import * as Eui from "./";
+import { EuiInput } from "./EuiInput";
 
 export const EuiMatrix = ({ data, icon }) => {
   return (
@@ -117,10 +118,12 @@ EuiMatrix.Chil2 = function Chil({ data, i, ...rest }) {
         </Eui.EuiTable.StyledTableCell>
 
         <Eui.EuiTable.StyledTableCell align="center">
-          {data.numberOfQuestions}
-        </Eui.EuiTable.StyledTableCell>
-        <Eui.EuiTable.StyledTableCell align="center">
-          <Style.Input
+          {/* <Style.Input
+            type={"number"}
+            value={data.numberOfQuestions}
+            onChange={handChange}
+          /> */}
+          <EuiInput
             type={"number"}
             value={data.numberOfQuestions}
             onChange={handChange}
@@ -211,10 +214,6 @@ const dataColumn = [
   },
   {
     name: "Số câu",
-    width: 50,
-  },
-  {
-    name: "Thao tác",
     width: 50,
   },
 ];
