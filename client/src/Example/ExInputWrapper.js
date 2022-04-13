@@ -85,3 +85,21 @@ ExInputWrapper.MultiSelect = function ({ name, label, required, ...rest }) {
     </Mui.Stack>
   );
 };
+
+ExInputWrapper.Time = function ({ name, label, required, ...rest }) {
+  return (
+    <Mui.Stack spacing={0.5}>
+      <Style.Label for={name}>
+        {label || "Giây"} <span> {required ? "*" : null}</span>
+      </Style.Label>
+      <EuiInput
+        type={"number"}
+        id={name}
+        name={name}
+        fullWidth
+        required={required}
+        {...rest}
+      />
+    </Mui.Stack>
+  );
+};

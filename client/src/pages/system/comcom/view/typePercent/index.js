@@ -106,7 +106,7 @@ export const TypePercent = () => {
         type={"number"}
       />
       <Mui.Stack direction={"row"} py={3} spacing={3}>
-        <EuiButton.Progress name={"Lưu cấu hình"} onClick={handleOpenModal} />
+        <EuiButton.AddType name={"Lưu cấu hình"} onClick={handleOpenModal} />
       </Mui.Stack>
     </div>
   );

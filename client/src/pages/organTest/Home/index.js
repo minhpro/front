@@ -119,27 +119,7 @@ export const Home = () => {
       <Views.ViewContent title={"Tổ chức thi"}>
         <Mui.Stack spacing={3}>
           <Views.ViewBoard>
-            <Mui.Grid container columnSpacing={5} rowSpacing={2}>
-              <Item>
-                <Ex.ExInputWrapper.Basic
-                  label={"Đề thi đã khởi tạo"}
-                  name={"keyword"}
-                  onChange={func.handleChange}
-                  value={search.keyword}
-                  placeholder={"Nhập tên đề thi "}
-                />
-              </Item>
-              <Item>
-                <Ex.ExDataSelect.ExamType
-                  label={"Dạng đề thi"}
-                  name={"examTypeId"}
-                  onChange={func.handleChange}
-                  value={search.examTypeId}
-                />
-              </Item>
-              <Item>
-                <Ex.ExInputWrapper.Basic label={"Hình thức thi"} />
-              </Item>
+            <Mui.Grid container columnSpacing={{ xs: 2, md: 4 }} rowSpacing={2}>
               <Item>
                 <Ex.ExDataSelect.Class
                   label={"Chọn lớp"}
@@ -154,15 +134,37 @@ export const Home = () => {
                   name={"subjectId"}
                   onChange={func.handleChange}
                   value={search.subjectId}
+                  id={search.classId}
+                />
+              </Item>
+              <Item>
+                <Ex.ExDataSelect.ExamType
+                  label={"Dạng đề thi"}
+                  name={"examTypeId"}
+                  onChange={func.handleChange}
+                  value={search.examTypeId}
+                />
+              </Item>
+              <Item>
+                <Ex.ExInputWrapper.Basic label={"Hình thức thi"} />
+              </Item>
+
+              <Item>
+                <Ex.ExInputWrapper.Basic
+                  label={"Đề thi đã khởi tạo"}
+                  name={"keyword"}
+                  onChange={func.handleChange}
+                  value={search.keyword}
+                  placeholder={"Nhập tên đề thi "}
                 />
               </Item>
             </Mui.Grid>
 
             <Mui.Stack pt={5} direction={"row"} spacing={3}>
-              <Eui.EuiButton.Search onClick={func.handleSearch} />
-              <Link to="/khao-thi-tao-moi">
-                <Eui.EuiButton.AddNew onClick={func.handleSearch} />
+              <Link to="/khao-thi/khao-thi-tao-moi">
+                <Eui.EuiButton.AddNew />
               </Link>
+              <Eui.EuiButton.Search onClick={func.handleSearch} />
             </Mui.Stack>
           </Views.ViewBoard>
 

@@ -30,13 +30,15 @@ ExModalPoppup.Basic = function Basic({
   name,
   handleClose,
   handleFunc,
+  w,
+  mw,
 }) {
   return (
     <Eui.EuiModal.Title
       open={open}
       handleClose={handleClose}
-      w={"80%"}
-      mw={"100%"}
+      w={w || "80%"}
+      mw={mw || "100%"}
       title={title || "Xác nhận tạo mới?"}
     >
       <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>

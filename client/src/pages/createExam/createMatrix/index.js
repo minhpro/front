@@ -178,6 +178,7 @@ export const CreateMatrix = () => {
         open={open}
         handleClose={func.handleClose}
         handleFunc={func.handleAdd}
+        mw={300}
       />
       <Mui.Stack spacing={0.5}>
         {/* nav */}

@@ -11,11 +11,14 @@ import * as Ex from "Example";
 
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
+import * as Co from "components";
+import { SecondFormat } from "utils/timeFormat/secondFormat";
 export const TypeSent = () => {
   // redux
   const reduxOtherConfig = useSelector((state) => state.reduxOtherConfig);
 
   const [data, setData] = React.useState("");
+  const [timeDisplay, settimeDisplay] = React.useState("");
   const dispatch = useDispatch();
 
   const [deleteState, setDeleteState] = React.useState({
@@ -54,6 +57,9 @@ export const TypeSent = () => {
       .then((res) => {
         console.log(res);
         dispatch(Slide.OtherConfigSlide.setOtherConfig(res));
+        const time = new SecondFormat(res.testingDuration);
+
+        settimeDisplay(time.getString());
       })
       .catch((error) => console.log(error));
   }
@@ -64,6 +70,11 @@ export const TypeSent = () => {
 
   function handleCloseModal() {
     setDeleteState({ id: null, open: false });
+  }
+
+  function handleSetTime(time) {
+    console.log(time);
+    setData(time);
   }
 
   React.useEffect(() => {
@@ -89,21 +100,22 @@ export const TypeSent = () => {
       >
         <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
           <Eui.EuiButton.Cancel onClick={handleCloseModal} />
-          <Eui.EuiButton.Progress name={"Lưu cấu hình"} onClick={save} />
+          <Eui.EuiButton.AddType name={"Lưu cấu hình"} onClick={save} />
         </Mui.Stack>
       </Eui.EuiModal.Title>
-      <ExInputWrapper.Basic
-        label={
-          "Thời gian hệ thống gửi link trước thời gian bắt đầu thi/ kiểm tra"
-        }
-        name={"time"}
-        placeholder={reduxOtherConfig?.testingDuration}
-        onChange={(e) => setData(e.target.value)}
-        type={"number"}
-      />
+
+      {/* content */}
+
+      <p>Thời gian hệ thống gửi link trước thời gian bắt đầu thi/ kiểm tra: </p>
+      <p> {timeDisplay}</p>
+
+      <p>Chỉnh sửa: </p>
+      <Mui.Stack width={{ xs: "90%", sm: "70%", md: "40%", lg: "40%" }}>
+        <Co.Time.TimeWrapper setTime={handleSetTime} />
+      </Mui.Stack>
       <Mui.Stack direction={"row"} py={3} spacing={3}>
         <EuiButton.Cancel />
-        <EuiButton.Progress name={"Lưu cấu hình"} onClick={handleOpenModal} />
+        <EuiButton.AddNew name={"Lưu cấu hình"} onClick={handleOpenModal} />
       </Mui.Stack>
     </div>
   );

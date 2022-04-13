@@ -5,5 +5,6 @@ import * as Notification from "./Notification";
 import * as Button from "./Button";
 import * as Auth from "./Auth";
 import * as Nav from "./Nav";
+import * as Time from "./Time";
 
-export { InputWrapper, Text, Card, Notification, Button, Auth, Nav };
+export { InputWrapper, Text, Card, Notification, Button, Auth, Nav, Time };

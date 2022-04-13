@@ -225,7 +225,6 @@ class NavRouter {
         routers.push(route);
       })
     );
-
     return routers;
   };
 }

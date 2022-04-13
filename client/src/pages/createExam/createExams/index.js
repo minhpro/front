@@ -144,6 +144,7 @@ export const CreateExams = () => {
         open={open}
         handleClose={() => handleOpenNew.close()}
         handleFunc={func.handleAddNew}
+        mw={300}
       />
       <Mui.Stack spacing={0.5} component={"form"} onSubmit={func.handleOpen}>
         {/* view question */}
@@ -155,9 +156,14 @@ export const CreateExams = () => {
         </Ex.ExModalPoppup.ViewQuestion>
         {/* nav */}
         <Views.ViewBoard>
-          <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
+          <Mui.Grid
+            container
+            columnSpacing={{ xs: 2, md: 3 }}
+            rowSpacing={2}
+            py={2}
+          >
             <Item>
-              <Mui.Grid container columnSpacing={{ xs: 2, lg: 5 }}>
+              <Mui.Grid container columnSpacing={{ xs: 2, lg: 3 }}>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Class
                     onChange={func.handleChange}
@@ -184,7 +190,7 @@ export const CreateExams = () => {
               />
             </Item>
             <Item>
-              <Mui.Grid container columnSpacing={{ xs: 2, lg: 5 }}>
+              <Mui.Grid container columnSpacing={{ xs: 2, lg: 3 }}>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.ExamType
                     onChange={func.handleChange}
