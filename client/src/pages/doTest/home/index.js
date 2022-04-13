@@ -7,6 +7,7 @@ import moment from "moment";
 import * as Function from "functions";
 import * as Api from "api";
 import { useNavigate } from "react-router-dom";
+import * as Co from "components";
 
 export const Home = () => {
   // State
@@ -32,11 +33,20 @@ export const Home = () => {
     try {
       const res = await Api.memberApi.myTest("", pages.page, pages.limit);
 
-      setPages({ ...pages, data: res.data, total: res.total });
+      setPages({
+        ...pages,
+        data: res.data,
+        total: Function.formatNumber.getTotalPage(res.total, pages.limit),
+      });
       console.log(res);
     } catch (error) {
       console.log(error);
     }
+  }
+
+  function handlePagination(event, value) {
+    console.log(value);
+    setPages({ ...pages, page: value });
   }
 
   // Life circle
@@ -45,33 +55,11 @@ export const Home = () => {
     getData();
   }, []);
 
+  // component
+
   return (
     <Views.ViewContent title={"Danh sách bài thi"}>
       <Mui.Stack spacing={3}>
-        {/* <Views.ViewBoard>
-          <Mui.Grid container columnSpacing={5} rowSpacing={2}>
-            <Item>
-              <Ex.ExInputWrapper.Basic label={"Đề thi đã khởi tạo"} />
-            </Item>
-            <Item>
-              <Ex.ExDataSelect.ExamType label={"Dạng đề thi"} />
-            </Item>
-            <Item>
-              <Ex.ExDataSelect.Target label={"Hình thức thi"} />
-            </Item>
-            <Item>
-              <Ex.ExDataSelect.Class label={"Chọn lớp"} />
-            </Item>
-            <Item>
-              <Ex.ExDataSelect.Subject label={"Chọn môn"} />
-            </Item>
-          </Mui.Grid>
-
-          <Mui.Stack pt={5}>
-            <Eui.EuiButton.Progress name={"Tim kiem"} />
-          </Mui.Stack>
-        </Views.ViewBoard> */}
-
         {/* bang du lieu */}
         <Views.ViewBoard>
           <Eui.EuiTable dataColumn={dataColumn}>
@@ -90,23 +78,26 @@ export const Home = () => {
                     <Eui.EuiTable.StyledTableCell align="center">
                       {moment(row.end).format("DD-MM-YYYY h:mm:ss")}
                     </Eui.EuiTable.StyledTableCell>
+                    <Eui.EuiTable.StyledTableCell align="center">
+                      {row.testMethod}
+                    </Eui.EuiTable.StyledTableCell>
 
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.worked ? (
-                        <Ex.ExIconEditDelete.ViewOnly
-                        // onDelete={() => func.onDelete(row.id)}
-                        // onEdit={func.onEdit}
-                        />
-                      ) : (
-                        <Ex.ExIconEditDelete.Work
-                          onWork={() => navigate(`${row.id}`)}
-                        />
-                      )}
+                      <Method status={row.status} id={row.id} />
                     </Eui.EuiTable.StyledTableCell>
                   </Eui.EuiTable.StyledTableRow>
                 ))
               : null}
           </Eui.EuiTable>
+          <Eui.EuiPagination
+            count={pages.total}
+            defaultPage={1}
+            siblingCount={0}
+            boundaryCount={2}
+            size={"large"}
+            shape={"rounded"}
+            onChange={handlePagination}
+          />
         </Views.ViewBoard>
       </Mui.Stack>
     </Views.ViewContent>
@@ -121,6 +112,22 @@ const Item = ({ children }) => {
   );
 };
 
+const Method = ({ status, id }) => {
+  const navigate = useNavigate();
+  switch (status) {
+    case 0:
+      return <Ex.ExIconEditDelete.Work onWork={() => navigate(`${id}`)} />;
+
+    case 1:
+      return <Ex.ExIconEditDelete.Wait onWait={() => navigate(`${id}`)} />;
+
+    case 2:
+      return <Ex.ExIconEditDelete.ViewOnly onView={() => navigate(`${id}`)} />;
+    default:
+      return <Ex.ExIconEditDelete.Work onWork={() => navigate(`${id}`)} />;
+  }
+};
+
 const dataColumn = [
   {
     name: "STT",
@@ -129,6 +136,10 @@ const dataColumn = [
   {
     name: "Tên bài thi",
     width: 200,
+  },
+  {
+    name: "Hình thức thi",
+    width: 100,
   },
 
   {

@@ -9,6 +9,7 @@ import * as OtherConfigSlide from "./otherConfigSlide";
 import * as questionDistributionsSlide from "./questionDistributionsSlide";
 import * as authSlide from "./authSlide";
 import * as checkingSlice from "./checkingSlice";
+import * as nofiSlide from "./nofiSlide";
 
 export {
   SubjectSlide,
@@ -22,4 +23,5 @@ export {
   questionDistributionsSlide,
   authSlide,
   checkingSlice,
+  nofiSlide,
 };

@@ -5,7 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { AddAlarmRounded } from "@mui/icons-material";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 export const ExIconEditDelete = ({ onEdit, onDelete }) => {
   return (
     <Stack direction={"row"} justifyContent="center" spacing={1}>
@@ -71,6 +71,14 @@ ExIconEditDelete.Work = function ({ onWork }) {
   return (
     <Stack direction={"row"} justifyContent="center" spacing={1}>
       <AppRegistrationIcon onClick={onWork} sx={{ ...style }} />
+    </Stack>
+  );
+};
+
+ExIconEditDelete.Wait = function ({ onWait }) {
+  return (
+    <Stack direction={"row"} justifyContent="center" spacing={1}>
+      <HourglassEmptyIcon onClick={onWait} sx={{ ...style }} />
     </Stack>
   );
 };

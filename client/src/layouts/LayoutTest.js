@@ -11,36 +11,11 @@ import * as Slide from "redux/slide";
 import * as Func from "functions";
 import * as Co from "components";
 import { useSelector } from "react-redux";
-
+import { apiNofi } from "assets/contants/apiContant";
+import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { useLocation } from "react-router-dom";
 export const LayoutTest = () => {
   const dispatch = useDispatch();
-
-  const [exam, setExam] = React.useState({
-    id: null,
-    start: null,
-    end: null,
-  });
-
-  function set(e) {
-    let data = JSON.parse(e.data);
-    if (exam.id === null) {
-      // setExam({ ...exam, id: data.id });
-    } else return;
-  }
-
-  React.useEffect(() => {
-    var source = new EventSource("http://18.179.5.86:8080/api/event/register");
-
-    if (!exam.id) {
-      source.addEventListener("upComingTest", set, false);
-    } else {
-      console.log("remove");
-      source.removeEventListener("upComingTest", set);
-    }
-
-    return () => source.removeEventListener("upComingTest", set);
-  }, []);
 
   React.useEffect(() => {
     Func.handler
@@ -80,10 +55,11 @@ export const LayoutTest = () => {
         dispatch(Slide.ClassSlide.setClassName(res));
       });
   }, [dispatch]);
+
   return (
     <>
-      {/* {exam.id ? <Co.Notification.Exam open={true} id={exam.id} /> : null} */}
       {/* <ThongBao /> */}
+      {/* <Co.Notification.Exam /> */}
       <Ex.Header.Nav c={"white"} />
       <Ex.Header />
       <Style.Main className="container">
@@ -112,28 +88,11 @@ const Style = {
   `,
 };
 
-// const Nav = () => {
-//   const auth = useSelector((s) => s.reduxAuth);
-//   return (
-//     <Mui.Stack spacing={2}>
-//       {navRouter.data.map((data, i) => {
-//         if (auth.auth.roles[0] === data.role) {
-//           return <EuiNavMenu data={data} key={i} icon={data.icon} />;
-//         } else {
-//           return null;
-//         }
-//       })}
-//     </Mui.Stack>
-//   );
-// };
-
 const Nav = () => {
   const auth = useSelector((s) => s.reduxAuth.auth);
   return (
     <Mui.Stack spacing={2}>
       {navRouter.data.map((data, i) => {
-        console.log(data.role);
-        console.log(auth.roles);
         if (auth?.roles?.find((role) => data.role?.includes(role))) {
           return <EuiNavMenu data={data} key={i} icon={data.icon} />;
         } else {
@@ -141,54 +100,5 @@ const Nav = () => {
         }
       })}
     </Mui.Stack>
-  );
-};
-
-const ThongBao = () => {
-  const [exam, setExam] = React.useState({
-    open: false,
-    id: null,
-    start: null,
-    end: null,
-  });
-
-  const location = useLocation().pathname;
-  const pathnames = location.split("/").filter((x) => x);
-  console.log(pathnames);
-  function set(e) {
-    let data = JSON.parse(e.data);
-    if (exam.id === null) {
-      console.log(data);
-
-      setExam({ ...exam, id: data.id });
-    }
-    if (pathnames[0] === "lam-bai") {
-      console.log("lambai");
-      setExam({ ...exam, id: null });
-    }
-  }
-
-  React.useEffect(() => {
-    var source = new EventSource("http://18.179.5.86:8080/api/event/register");
-
-    if (!exam.id) {
-      source.addEventListener("upComingTest", set, false);
-    } else {
-      console.log("remove");
-      source.removeEventListener("upComingTest", function () {
-        console.log("fdfdfdfd");
-      });
-    }
-
-    return () =>
-      source.removeEventListener("upComingTest", function () {
-        console.log("ads");
-      });
-  }, []);
-
-  return (
-    <>
-      <Co.Notification.Exam open={exam.open} id={exam.id} />{" "}
-    </>
   );
 };

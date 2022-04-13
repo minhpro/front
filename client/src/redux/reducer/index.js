@@ -11,6 +11,7 @@ import scoreSlide from "redux/slide/scoreSlide";
 import otherConfigSlide from "redux/slide/otherConfigSlide";
 import authSlide from "redux/slide/authSlide";
 import checkingSlice from "redux/slide/checkingSlice";
+import nofiSlide from "redux/slide/nofiSlide";
 
 export default combineReducers({
   reduxQuestionType: questionTypeSlide,
@@ -25,4 +26,5 @@ export default combineReducers({
   reduxOtherConfig: otherConfigSlide,
   reduxAuth: authSlide,
   reduxChecking: checkingSlice,
+  reduxNofi: nofiSlide,
 });
