@@ -52,5 +52,5 @@ const Item = ({ children }) => {
 
 const data = [
   { name: "Giáo viên", link: "/khao-thi", icon: "teacher" },
-  { name: "Học sinh", link: "/khao-thi", icon: "hoc-sinh" },
+  { name: "Học sinh", link: "/khao-thi/danh-sach-bai-thi", icon: "hoc-sinh" },
 ];

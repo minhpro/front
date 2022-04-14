@@ -38,6 +38,7 @@ function App() {
             allowedRoles={[
               Contants.authContants.ROLES.Admin,
               Contants.authContants.ROLES.teacher,
+              Contants.authContants.ROLES.Student,
             ]}
           />
         }

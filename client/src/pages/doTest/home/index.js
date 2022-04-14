@@ -139,10 +139,6 @@ const dataColumn = [
     name: "Tên bài thi",
     width: 200,
   },
-  {
-    name: "Hình thức thi",
-    width: 100,
-  },
 
   {
     name: "Thời gian bắt đầu ",
@@ -151,6 +147,10 @@ const dataColumn = [
   {
     name: "Thời gian kết thúc",
     width: 200,
+  },
+  {
+    name: "Hình thức thi",
+    width: 100,
   },
 
   {
