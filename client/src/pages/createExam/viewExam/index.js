@@ -87,16 +87,16 @@ const CardExam = ({ data }) => {
         sx={{ overflow: "hidden" }}
         border={"solid 1px"}
       >
-        <Items name={"Code:"} value={data.code} />
+        <Items name={"Code:"} value={data?.code} />
         <Items
           name={"Lớp học:"}
-          value={data?.testMatrixData.subjectData.classs.name}
+          value={data?.testMatrixData?.subjectData?.classs?.name}
         />
         <Items
           name={"Môn học:"}
-          value={data?.testMatrixData.subjectData.name}
+          value={data?.testMatrixData?.subjectData?.name}
         />
-        <Items name={"Ma trận đề thi:"} value={data?.testMatrixData.name} />
+        <Items name={"Ma trận đề thi:"} value={data?.testMatrixData?.name} />
       </Mui.Stack>
     </Mui.Stack>
   );
@@ -127,11 +127,18 @@ const CardChooseQuestion = ({ data, id, ...rest }) => {
           columnGap={2}
           rowGap={2}
         >
-          {data?.map((item, i) => {
-            return (
-              <QuestionItem key={i} num={i + 1} isOpen={i === id} {...rest} />
-            );
-          })}
+          {data.length
+            ? data?.map((item, i) => {
+                return (
+                  <QuestionItem
+                    key={i}
+                    num={i + 1}
+                    isOpen={i === id}
+                    {...rest}
+                  />
+                );
+              })
+            : null}
         </Mui.Stack>
       </Mui.Stack>
     </Mui.Stack>
