@@ -5,6 +5,7 @@ import { Feedback } from "./Feedback";
 import { LinkLms } from "./LinkLms";
 import { ViewAnswer } from "./ViewAnswer";
 import { ViewResult } from "./ViewResult";
+import { Clock } from "./Clock";
 
 export {
   ViewQuestion,
@@ -14,4 +15,5 @@ export {
   LinkLms,
   ViewAnswer,
   ViewResult,
+  Clock,
 };

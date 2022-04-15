@@ -42,7 +42,7 @@ export const ViewExam = () => {
         <Views.ViewBoard>
           {data ? (
             <CardChooseQuestion
-              data={data.questionData}
+              data={data?.questionData}
               onClick={getQuestion}
               id={num}
             />
@@ -50,7 +50,9 @@ export const ViewExam = () => {
         </Views.ViewBoard>
 
         <Views.ViewBoard>
-          {data ? <QuestionWrapper num={num} data={data.questionData} /> : null}
+          {data ? (
+            <QuestionWrapper num={num} data={data?.questionData} />
+          ) : null}
         </Views.ViewBoard>
       </Mui.Stack>
     </Views.ViewContent>
@@ -88,10 +90,13 @@ const CardExam = ({ data }) => {
         <Items name={"Code:"} value={data.code} />
         <Items
           name={"Lớp học:"}
-          value={data.testMatrixData.subjectData.classs.name}
+          value={data?.testMatrixData.subjectData.classs.name}
         />
-        <Items name={"Môn học:"} value={data.testMatrixData.subjectData.name} />
-        <Items name={"Ma trận đề thi:"} value={data.testMatrixData.name} />
+        <Items
+          name={"Môn học:"}
+          value={data?.testMatrixData.subjectData.name}
+        />
+        <Items name={"Ma trận đề thi:"} value={data?.testMatrixData.name} />
       </Mui.Stack>
     </Mui.Stack>
   );
@@ -122,7 +127,7 @@ const CardChooseQuestion = ({ data, id, ...rest }) => {
           columnGap={2}
           rowGap={2}
         >
-          {data.map((item, i) => {
+          {data?.map((item, i) => {
             return (
               <QuestionItem key={i} num={i + 1} isOpen={i === id} {...rest} />
             );

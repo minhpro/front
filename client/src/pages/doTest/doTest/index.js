@@ -11,7 +11,8 @@ import * as Co from "components";
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { SecondFormat } from "utils";
+import moment from "moment";
 
 export const DoTest = () => {
   const param = useParams();
@@ -20,12 +21,16 @@ export const DoTest = () => {
   const [data, setData] = React.useState(null);
   const [isDo, setIsDo] = React.useState(true);
 
+  const [time, setTime] = React.useState("");
+
   React.useEffect(async () => {
     try {
       const res = await Api.testKitApi.getExam(param.id);
       console.log(res);
       dispatch(Slide.checkingSlice.setTestKitId(param.id));
       setData(res);
+      const classTime = new SecondFormat(res.time);
+      setTime(classTime.getString());
     } catch (error) {
       console.log(error);
     }
@@ -78,6 +83,11 @@ export const DoTest = () => {
       <Views.ViewContent title={"Khảo thí > " + data?.code}>
         {isDo ? (
           <Views.ViewBoard>
+            <Mui.Stack alignItems={"center"}>
+              <Co.Text.Body.Caption>Thời gian làm bài</Co.Text.Body.Caption>
+
+              {data ? <Co.Card.Clock timeSecond={data?.time} /> : null}
+            </Mui.Stack>
             <Mui.Stack sx={{ height: "70vh", overflowY: "scroll" }}>
               {data
                 ? data.questions.map((item, i) => (

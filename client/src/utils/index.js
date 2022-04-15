@@ -1,3 +1,5 @@
 import { TimeFormat } from "./timeFormat/timeFormat";
+import { SecondFormat } from "./timeFormat/secondFormat";
+import { getPercent } from "./getPercent";
 
-export { TimeFormat };
+export { TimeFormat, SecondFormat, getPercent };
