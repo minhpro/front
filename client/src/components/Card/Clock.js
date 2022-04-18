@@ -15,13 +15,17 @@ export const Clock = ({ timeSecond }) => {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setClockState(clockState - 1);
-      console.log(clockState);
+
       setPercent(Utils.getPercent(clockState, timeSecond));
     }, 1000);
     return () => {
       clearInterval(interval);
     };
   });
+
+  React.useEffect(() => {
+    setClockState(timeSecond);
+  }, [timeSecond]);
 
   function getTime() {
     const time = new Utils.SecondFormat(timeSecond - clockState);

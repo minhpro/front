@@ -1,3 +1,4 @@
 import { DoExam } from "./DoExam";
+import { ChooseQuestion } from "./ChooseQuestion";
 
-export { DoExam };
+export { DoExam, ChooseQuestion };

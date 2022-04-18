@@ -9,7 +9,25 @@ export const LayoutExam = () => {
     <>
       <Ex.Header.Nav c={"white"} />
       <Ex.Header />
-      <Outlet />
+
+      <Style.Main className="container">
+        <Mui.Stack direction={{ xs: "column", md: "row" }}>
+          <Mui.Box width={"100%"}>
+            <Outlet />
+          </Mui.Box>
+        </Mui.Stack>
+      </Style.Main>
     </>
   );
+};
+
+const Style = {
+  Main: styled.main`
+    margin: 20px 0;
+    display: block;
+    width: 100%;
+  `,
+  Nav: styled.nav`
+    min-width: 300px;
+  `,
 };

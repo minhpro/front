@@ -13,6 +13,7 @@ import * as Slide from "redux/slide";
 import { useSelector } from "react-redux";
 import { SecondFormat } from "utils";
 import moment from "moment";
+import styled from "styled-components";
 
 export const DoTest = () => {
   const param = useParams();
@@ -22,6 +23,9 @@ export const DoTest = () => {
   const [isDo, setIsDo] = React.useState(true);
 
   const [time, setTime] = React.useState("");
+
+  const [question, setQuestion] = React.useState(0);
+  const [done, setDone] = React.useState([0]);
 
   React.useEffect(async () => {
     try {
@@ -35,6 +39,16 @@ export const DoTest = () => {
       console.log(error);
     }
   }, []);
+
+  function han(i) {
+    setQuestion(i);
+    let data = done;
+    let result = data.filter((index) => index !== i);
+
+    result.push(i);
+    setDone(result);
+    console.log(result);
+  }
 
   const [snack, setSnack] = React.useState({
     isOpen: false,
@@ -81,7 +95,7 @@ export const DoTest = () => {
         mw={300}
       />
       <Views.ViewContent title={"Khảo thí > " + data?.code}>
-        {isDo ? (
+        {/* {isDo ? (
           <Views.ViewBoard>
             <Mui.Stack alignItems={"center"}>
               <Co.Text.Body.Caption>Thời gian làm bài</Co.Text.Body.Caption>
@@ -126,8 +140,105 @@ export const DoTest = () => {
           </Views.ViewBoard>
         ) : (
           <p>Đã nộp bài</p>
-        )}
+        )} */}
+        <Mui.Stack direction={{ xs: "column", md: "row" }} spacing={1}>
+          <Style.Nav>
+            <Views.ViewBoard>
+              <Mui.Stack>
+                {data ? <Co.Card.Clock timeSecond={data?.time} /> : null}
+                <Co.Text.Body.Medium>Chọn câu hỏi:</Co.Text.Body.Medium>
+                <Mui.Divider />
+                <Co.Button.ChooseQuestion.Wrapper>
+                  {data ? (
+                    data.questions.map((data, i) => {
+                      return (
+                        <Co.Button.ChooseQuestion
+                          key={i}
+                          i={i}
+                          onClick={han}
+                          choose={i === question}
+                          done={done.includes(i)}
+                        />
+                      );
+                    })
+                  ) : (
+                    <p>loading...</p>
+                  )}
+                </Co.Button.ChooseQuestion.Wrapper>
+              </Mui.Stack>
+              <Mui.Stack mt={5}>
+                <Eui.EuiButton.AddType
+                  name={"Nộp bài"}
+                  onClick={() => handleOpenNew.open()}
+                />
+              </Mui.Stack>
+            </Views.ViewBoard>
+          </Style.Nav>
+          <Mui.Box width={"100%"}>
+            <Views.ViewBoard>
+              <Mui.Stack alignItems={"center"}>
+                {/* cau hoi */}
+                <Mui.Stack width={"100%"}>
+                  {data
+                    ? data.questions.map((item, i) => {
+                        return (
+                          <Style.Hide key={i} hide={question === i}>
+                            <Mui.Stack alignItems={"center"}>
+                              <Co.Text.Body.Caption>
+                                Thời gian làm bài
+                              </Co.Text.Body.Caption>
+                              <Co.Card.Clock timeSecond={item?.time} />
+                              <Mui.Divider />
+                            </Mui.Stack>
+
+                            <Mui.Stack mb={5}>
+                              {item.type === "ConstructedResponseQuestion" ? (
+                                <Co.Card.ViewQuestion.Constructed
+                                  index={i + 1}
+                                  id={item.id}
+                                  code={item.code}
+                                  question={item.question}
+                                  exam={true}
+                                />
+                              ) : (
+                                <Co.Card.ViewQuestion.MultiChoice
+                                  index={i + 1}
+                                  id={item.id}
+                                  code={item.code}
+                                  question={item.question}
+                                  A={item.answerOne}
+                                  B={item.answerTwo}
+                                  C={item.answerThree}
+                                  D={item.answerFour}
+                                  exam={true}
+                                />
+                              )}
+                            </Mui.Stack>
+                          </Style.Hide>
+                        );
+                      })
+                    : null}
+                </Mui.Stack>
+              </Mui.Stack>
+            </Views.ViewBoard>
+          </Mui.Box>
+        </Mui.Stack>
       </Views.ViewContent>
     </>
   );
+};
+
+const Style = {
+  Main: styled.main`
+    margin: 20px 0;
+    display: block;
+    width: 100%;
+  `,
+  Nav: styled.nav`
+    min-width: 300px;
+  `,
+  Hide: styled.div`
+    display: ${(props) => (props.hide ? "block" : "none")};
+    width: 100%;
+  `,
 };
