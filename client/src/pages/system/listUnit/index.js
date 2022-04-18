@@ -177,26 +177,39 @@ export const PageSystemListUnit = () => {
       }
     };
 
-    onDelete = () => {
-      Function.handler
-        .api(() => Api.unitApi.delete(deleteId))
-        .then((res) => {
-          if (res?.response?.status === 400) {
-            setSnack({
-              isOpen: true,
-              message: res.response.data.message,
-              severity: "error",
-            });
-          } else {
-            handleSnack.delete();
-            this.handleSearch();
-          }
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log("loi nay");
-          console.log(error);
+    onDelete = async () => {
+      // Function.handler
+      //   .api(() => Api.unitApi.delete(deleteId))
+      //   .then((res) => {
+      //     if (res?.response?.status === 400) {
+      //       setSnack({
+      //         isOpen: true,
+      //         message: res.response.data.message,
+      //         severity: "error",
+      //       });
+      //     } else {
+      //       handleSnack.delete();
+      //       this.handleSearch();
+      //     }
+      //     console.log(res);
+      //   })
+      //   .catch((error) => {
+      //     console.log("loi nay");
+      //     console.log(error);
+      //   });
+
+      try {
+        const res = await Api.unitApi.delete(deleteId);
+        handleSnack.delete();
+        this.handleSearch();
+      } catch (error) {
+        console.log("loi nay");
+        setSnack({
+          isOpen: true,
+          message: error.response.data.message,
+          severity: "error",
         });
+      }
       handleOpenDelete.close();
     };
     onEdit(id) {

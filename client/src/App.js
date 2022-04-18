@@ -43,6 +43,13 @@ function App() {
           />
         }
       >
+        <Route path="/khao-thi" element={<Layout.LayoutExam />}>
+          <Route
+            path="danh-sach-bai-thi/:id"
+            element={<Pages.DoTest.DoTest />}
+          />
+        </Route>
+
         <Route path="/khao-thi" element={<Layout.LayoutTest />}>
           <Route
             index
@@ -66,10 +73,10 @@ function App() {
             path="danh-sach-cau-hoi-rieng/chinh-sua/:id"
             element={<Pages.BankPrivateQuestion.EditQuestion />}
           />
-          <Route
+          {/* <Route
             path="danh-sach-bai-thi/:id"
             element={<Pages.DoTest.DoTest />}
-          />
+          /> */}
           <Route
             path="danh-sach-bai-thi/ket-qua/:id"
             element={<Pages.DoTest.ViewResult />}
