@@ -50,6 +50,22 @@ export const DoTest = () => {
     console.log(result);
   }
 
+  function nextQuestion(i) {
+    if (i >= data.questions.length || done.includes(i + 1)) {
+      return null;
+    } else {
+      han(i + 1);
+    }
+  }
+
+  function backQuestion(i) {
+    if (i <= 0 || done.includes(i - 1)) {
+      return null;
+    } else {
+      han(i - 1);
+    }
+  }
+
   const [snack, setSnack] = React.useState({
     isOpen: false,
     message: "",
@@ -95,57 +111,11 @@ export const DoTest = () => {
         mw={300}
       />
       <Views.ViewContent title={"Khảo thí > " + data?.code}>
-        {/* {isDo ? (
-          <Views.ViewBoard>
-            <Mui.Stack alignItems={"center"}>
-              <Co.Text.Body.Caption>Thời gian làm bài</Co.Text.Body.Caption>
-
-              {data ? <Co.Card.Clock timeSecond={data?.time} /> : null}
-            </Mui.Stack>
-            <Mui.Stack sx={{ height: "70vh", overflowY: "scroll" }}>
-              {data
-                ? data.questions.map((item, i) => (
-                    <Mui.Stack key={i} mb={5}>
-                      {item.type === "ConstructedResponseQuestion" ? (
-                        <Co.Card.ViewQuestion.Constructed
-                          index={i + 1}
-                          id={item.id}
-                          code={item.code}
-                          question={item.question}
-                          exam={true}
-                        />
-                      ) : (
-                        <Co.Card.ViewQuestion.MultiChoice
-                          index={i + 1}
-                          id={item.id}
-                          code={item.code}
-                          question={item.question}
-                          A={item.answerOne}
-                          B={item.answerTwo}
-                          C={item.answerThree}
-                          D={item.answerFour}
-                          exam={true}
-                        />
-                      )}
-                    </Mui.Stack>
-                  ))
-                : null}
-            </Mui.Stack>
-            <Mui.Stack mt={5}>
-              <Eui.EuiButton.AddType
-                name={"Nộp bài"}
-                onClick={() => handleOpenNew.open()}
-              />
-            </Mui.Stack>
-          </Views.ViewBoard>
-        ) : (
-          <p>Đã nộp bài</p>
-        )} */}
         <Mui.Stack direction={{ xs: "column", md: "row" }} spacing={1}>
           <Style.Nav>
             <Views.ViewBoard>
               <Mui.Stack>
-                {data ? <Co.Card.Clock timeSecond={data?.time} /> : null}
+                {/* {data ? <Co.Card.Clock timeSecond={data?.time} /> : null} */}
                 <Co.Text.Body.Medium>Chọn câu hỏi:</Co.Text.Body.Medium>
                 <Mui.Divider />
                 <Co.Button.ChooseQuestion.Wrapper>
@@ -179,18 +149,39 @@ export const DoTest = () => {
               <Mui.Stack alignItems={"center"}>
                 {/* cau hoi */}
                 <Mui.Stack width={"100%"}>
+                  <Mui.Stack alignItems={"center"}>
+                    <Mui.Stack
+                      direction={"row"}
+                      justifyContent={"space-between"}
+                      alignItems={"center"}
+                      width={"100%"}
+                    >
+                      <Co.Icon.IconWidth
+                        src={Function.getImage.getPng("back")}
+                        alt={"icon"}
+                        onClick={() => backQuestion(question)}
+                      />
+                      <Co.Text.Body.Caption>
+                        Thời gian làm bài
+                      </Co.Text.Body.Caption>
+                      <Co.Icon.IconWidth
+                        src={Function.getImage.getPng("pre")}
+                        alt={"icon"}
+                        onClick={() => nextQuestion(question)}
+                      />
+                    </Mui.Stack>
+
+                    <Co.Card.Clock
+                      timeSecond={data?.questions[question].time}
+                      nextTime={() => nextQuestion(question)}
+                      move={question}
+                    />
+                    <Mui.Divider />
+                  </Mui.Stack>
                   {data
                     ? data.questions.map((item, i) => {
                         return (
                           <Style.Hide key={i} hide={question === i}>
-                            <Mui.Stack alignItems={"center"}>
-                              <Co.Text.Body.Caption>
-                                Thời gian làm bài
-                              </Co.Text.Body.Caption>
-                              <Co.Card.Clock timeSecond={item?.time} />
-                              <Mui.Divider />
-                            </Mui.Stack>
-
                             <Mui.Stack mb={5}>
                               {item.type === "ConstructedResponseQuestion" ? (
                                 <Co.Card.ViewQuestion.Constructed

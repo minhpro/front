@@ -111,7 +111,6 @@ export const OrganMatrix = () => {
             severity: "warning",
           });
           func.handleSearch();
-          console.log(res);
         })
         .catch((error) => {
           console.log("error:");
@@ -122,6 +121,7 @@ export const OrganMatrix = () => {
             severity: "error",
           });
         });
+      handleOpenDelete.close();
     };
 
     onEdit = (e) => {

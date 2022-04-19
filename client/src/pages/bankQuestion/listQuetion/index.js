@@ -211,11 +211,12 @@ export const ListQuestion = () => {
               pt={2}
               borderColor={"primary.main"}
               borderTop={"solid 2px"}
-              direction={"column"}
+              direction={"row"}
               spacing={2}
               justifyContent={"flex-start"}
               alignItems={"flex-start"}
               flexWrap={"wrap"}
+              rowGap={2}
             >
               <Eui.EuiButton.Search
                 name={"Tìm kiếm"}
@@ -223,13 +224,13 @@ export const ListQuestion = () => {
               />
               <Link to="/khao-thi/them-cau-tu-luan-EBD">
                 <Eui.EuiButton.AddNew
-                  name={"Thêm mới câu tự luận"}
+                  name={"Câu tự luận"}
                   onClick={func.handleSearch}
                 />
               </Link>
               <Link to={"/khao-thi/them-cau-trac-nghiem-EDB"}>
                 <Eui.EuiButton.AddNew
-                  name={"Thêm mới câu trắc nghiệm"}
+                  name={"Câu trắc nghiệm"}
                   onClick={func.handleSearch}
                 />
               </Link>

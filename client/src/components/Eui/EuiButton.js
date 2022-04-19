@@ -135,8 +135,8 @@ EuiButton.OpenCreate = function ({ name, ...rest }) {
       boxShadow={"rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"}
       {...rest}
     >
-      <Create sx={{ fontSize: 20 }} />
-      <p>{name || "Tạo mới"}</p>
+      <Create sx={{ fontSize: 20, color: "white.main" }} />
+      <p style={{ color: "white" }}>{name || "Tạo mới"}</p>
     </Mui.Stack>
   );
 };
@@ -166,8 +166,8 @@ EuiButton.AddNew = function ({ name, ...rest }) {
       boxShadow={"rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"}
       {...rest}
     >
-      <Add sx={{ fontSize: 20 }} />
-      <p>{name || "Tạo mới"}</p>
+      <Add sx={{ fontSize: 20, color: "white.main" }} color={"white.main"} />
+      <p style={{ color: "white" }}>{name || "Tạo mới"}</p>
     </Mui.Stack>
   );
 };
@@ -197,7 +197,7 @@ EuiButton.Delete = function ({ name, ...rest }) {
       boxShadow={"rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"}
       {...rest}
     >
-      <Delete sx={{ fontSize: 20 }} color="white" />
+      <Delete sx={{ fontSize: 20 }} color="white.main" />
       <Sui.SuiText.SmallText style={{ color: "white" }}>
         {name || "Tạo mới"}
       </Sui.SuiText.SmallText>

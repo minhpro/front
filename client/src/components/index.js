@@ -6,5 +6,16 @@ import * as Button from "./Button";
 import * as Auth from "./Auth";
 import * as Nav from "./Nav";
 import * as Time from "./Time";
+import * as Icon from "./Icon";
 
-export { InputWrapper, Text, Card, Notification, Button, Auth, Nav, Time };
+export {
+  InputWrapper,
+  Text,
+  Card,
+  Notification,
+  Button,
+  Auth,
+  Nav,
+  Time,
+  Icon,
+};
