@@ -16,7 +16,9 @@ export const ChooseQuestion = ({ i, onClick, done, ...rest }) => {
   return (
     <Style.Wrapper onClick={handleChange} done={done} {...rest}>
       <Mui.Stack justifyContent={"center"} alignItems={"center"}>
-        <Co.Text.Normal.Medium>Câu {i + 1}</Co.Text.Normal.Medium>
+        <Co.Text.Normal.Medium style={{ color: "white" }}>
+          Câu {i + 1}
+        </Co.Text.Normal.Medium>
       </Mui.Stack>
     </Style.Wrapper>
   );

@@ -4,6 +4,8 @@ import { ExInputWrapper } from "./ExInputWrapper";
 import { ExIconEditDelete } from "./ExIconEditDelete";
 import { ExDataSelect } from "./ExDataSelect";
 import { ExModalPoppup } from "./ExModalPoppup";
+import * as ModalConfirm from "./ModalConfirm";
+import * as SelectLMS from "./SelectLMS";
 
 export {
   Header,
@@ -12,4 +14,6 @@ export {
   ExIconEditDelete,
   ExDataSelect,
   ExModalPoppup,
+  ModalConfirm,
+  SelectLMS,
 };

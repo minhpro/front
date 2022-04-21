@@ -51,7 +51,7 @@ export const DoTest = () => {
   }
 
   function nextQuestion(i) {
-    if (i >= data.questions.length || done.includes(i + 1)) {
+    if (i >= data.questions.length - 1 || done.includes(i + 1)) {
       return null;
     } else {
       han(i + 1);
@@ -81,6 +81,7 @@ export const DoTest = () => {
     "Nộp bài",
     "Xác nhận nộp bài"
   );
+
   async function confirm() {
     try {
       const res = Api.testKitApi.checking(result);
@@ -114,8 +115,17 @@ export const DoTest = () => {
         <Mui.Stack direction={{ xs: "column", md: "row" }} spacing={1}>
           <Style.Nav>
             <Views.ViewBoard>
-              <Mui.Stack>
-                {/* {data ? <Co.Card.Clock timeSecond={data?.time} /> : null} */}
+              <Mui.Stack spacing={2}>
+                <Mui.Stack alignItems={"center"} spacing={1}>
+                  <Co.Text.Body.Caption>Tổng thời gian</Co.Text.Body.Caption>
+                  {data ? (
+                    <Co.Card.Clock
+                      timeSecond={data?.time}
+                      nextTime={() => handleOpenNew.open()}
+                    />
+                  ) : null}
+                </Mui.Stack>
+
                 <Co.Text.Body.Medium>Chọn câu hỏi:</Co.Text.Body.Medium>
                 <Mui.Divider />
                 <Co.Button.ChooseQuestion.Wrapper>
@@ -178,37 +188,39 @@ export const DoTest = () => {
                     />
                     <Mui.Divider />
                   </Mui.Stack>
-                  {data
-                    ? data.questions.map((item, i) => {
-                        return (
-                          <Style.Hide key={i} hide={question === i}>
-                            <Mui.Stack mb={5}>
-                              {item.type === "ConstructedResponseQuestion" ? (
-                                <Co.Card.ViewQuestion.Constructed
-                                  index={i + 1}
-                                  id={item.id}
-                                  code={item.code}
-                                  question={item.question}
-                                  exam={true}
-                                />
-                              ) : (
-                                <Co.Card.ViewQuestion.MultiChoice
-                                  index={i + 1}
-                                  id={item.id}
-                                  code={item.code}
-                                  question={item.question}
-                                  A={item.answerOne}
-                                  B={item.answerTwo}
-                                  C={item.answerThree}
-                                  D={item.answerFour}
-                                  exam={true}
-                                />
-                              )}
-                            </Mui.Stack>
-                          </Style.Hide>
-                        );
-                      })
-                    : null}
+                  {data ? (
+                    data.questions.map((item, i) => {
+                      return (
+                        <Style.Hide key={i} hide={question === i}>
+                          <Mui.Stack mb={5}>
+                            {item.type === "ConstructedResponseQuestion" ? (
+                              <Co.Card.ViewQuestion.Constructed
+                                index={i + 1}
+                                id={item.id}
+                                code={item.code}
+                                question={item.question}
+                                exam={true}
+                              />
+                            ) : (
+                              <Co.Card.ViewQuestion.MultiChoice
+                                index={i + 1}
+                                id={item.id}
+                                code={item.code}
+                                question={item.question}
+                                A={item.answerOne}
+                                B={item.answerTwo}
+                                C={item.answerThree}
+                                D={item.answerFour}
+                                exam={true}
+                              />
+                            )}
+                          </Mui.Stack>
+                        </Style.Hide>
+                      );
+                    })
+                  ) : (
+                    <p>loading...</p>
+                  )}
                 </Mui.Stack>
               </Mui.Stack>
             </Views.ViewBoard>

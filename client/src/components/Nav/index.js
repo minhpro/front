@@ -1,3 +1,4 @@
 import { AuthNav } from "./AuthNav";
+import { NavSystemPage } from "./NavSystemPage";
 
-export { AuthNav };
+export { AuthNav, NavSystemPage };

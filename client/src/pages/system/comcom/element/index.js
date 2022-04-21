@@ -1,2 +1,3 @@
 import { LayoutTable } from "./LayoutTable";
-export { LayoutTable };
+import { Nav } from "./Nav";
+export { LayoutTable, Nav };

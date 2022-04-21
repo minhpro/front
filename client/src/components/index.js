@@ -7,6 +7,8 @@ import * as Auth from "./Auth";
 import * as Nav from "./Nav";
 import * as Time from "./Time";
 import * as Icon from "./Icon";
+import * as Modal from "./Modal";
+import * as Input from "./Input";
 
 export {
   InputWrapper,
@@ -18,4 +20,6 @@ export {
   Nav,
   Time,
   Icon,
+  Modal,
+  Input,
 };

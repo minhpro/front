@@ -32,7 +32,7 @@ export const Clock = ({ timeSecond, nextTime, move }) => {
   }, [move]);
 
   function getTime() {
-    const time = new Utils.SecondFormat(clockState);
+    const time = new Utils.SecondFormat(timeSecond - clockState);
 
     if (time.getSecond() < 0) {
       nextTime();

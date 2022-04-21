@@ -10,6 +10,8 @@ import * as questionDistributionsSlide from "./questionDistributionsSlide";
 import * as authSlide from "./authSlide";
 import * as checkingSlice from "./checkingSlice";
 import * as nofiSlide from "./nofiSlide";
+import * as navComcomSystemSlide from "./navComcomSystemSlide";
+import * as snackbarSlide from "./snackbarSlide";
 
 export {
   SubjectSlide,
@@ -24,4 +26,6 @@ export {
   authSlide,
   checkingSlice,
   nofiSlide,
+  navComcomSystemSlide,
+  snackbarSlide,
 };

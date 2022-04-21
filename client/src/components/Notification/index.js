@@ -1,3 +1,4 @@
 import { Exam } from "./Exam";
+import { Snackbar } from "./Snackbar";
 
-export { Exam };
+export { Exam, Snackbar };

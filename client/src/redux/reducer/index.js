@@ -12,6 +12,8 @@ import otherConfigSlide from "redux/slide/otherConfigSlide";
 import authSlide from "redux/slide/authSlide";
 import checkingSlice from "redux/slide/checkingSlice";
 import nofiSlide from "redux/slide/nofiSlide";
+import navComcomSystemSlide from "redux/slide/navComcomSystemSlide";
+import snackbarSlide from "redux/slide/snackbarSlide";
 
 export default combineReducers({
   reduxQuestionType: questionTypeSlide,
@@ -27,4 +29,6 @@ export default combineReducers({
   reduxAuth: authSlide,
   reduxChecking: checkingSlice,
   reduxNofi: nofiSlide,
+  reduxNavSystem: navComcomSystemSlide,
+  reduxSnackbar: snackbarSlide,
 });

@@ -1,11 +1,11 @@
 import * as Mui from "@mui/material";
-import * as Eui from "components/Eui";
 import React from "react";
 import * as Views from "views";
 import * as View from "./view";
-
-export const PagesSystemComcom = () => {
-  const [nav, setNav] = React.useState(0);
+import * as Eui from "./element";
+import { useSelector } from "react-redux";
+export const Comcom = () => {
+  const nav = useSelector((s) => s.reduxNavSystem);
   const Nav = () => {
     switch (nav) {
       case 0:
@@ -26,9 +26,7 @@ export const PagesSystemComcom = () => {
       case 5:
         // code block
         return <View.TypeSent />;
-      // case 6:
-      //   // code block
-      //   return <View.ViewTimeSent />;
+
       default:
 
       // code block
@@ -39,24 +37,7 @@ export const PagesSystemComcom = () => {
       <Mui.Stack spacing={0.5}>
         {/* nav */}
         <Views.ViewBoard>
-          <Mui.Stack
-            direction={"row"}
-            justifyContent={"flex-start"}
-            flexWrap={"wrap"}
-            alignItems={"center"}
-            spacing={2}
-          >
-            {dataNav.map((link, i) => {
-              return (
-                <Eui.EuiNavMenu.NavBoard
-                  key={i}
-                  onClick={() => setNav(i)}
-                  isOpen={nav === i}
-                  name={link.name}
-                />
-              );
-            })}
-          </Mui.Stack>
+          <Eui.Nav />
         </Views.ViewBoard>
 
         {/* bang */}

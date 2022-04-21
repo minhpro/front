@@ -80,6 +80,7 @@ export const AddEssayQuestion = () => {
           });
         })
         .catch((error) => console.log(error));
+
       this.handleClose();
       console.log("submit");
     };

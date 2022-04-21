@@ -20,12 +20,12 @@ class NavRouter {
           {
             name: "Cấu hình chung",
             link: "cau-hinh-chung",
-            element: <Pages.System.PagesSystemComcom />,
+            element: <Pages.System.Comcom />,
           },
           {
             name: "Danh sách chủ đề",
             link: "danh-sach-chuong",
-            element: <Pages.System.PageSystemListChapter />,
+            element: <Pages.System.ListChapter />,
           },
           {
             name: "Danh sách đơn vị kiến thức",
@@ -64,18 +64,18 @@ class NavRouter {
           {
             name: "Danh sách câu hỏi",
             link: "danh-sach-cau-hoi-rieng",
-            element: <Pages.BankPrivateQuestion.ListQuestion />,
+            element: <Pages.BankQuestion.ListQuestion />,
           },
 
           {
             name: "Thêm câu hỏi trắc nghiệm",
             link: "them-cau-trac-nghiem-rieng",
-            element: <Pages.BankPrivateQuestion.AddMultiQuestion />,
+            element: <Pages.BankQuestion.AddMultiQuestion />,
           },
           {
             name: "Thêm câu hỏi tự luận",
             link: "them-cau-tu-luan-rieng",
-            element: <Pages.BankPrivateQuestion.AddEssayQuestion />,
+            element: <Pages.BankQuestion.AddEssayQuestion />,
           },
         ],
         role: [
@@ -90,7 +90,7 @@ class NavRouter {
           {
             name: "Quản lý ma trận đề",
             link: "quan-ly-ma-tran-de",
-            element: <Pages.CreateExam.OrganMatrix />,
+            element: <Pages.CreateExam.CreateMatrix />,
           },
           {
             name: "Quản lý đề thi",
@@ -120,12 +120,12 @@ class NavRouter {
           {
             name: "Khảo thí",
             link: "khao-thi",
-            element: <Pages.OrganTest.Home />,
+            element: <div />,
           },
           {
             name: "Tạo mới",
             link: "khao-thi-tao-moi",
-            element: <Pages.OrganTest.Create />,
+            element: <div />,
           },
         ],
         role: [
@@ -140,7 +140,7 @@ class NavRouter {
           {
             name: "Danh sách bài thi",
             link: "danh-sach-bai-thi",
-            element: <Pages.DoTest.Home />,
+            element: <div />,
           },
         ],
         role: [
@@ -170,17 +170,17 @@ class NavRouter {
           {
             name: "Hồ sơ người dùng ",
             link: "ho-so-nguoi-dung",
-            element: <Pages.UserManage.UserProfile />,
+            element: <div />,
           },
           {
             name: "Danh sách User",
             link: "danh-sach-user",
-            element: <Pages.UserManage.ListUser />,
+            element: <div />,
           },
           {
             name: "Danh sách nhóm",
             link: "danh-sach-nhom",
-            element: <Pages.UserManage.ListUserGroup />,
+            element: <div />,
           },
         ],
         role: [Contants.authContants.ROLES.Admin],
@@ -192,22 +192,22 @@ class NavRouter {
           {
             name: "Danh sách thành viên",
             link: "danh-sach-member",
-            element: <Pages.MemberManage.ListMember />,
+            element: <div />,
           },
           {
             name: "Danh sách nhóm thành viên",
             link: "danh-sach-member-group",
-            element: <Pages.MemberManage.ListMemberGroup />,
+            element: <div />,
           },
           {
             name: "Quản lý loại thành viên",
             link: "quan-ly-member",
-            element: <Pages.MemberManage.MemberType />,
+            element: <div />,
           },
           {
             name: "Quản lý nhóm thành viên",
             link: "quan-ly-nhom-member",
-            element: <Pages.MemberManage.MemberGroup />,
+            element: <div />,
           },
         ],
         role: [Contants.authContants.ROLES.Admin],

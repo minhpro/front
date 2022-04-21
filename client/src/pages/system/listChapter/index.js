@@ -7,9 +7,11 @@ import { useSelector } from "react-redux";
 import * as Function from "functions";
 import * as Api from "api";
 import * as Class from "Class";
-import { Update } from "./Update";
+
 import moment from "moment";
-export const PageSystemListChapter = () => {
+import * as Screens from "screens";
+
+export const ListChapter = () => {
   const [pages, setPages] = React.useState({
     data: null,
     page: 1,
@@ -33,7 +35,13 @@ export const PageSystemListChapter = () => {
 
   const [isOpenUpdate, setIsOpenUpdate] = React.useState(false);
 
+  // class
+
   const handleOpenUpdate = new Class.HandlePopup(setIsOpenUpdate);
+
+  const handleChange = new Class.HandleChange(setSearch, search);
+
+  const handlePagination = new Class.HandlePagination(setPages, pages);
 
   // life cirle
   React.useEffect(() => {
@@ -89,8 +97,7 @@ export const PageSystemListChapter = () => {
       return num;
     }
     handlePagination(event, value) {
-      console.log(value);
-      setPages({ ...pages, page: value });
+      handlePagination.change(event, value);
     }
     getTotalPage(total) {
       return total / pages.limit + 1;
@@ -120,7 +127,7 @@ export const PageSystemListChapter = () => {
     };
 
     handleChange = (e) => {
-      setSearch({ ...search, [e.target.name]: e.target.value });
+      handleChange.change(e);
     };
 
     handleInput = (e) => {
@@ -201,76 +208,38 @@ export const PageSystemListChapter = () => {
   return (
     <Views.ViewContent title={"Danh sách chủ đề"}>
       {/* modal update */}
-      <Update
+
+      <Ex.ModalConfirm.DeleteConfirm
+        open={isDeteteOpen}
+        onClose={() => handleOpenDelete.close()}
+        onFunc={func.onDelete}
+      />
+
+      <Screens.Create.Chapter
+        open={open}
+        onClose={() => handleOpenNew.close()}
+      />
+
+      <Screens.Create.Chapter.Update
         open={isOpenUpdate}
-        handleClose={() => handleOpenUpdate.close()}
+        onClose={() => handleOpenUpdate.close()}
         id={deleteId}
       />
-      {/* thong bao */}
-      <Eui.EuiSnackbar
-        open={snack.isOpen}
-        handleClose={() => handleSnack.close()}
-        message={snack.message}
-        severity={snack.severity}
-      />
-      {/* popup */}
-      <Ex.ExModalPoppup.Delete
-        open={isDeteteOpen}
-        handleClose={() => handleOpenDelete.close()}
-        handleDelete={func.onDelete}
-      />
-      <Ex.ExModalPoppup.Create
-        open={open}
-        handleClose={() => handleOpenNew.close()}
-        handleCreate={func.handleAdd}
-      >
-        <Ex.ExDataSelect.Class
-          onChange={func.handleInput}
-          required
-          value={addingData.classId}
-        />
-
-        <Mui.Divider />
-        <Ex.ExDataSelect.Subject
-          id={addingData.classId}
-          onChange={func.handleInput}
-          value={addingData.subjectId}
-          required
-        />
-        <Mui.Divider />
-        <Ex.ExInputWrapper.Basic
-          label={"Tên chủ đề:"}
-          placeholder={"Nhập tên chủ đề"}
-          name={"chapterName"}
-          value={addingData.chapterName}
-          required
-          onChange={func.handleInput}
-        />
-        <Mui.Divider />
-        <Ex.ExInputWrapper.Basic
-          label={"Mã chủ đề:"}
-          name={"code"}
-          placeholder={"Nhập mã chủ đề"}
-          value={addingData.code}
-          required
-          onChange={func.handleInput}
-        />
-      </Ex.ExModalPoppup.Create>
 
       <Mui.Stack spacing={0.5}>
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
-              <Ex.ExDataSelect.Class
-                onChange={func.handleChange}
+              <Ex.SelectLMS.Basic.Class
+                onChange={(e) => handleChange.change(e)}
                 value={search.classId}
               />
             </Item>
             <Item>
-              <Ex.ExDataSelect.Subject
-                id={search.classId}
-                onChange={func.handleChange}
+              <Ex.SelectLMS.Basic.Subject
+                onChange={(e) => handleChange.change(e)}
                 value={search.subjectId}
+                id={search.classId}
               />
             </Item>
             <Item>

@@ -60,6 +60,7 @@ export const LayoutTest = () => {
     <>
       {/* <ThongBao /> */}
       {/* <Co.Notification.Exam /> */}
+      <Co.Notification.Snackbar />
       <Ex.Header.Nav c={"white"} />
       <Ex.Header />
       <Style.Main className="container">
@@ -68,6 +69,7 @@ export const LayoutTest = () => {
             <Nav />
           </Style.Nav>
           <Mui.Box width={"100%"}>
+            <Mui.Stack>breadcrumb</Mui.Stack>
             <Outlet />
           </Mui.Box>
         </Mui.Stack>
