@@ -3,6 +3,7 @@ import { LayoutAuth } from "./LayoutAuth";
 import LayoutNavigationScroll from "./LayoutNavigationScroll";
 import { LayoutTest } from "./LayoutTest";
 import { LayoutExam } from "./LayoutExam";
+import { LayoutSchoolManagement } from "./LayoutSchoolManagement";
 
 export {
   LayoutHome,
@@ -10,4 +11,5 @@ export {
   LayoutNavigationScroll,
   LayoutTest,
   LayoutExam,
+  LayoutSchoolManagement
 };
