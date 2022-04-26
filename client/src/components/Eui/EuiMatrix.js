@@ -209,7 +209,7 @@ const dataColumn = [
     width: 50,
   },
   {
-    name: "Tên yêu cầu kiến thức",
+    name: "Tên yêu cầu cần đạt",
     width: 200,
   },
   {

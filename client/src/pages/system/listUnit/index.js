@@ -286,9 +286,9 @@ export const PageSystemListUnit = () => {
               spacing={2}
             >
               <Ex.ExInputWrapper.Basic
-                label={"Thêm yêu cầu kiến thức:"}
+                label={"Thêm yêu cầu cần đạt:"}
                 name={"requireName"}
-                placeholder={"Thêm yêu cầu kiến thức"}
+                placeholder={"Thêm yêu cầu cần đạt"}
                 value={requirements.input}
                 onChange={(e) =>
                   setRequirements({ ...requirements, input: e.target.value })
@@ -296,7 +296,7 @@ export const PageSystemListUnit = () => {
                 // onSubmit={func.onSubmitAddRequirement}
               />
               <Eui.EuiButton.OpenCreate
-                name={"Thêm yêu cầu kiến thức"}
+                name={"Thêm yêu cầu cần đạt"}
                 onClick={func.onSubmitAddRequirement}
               />
 
@@ -485,7 +485,7 @@ const dataColumn2 = [
     width: 50,
   },
   {
-    name: "Yêu cầu kiến thức",
+    name: "Yêu cầu cần đạt",
   },
   {
     name: "Xoá",

@@ -34,9 +34,9 @@ const View = ({ data }) => {
       <Item xs={12}>
         <p>Tên: {data?.chapterData?.name}</p>
       </Item>
-      {/* <p>Yêu cầu kiến thức:</p> */}
+      {/* <p>Yêu cầu cần đạt:</p> */}
       <Mui.Grid item xs={12} py={2}>
-        <p>Yêu cầu kiến thức:</p>
+        <p>Yêu cầu cần đạt:</p>
       </Mui.Grid>
       <Item xs={2} bgcolor={"grey.400"}>
         Code

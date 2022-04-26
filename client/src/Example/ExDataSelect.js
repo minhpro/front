@@ -128,7 +128,7 @@ ExDataSelect.Require = function Require({ id, ...rest }) {
 
   return (
     <Ex.ExInputWrapper.Select
-      label={"Chọn yêu cầu kiến thức:"}
+      label={"Chọn yêu cầu cần đạt:"}
       name={"requirementId"}
       data={data?.requirementData}
       {...rest}
