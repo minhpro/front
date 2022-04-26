@@ -30,6 +30,6 @@ export const header = [
     id: 5,
     name: "Schools",
     link: "/schools",
-    element: <Pages.SchoolList />,
+    element: <Pages.SchoolManagement />,
   },
 ];
