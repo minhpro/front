@@ -10,7 +10,7 @@ export const HomeSection = () => {
         <Item>
           <Mui.Stack pt={30} pb={{ xs: 5, md: 20 }}>
             <Style.Title>
-              Hệ thống quản lý Học và thi trực tuyến EBD MLS
+              Hệ thống quản lý Học và thi trực tuyến EBD LMS
             </Style.Title>
             <p style={{ maxWidth: "80%" }}>
               Nền tảng dạy và học trực tuyến với đầy đủ các tính năng quản lý
