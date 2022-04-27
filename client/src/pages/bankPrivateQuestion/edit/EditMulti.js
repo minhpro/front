@@ -14,7 +14,7 @@ export const EditMulti = ({ data }) => {
     classId: null,
     subjectId: null,
     unitId: null,
-    typeQuestionId: null,
+    typeQuestionId: data.questionTypeData.id,
     questionName: data.name,
     timeAnswer: data.time,
     requirementId: data.requirementData?.id,
@@ -197,21 +197,11 @@ export const EditMulti = ({ data }) => {
             </Item>
 
             <Item>
-              <Mui.Grid container columnSpacing={2}>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Bank
-                    onChange={func.handleChange}
-                    value={search.bank}
-                  />
-                </Mui.Grid>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.TypeQuestion
-                    required
-                    onChange={func.handleChange}
-                    value={search.typeQuestionId}
-                  />
-                </Mui.Grid>
-              </Mui.Grid>
+              <Ex.ExDataSelect.TypeQuestion
+                required
+                onChange={func.handleChange}
+                value={search.typeQuestionId}
+              />
             </Item>
             <Item>
               <Ex.ExInputWrapper.MultiSelect

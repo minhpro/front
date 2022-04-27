@@ -81,13 +81,13 @@ export function Chapter({ onClose, ...rest }) {
             onChange={handleChange}
             value={create.subjectId}
           />
-          <Sui.Input.Label.Text
+          {/* <Sui.Input.Label.Text
             label={titleData.LMS.Code}
             name={"code"}
             required
             onChange={handleChange}
             placeholder={titleData.LMS.TypeCode}
-          />
+          /> */}
           <Sui.Input.Label.Text
             label={titleData.LMS.Chapter}
             name={"chapterName"}

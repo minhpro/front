@@ -157,6 +157,19 @@ export const OrganExam = () => {
   React.useEffect(() => {
     setSearch({ ...search, matrixId: null });
   }, [search.subjectId]);
+
+  function resets(name) {
+    setSearch({ ...search, [name]: null });
+  }
+
+  React.useEffect(() => {
+    resets("subjectId");
+  }, [search.classId]);
+
+  React.useEffect(() => {
+    resets("matrixId");
+  }, [search.subjectId]);
+
   return (
     <Views.ViewContent title={"Quản lý đề thi"}>
       {/* thong bao */}

@@ -131,8 +131,24 @@ export const ListQuestion = () => {
     func.handleSearch();
   }, [pages.page, snack]);
 
+  function resets(name) {
+    setSearch({ ...search, [name]: null });
+  }
+
+  React.useEffect(() => {
+    resets("subjectId");
+  }, [search.classId]);
+
+  React.useEffect(() => {
+    resets("chapterId");
+  }, [search.subjectId]);
+
+  React.useEffect(() => {
+    resets("unitId");
+  }, [search.chapterId]);
+
   return (
-    <Views.ViewContent title={"Danh sách câu hỏi"}>
+    <Views.ViewContent title={"Danh sách câu hỏi EBD"}>
       {/* snack */}
       {/* thong bao */}
       <Eui.EuiSnackbar
@@ -202,10 +218,10 @@ export const ListQuestion = () => {
               </ItemOne>
               <ItemOne>
                 <Ex.ExInputWrapper.Basic
-                  label={"Tên câu hỏi"}
+                  label={"Từ khoá"}
                   name={"questionName"}
                   onChange={func.handleChange}
-                  placeholder={"Nhập tên câu hỏi"}
+                  placeholder={"Nhập từ khoá"}
                 />
               </ItemOne>
             </Mui.Grid>

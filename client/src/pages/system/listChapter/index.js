@@ -206,6 +206,14 @@ export const ListChapter = () => {
     func.handleSearch();
   }, [snack, open]);
 
+  function resets(name) {
+    setSearch({ ...search, [name]: null });
+  }
+
+  React.useEffect(() => {
+    resets("subjectId");
+  }, [search.classId]);
+
   return (
     <Views.ViewContent title={"Danh sách chủ đề"}>
       {/* modal update */}
@@ -245,9 +253,9 @@ export const ListChapter = () => {
             </Item>
             <Item>
               <Ex.ExInputWrapper.Basic
-                label={"Tên chủ đề:"}
+                label={"Từ khoá:"}
                 name={"chapterName"}
-                placeholder={"Nhập tên chủ đề"}
+                placeholder={"Nhập từ khoá"}
                 onChange={func.handleChange}
               />
             </Item>

@@ -181,8 +181,8 @@ export const TypeTime = () => {
         </Mui.Stack>
         <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
           <Eui.EuiButton.Cancel onClick={() => setIsOpen(false)} />
-          <Co.Button.Basic.Update
-            name={"Lưu cấu hình"}
+          <Co.Button.Basic.Create
+            name={"Lưu thời gian"}
             onClick={func.onSubmit}
           />
         </Mui.Stack>

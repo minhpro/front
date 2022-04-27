@@ -100,7 +100,7 @@ export const ListUserGroup = () => {
                       {row.name || "name"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      {row.leaderData.fullName || "phone"}
+                      {row.leaderData || "phone"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
                       {row.totalMember}

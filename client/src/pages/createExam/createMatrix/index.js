@@ -35,6 +35,10 @@ export const CreateMatrix = () => {
   console.log(dataNumber);
   const dispatch = useDispatch();
 
+  React.useEffect(() => {
+    dispatch(Slide.questionDistributionsSlide.setQuestionDistributions([]));
+  }, []);
+
   //   function
   class Func {
     constructor() {
@@ -165,6 +169,18 @@ export const CreateMatrix = () => {
 
   const func = new Func();
 
+  React.useEffect(() => {
+    func.handleSearch();
+  }, [search.subjectId]);
+
+  function resets(name) {
+    setSearch({ ...search, [name]: null });
+  }
+
+  React.useEffect(() => {
+    resets("subjectId");
+  }, [search.classId]);
+
   return (
     <Views.ViewContent title={"Tạo ma trận đề thi mới"}>
       {/* thong bao */}
@@ -247,7 +263,7 @@ export const CreateMatrix = () => {
               />
             </Item>
           </Mui.Grid>
-          <Mui.Stack
+          {/* <Mui.Stack
             direction={"row"}
             spacing={2}
             pt={2}
@@ -255,13 +271,13 @@ export const CreateMatrix = () => {
             borderColor={"red"}
           >
             <Eui.EuiButton.Search onClick={func.handleSearch} />
-          </Mui.Stack>
+          </Mui.Stack> */}
         </Views.ViewBoard>
 
         <Views.ViewBoard>
           <Mui.Stack spacing={3}>
-            <h3>Danh sách chủ đề</h3>
-            {dataNumber.data ? (
+            <h3> Danh sách chủ đề </h3>
+            {search.subjectId ? (
               dataNumber.data?.map((data, i) => {
                 return (
                   <Mui.Stack key={i}>

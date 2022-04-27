@@ -20,7 +20,7 @@ export const AddMultiQuestion = () => {
     requirementId: null,
     classification: "THEORY",
     targets: [],
-    bank: "EDB",
+    bank: "PRIVATE",
   });
 
   const [question, setQuestion] = React.useState({
@@ -110,9 +110,28 @@ export const AddMultiQuestion = () => {
     message: "",
     severity: null,
   });
+  function resets(name) {
+    setSearch({ ...search, [name]: null });
+  }
+
+  React.useEffect(() => {
+    resets("subjectId");
+  }, [search.classId]);
+
+  React.useEffect(() => {
+    resets("chapterId");
+  }, [search.subjectId]);
+
+  React.useEffect(() => {
+    resets("unitId");
+  }, [search.chapterId]);
+
+  React.useEffect(() => {
+    resets("requirementId");
+  }, [search.unitId]);
 
   return (
-    <Views.ViewContent title={"Thêm mới câu hỏi trắc nghiệm"}>
+    <Views.ViewContent title={"Thêm mới câu hỏi trắc nghiệm cá nhân"}>
       {/* thong bao */}
       <Eui.EuiSnackbar
         open={snack.isOpen}
@@ -188,21 +207,11 @@ export const AddMultiQuestion = () => {
             </Item>
 
             <Item>
-              <Mui.Grid container columnSpacing={2}>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Bank
-                    onChange={func.handleChange}
-                    value={search.bank}
-                  />
-                </Mui.Grid>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.TypeQuestion
-                    required
-                    onChange={func.handleChange}
-                    value={search.typeQuestionId}
-                  />
-                </Mui.Grid>
-              </Mui.Grid>
+              <Ex.ExDataSelect.TypeQuestion
+                required
+                onChange={func.handleChange}
+                value={search.typeQuestionId}
+              />
             </Item>
             <Item>
               <Ex.ExInputWrapper.MultiSelect

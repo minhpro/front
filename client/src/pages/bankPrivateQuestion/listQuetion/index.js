@@ -134,7 +134,7 @@ export const ListQuestion = () => {
   }, [pages.page, snack]);
 
   return (
-    <Views.ViewContent title={"Danh sách câu hỏi"}>
+    <Views.ViewContent title={"Danh sách câu hỏi cá nhân"}>
       {/* snack */}
       {/* thong bao */}
       <Eui.EuiSnackbar

@@ -120,12 +120,12 @@ class NavRouter {
           {
             name: "Khảo thí",
             link: "khao-thi",
-            element: <div />,
+            element: <Pages.OrganTest.Home />,
           },
           {
             name: "Tạo mới",
             link: "khao-thi-tao-moi",
-            element: <div />,
+            element: <Pages.OrganTest.Create />,
           },
         ],
         role: [
@@ -140,7 +140,7 @@ class NavRouter {
           {
             name: "Danh sách bài thi",
             link: "danh-sach-bai-thi",
-            element: <div />,
+            element: <Pages.DoTest.Home />,
           },
         ],
         role: [
@@ -170,17 +170,17 @@ class NavRouter {
           {
             name: "Hồ sơ người dùng ",
             link: "ho-so-nguoi-dung",
-            element: <div />,
+            element: <Pages.UserManage.UserProfile />,
           },
           {
             name: "Danh sách User",
             link: "danh-sach-user",
-            element: <div />,
+            element: <Pages.UserManage.ListUser />,
           },
           {
             name: "Danh sách nhóm",
             link: "danh-sach-nhom",
-            element: <div />,
+            element: <Pages.UserManage.ListUserGroup />,
           },
         ],
         role: [Contants.authContants.ROLES.Admin],
@@ -192,22 +192,22 @@ class NavRouter {
           {
             name: "Danh sách thành viên",
             link: "danh-sach-member",
-            element: <div />,
+            element: <Pages.MemberManage.ListMember />,
           },
           {
             name: "Danh sách nhóm thành viên",
             link: "danh-sach-member-group",
-            element: <div />,
+            element: <Pages.MemberManage.ListMemberGroup />,
           },
           {
             name: "Quản lý loại thành viên",
             link: "quan-ly-member",
-            element: <div />,
+            element: <Pages.MemberManage.MemberType />,
           },
           {
             name: "Quản lý nhóm thành viên",
             link: "quan-ly-nhom-member",
-            element: <div />,
+            element: <Pages.MemberManage.ListMemberGroup />,
           },
         ],
         role: [Contants.authContants.ROLES.Admin],

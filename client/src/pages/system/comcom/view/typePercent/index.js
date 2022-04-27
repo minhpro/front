@@ -31,7 +31,7 @@ export const TypePercent = () => {
   function save() {
     if (data < 100) {
       Function.handler
-        .api(() => Api.otherConfigApi.updateRate(data))
+        .api(() => Api.otherConfigApi.updateRate(parseInt(data)))
         .then((res) => {
           console.log(res);
           setSnack({
@@ -65,11 +65,11 @@ export const TypePercent = () => {
   }
 
   function handleOpenModal() {
-    if (data === "") {
+    if (data === "" || data === NaN) {
       return setSnack({
         isOpen: true,
         message: "Chưa có dữ liệu thay đổi",
-        severity: null,
+        severity: "warning",
       });
     } else {
       setDeleteState({ id: null, open: true });
@@ -83,6 +83,19 @@ export const TypePercent = () => {
   React.useEffect(() => {
     get();
   }, [snack]);
+
+  function onChange(e) {
+    if (e.target.value >= 0 && e.target.value <= 100) {
+      setData(e.target.value);
+    } else {
+      setSnack({
+        isOpen: true,
+        message: "Dữ liệu không đúng",
+        severity: null,
+      });
+      setData(parseInt(50));
+    }
+  }
   return (
     <div>
       {/* thong bao */}
@@ -110,8 +123,9 @@ export const TypePercent = () => {
         label={"Số % câu hỏi trùng khi hệ thống bốc đề Kiểm tra/ Thi"}
         name={"persent"}
         placeholder={reduxOtherConfig?.questionDuplicationRate}
-        onChange={(e) => setData(parseInt(e.target.value))}
+        onChange={onChange}
         type={"number"}
+        value={data}
       />
       <Mui.Stack direction={"row"} py={3} spacing={3}>
         <EuiButton.AddType name={"Lưu cấu hình"} onClick={handleOpenModal} />

@@ -149,6 +149,14 @@ export const OrganMatrix = () => {
   React.useEffect(() => {
     func.handleSearch();
   }, [pages.page, isDeteteOpen]);
+
+  function resets(name) {
+    setSearch({ ...search, [name]: null });
+  }
+
+  React.useEffect(() => {
+    resets("subjectId");
+  }, [search.classId]);
   return (
     <Views.ViewContent title={"Quản lý ma trận đề"}>
       <Mui.Stack spacing={0.5}>

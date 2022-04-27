@@ -12,7 +12,9 @@ const questionDistributionsSlide = createSlice({
         total: 0,
         data: action.payload,
       };
-
+      if (action.payload === null) {
+        return null;
+      }
       data.data.forEach((chapter) => {
         chapter.numberOfQuestions = 0;
         chapter.unitData.forEach((unit) => {

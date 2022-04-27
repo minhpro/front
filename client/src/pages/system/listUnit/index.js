@@ -207,6 +207,18 @@ export const PageSystemListUnit = () => {
     func.handleSearch();
   }, [pages.page, isDeteteOpen, isOpenUpdate]);
 
+  function resets(name) {
+    setSearch({ ...search, [name]: null });
+  }
+
+  React.useEffect(() => {
+    resets("subjectId");
+  }, [search.classId]);
+
+  React.useEffect(() => {
+    resets("chapterId");
+  }, [search.subjectId]);
+
   return (
     <Views.ViewContent title={"Danh sách đơn vị kiến thức"}>
       {/* modal update */}
@@ -349,10 +361,10 @@ export const PageSystemListUnit = () => {
             </Item>
             <Item>
               <Ex.ExInputWrapper.Basic
-                label={"Tên đơn vị kiến thức:"}
+                label={"Từ khoá:"}
                 name={"unitName"}
                 onChange={func.handleChange}
-                placeholder={"Nhập tên đơn vị kiến thức"}
+                placeholder={"Nhập từ khoá"}
               />
             </Item>
           </Mui.Grid>
@@ -456,7 +468,7 @@ const dataColumn = [
     width: 150,
   },
   {
-    name: "Mã ĐVKT",
+    name: "Mã",
     width: 50,
   },
   {
