@@ -17,6 +17,8 @@ export const TypeSent = () => {
   // redux
   const reduxOtherConfig = useSelector((state) => state.reduxOtherConfig);
 
+  const [isOpen, setIsOpen] = React.useState(false);
+
   const [data, setData] = React.useState("");
   const [timeDisplay, settimeDisplay] = React.useState("");
   const dispatch = useDispatch();
@@ -90,6 +92,21 @@ export const TypeSent = () => {
         severity={snack.severity}
       />
 
+      {/* chinh sua  */}
+      <Co.Modal.BasicModal.Title
+        title={"Chỉnh sửa thời gian gửi link"}
+        open={isOpen}
+        handleClose={() => setIsOpen(false)}
+      >
+        <Mui.Stack>
+          <Co.Time.TimeWrapper setTime={handleSetTime} />
+        </Mui.Stack>
+        <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
+          <Eui.EuiButton.Cancel onClick={() => setIsOpen(false)} />
+          <Co.Button.Basic.Update name={"Lưu cấu hình"} onClick={save} />
+        </Mui.Stack>
+      </Co.Modal.BasicModal.Title>
+
       {/* modal delete */}
       <Eui.EuiModal.Title
         open={deleteState.open}
@@ -111,13 +128,20 @@ export const TypeSent = () => {
         <strong> {timeDisplay} </strong>
       </p>
 
-      <p>Chỉnh sửa: </p>
+      {/* <p>Chỉnh sửa: </p>
       <Mui.Stack width={{ xs: "90%", sm: "70%", md: "40%", lg: "40%" }}>
         <Co.Time.TimeWrapper setTime={handleSetTime} />
       </Mui.Stack>
       <Mui.Stack direction={"row"} py={3} spacing={3}>
         <EuiButton.Cancel />
         <EuiButton.AddNew name={"Lưu cấu hình"} onClick={handleOpenModal} />
+      </Mui.Stack> */}
+
+      <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
+        <Eui.EuiButton.AddType
+          name={"Cài đặt thời gian"}
+          onClick={() => setIsOpen(true)}
+        />
       </Mui.Stack>
     </div>
   );
