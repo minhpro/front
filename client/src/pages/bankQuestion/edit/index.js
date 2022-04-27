@@ -22,7 +22,7 @@ export const EditQuestion = () => {
         data.type === "MultiChoiceQuestion" ? (
           <EditMulti data={data} />
         ) : (
-          <EditEssay />
+          <EditEssay data={data} />
         )
       ) : null}
     </Views.ViewContent>

@@ -69,7 +69,7 @@ export const LayoutTest = () => {
             <Nav />
           </Style.Nav>
           <Mui.Box width={"100%"}>
-            <Mui.Stack>breadcrumb</Mui.Stack>
+            {/* <Mui.Stack>breadcrumb</Mui.Stack> */}
             <Outlet />
           </Mui.Box>
         </Mui.Stack>

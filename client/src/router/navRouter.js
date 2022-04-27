@@ -90,7 +90,7 @@ class NavRouter {
           {
             name: "Quản lý ma trận đề",
             link: "quan-ly-ma-tran-de",
-            element: <Pages.CreateExam.CreateMatrix />,
+            element: <Pages.CreateExam.OrganMatrix />,
           },
           {
             name: "Quản lý đề thi",

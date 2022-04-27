@@ -178,29 +178,9 @@ export const PageSystemListUnit = () => {
     };
 
     onDelete = async () => {
-      // Function.handler
-      //   .api(() => Api.unitApi.delete(deleteId))
-      //   .then((res) => {
-      //     if (res?.response?.status === 400) {
-      //       setSnack({
-      //         isOpen: true,
-      //         message: res.response.data.message,
-      //         severity: "error",
-      //       });
-      //     } else {
-      //       handleSnack.delete();
-      //       this.handleSearch();
-      //     }
-      //     console.log(res);
-      //   })
-      //   .catch((error) => {
-      //     console.log("loi nay");
-      //     console.log(error);
-      //   });
-
       try {
         const res = await Api.unitApi.delete(deleteId);
-        handleSnack.delete();
+        handleSnack.delete(res.id);
         this.handleSearch();
       } catch (error) {
         console.log("loi nay");
@@ -323,10 +303,16 @@ export const PageSystemListUnit = () => {
           </Mui.Grid>
         </Mui.Grid>
       </Ex.ExModalPoppup.Create>
-      <Ex.ExModalPoppup.Delete
+      {/* <Ex.ExModalPoppup.Delete
         open={isDeteteOpen}
         handleClose={() => handleOpenDelete.close()}
         handleDelete={func.onDelete}
+      /> */}
+
+      <Ex.ModalConfirm.DeleteConfirm
+        open={isDeteteOpen}
+        onClose={() => handleOpenDelete.close()}
+        onFunc={func.onDelete}
       />
       <Eui.EuiSnackbar
         open={snack.isOpen}

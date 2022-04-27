@@ -201,9 +201,10 @@ export const ListChapter = () => {
   }
 
   const func = new Func();
+
   React.useEffect(() => {
     func.handleSearch();
-  }, [snack, isOpenUpdate]);
+  }, [snack, open]);
 
   return (
     <Views.ViewContent title={"Danh sách chủ đề"}>

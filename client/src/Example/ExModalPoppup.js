@@ -105,10 +105,10 @@ ExModalPoppup.ViewQuestion = function ViewQuestion({
       <Mui.Stack direction={"column"} spacing={1.5}>
         {children}
       </Mui.Stack>
-      <Mui.Stack direction={"row"} justifyContent={"center"} pt={5} spacing={5}>
+      {/* <Mui.Stack direction={"row"} justifyContent={"center"} pt={5} spacing={5}>
         <Eui.EuiButton.Cancel onClick={handleClose} />
         <Eui.EuiButton.Delete name={"Xoá"} onClick={handleDelete} />
-      </Mui.Stack>
+      </Mui.Stack> */}
     </Eui.EuiModal.Title>
   );
 };
