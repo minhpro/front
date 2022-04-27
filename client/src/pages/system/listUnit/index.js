@@ -162,6 +162,10 @@ export const PageSystemListUnit = () => {
 
     handleAdd = (e) => {
       e.preventDefault();
+      if (requirements.data.length === 0) {
+        return handleSnack.error("Chưa có yêu cầu kiến thức");
+      }
+
       if (add.unitName && add.chapterId) {
         Function.handler
           .api(() =>
