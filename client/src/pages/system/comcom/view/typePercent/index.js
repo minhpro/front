@@ -65,7 +65,15 @@ export const TypePercent = () => {
   }
 
   function handleOpenModal() {
-    setDeleteState({ id: null, open: true });
+    if (data === "") {
+      return setSnack({
+        isOpen: true,
+        message: "Chưa có dữ liệu thay đổi",
+        severity: null,
+      });
+    } else {
+      setDeleteState({ id: null, open: true });
+    }
   }
 
   function handleCloseModal() {

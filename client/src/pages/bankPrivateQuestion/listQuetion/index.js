@@ -65,6 +65,10 @@ export const ListQuestion = () => {
   class Func {
     handlePagination(event, value) {
       console.log(value);
+
+      if (value >= pages.total) {
+        return;
+      }
       setPages({ ...pages, page: value });
     }
     getTotalPage(total) {
@@ -211,7 +215,7 @@ export const ListQuestion = () => {
               pt={2}
               borderColor={"primary.main"}
               borderTop={"solid 2px"}
-              direction={"column"}
+              direction={"row"}
               spacing={2}
               justifyContent={"flex-start"}
               alignItems={"flex-start"}

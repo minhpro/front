@@ -22,9 +22,9 @@ export class SecondFormat {
   getString() {
     let data = `${formatNumber.getMinTwoDigits(
       this.getHour()
-    )} : ${formatNumber.getMinTwoDigits(
+    )}h : ${formatNumber.getMinTwoDigits(
       this.getMinute()
-    )} : ${formatNumber.getMinTwoDigits(this.getSecond())}`;
+    )}m : ${formatNumber.getMinTwoDigits(this.getSecond())}s`;
     return data;
   }
 }

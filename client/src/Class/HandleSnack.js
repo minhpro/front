@@ -4,11 +4,12 @@ class HandleSnack {
     this.setIsOpen = setIsOpen;
   }
 
-  setMessage = (addM, deleteM, errorM) => {
+  setMessage = (addM, deleteM, errorM, customM) => {
     this.message = {
       add: addM,
       delete: deleteM,
       error: errorM,
+      custom: customM,
     };
   };
   close() {
@@ -38,6 +39,14 @@ class HandleSnack {
     this.setIsOpen({
       isOpen: true,
       message: this.message.error + id,
+      severity: "error",
+    });
+  }
+
+  custom(id) {
+    this.setIsOpen({
+      isOpen: true,
+      message: this.message.custom,
       severity: "error",
     });
   }

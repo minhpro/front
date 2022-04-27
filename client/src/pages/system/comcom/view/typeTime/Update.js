@@ -4,6 +4,7 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import * as Api from "api";
 import * as Class from "Class";
+import * as Co from "components";
 export const Update = ({ open, handleClose, id }) => {
   const [data, setData] = React.useState({
     timeType: "",
@@ -51,9 +52,14 @@ export const Update = ({ open, handleClose, id }) => {
 
   const func = new Func();
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     func.getInfor();
   }, [id]);
+
+  function handleSetTime(time) {
+    console.log(time);
+    setData({ ...data, timeType: time });
+  }
   return (
     <>
       {/* thong bao */}
@@ -71,7 +77,7 @@ export const Update = ({ open, handleClose, id }) => {
         title={"Chỉnh sửa thời gian làm bài"}
       >
         <Mui.Stack spacing={2} component={"form"} onSubmit={func.onSubmit}>
-          <Ex.ExInputWrapper.Basic
+          {/* <Ex.ExInputWrapper.Basic
             label={"Thời gian làm bài"}
             name={"timeType"}
             onChange={func.handleChange}
@@ -79,6 +85,10 @@ export const Update = ({ open, handleClose, id }) => {
             type={"number"}
             placeholder="Nhập thời gian"
             value={data.timeType}
+          /> */}
+          <Co.Time.TimeWrapper
+            setTime={handleSetTime}
+            preTime={data.timeType}
           />
           <Ex.ExInputWrapper.Multiline
             label={"Mô tả"}

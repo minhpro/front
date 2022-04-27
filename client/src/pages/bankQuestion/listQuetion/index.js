@@ -64,7 +64,9 @@ export const ListQuestion = () => {
   //   function
   class Func {
     handlePagination(event, value) {
-      console.log(value);
+      if (value > pages.total) {
+        return;
+      }
       setPages({ ...pages, page: value });
     }
     getTotalPage(total) {

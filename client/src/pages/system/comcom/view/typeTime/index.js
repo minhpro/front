@@ -9,6 +9,8 @@ import * as Api from "api";
 import { useDispatch } from "react-redux";
 import * as Slide from "redux/slide";
 import * as Class from "Class";
+import * as Co from "components";
+import * as Utils from "utils";
 
 export const TypeTime = () => {
   const dispatch = useDispatch();
@@ -19,6 +21,7 @@ export const TypeTime = () => {
     total: 1,
     limit: 32,
   });
+
   // state
 
   const [data, setData] = React.useState({
@@ -46,7 +49,8 @@ export const TypeTime = () => {
   handleSnack.setMessage(
     "Đã thêm thời gian làm bài mới, id: ",
     "Đã xoá thời gian làm bài, id: ",
-    "Lỗi hệ thống, không thể xoá"
+    "Lỗi hệ thống, không thể xoá",
+    "Chưa nhập thời gian"
   );
 
   const handleOpenNew = new Class.HandlePopup(
@@ -60,6 +64,11 @@ export const TypeTime = () => {
     "",
     "Xác nhận xoá?"
   );
+
+  function handleSetTime(time) {
+    console.log(time);
+    setData({ ...data, timeType: time });
+  }
 
   // function
   class Func {
@@ -92,16 +101,19 @@ export const TypeTime = () => {
       console.log(data);
     };
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
       e.preventDefault();
 
-      Function.handler
-        .api(() => Api.testTimeApi.add(data.timeType, data.des))
-        .then((res) => {
-          handleSnack.add(res.id);
-          handleOpenNew.close();
-        })
-        .catch((error) => console.log(error));
+      if (data.timeType <= 0) {
+        return handleSnack.custom();
+      }
+      try {
+        const res = await Api.testTimeApi.add(data.timeType, data.des);
+        handleSnack.add(res.id);
+        handleOpenNew.close();
+      } catch (error) {
+        console.log(error);
+      }
     };
     onDelete = () => {
       Function.handler
@@ -151,40 +163,30 @@ export const TypeTime = () => {
         id={deleteId}
       />
       {/* modal */}
-      <Eui.EuiModal.Title
+
+      {/* chinh sua  */}
+      <Co.Modal.BasicModal.Title
+        title={handleOpenNew.title}
         open={open}
         handleClose={() => handleOpenNew.close()}
-        w={"80%"}
-        mw={400}
-        title={handleOpenNew.title}
       >
-        <Mui.Stack spacing={2} component={"form"} onSubmit={func.onSubmit}>
-          <Ex.ExInputWrapper.Basic
-            label={"Thoi gian lam bai"}
-            name={"timeType"}
-            type={"number"}
-            onChange={func.handleChange}
-            required
-            placeholder="Nhập thời gian làm bài"
-          />
+        <Mui.Stack>
+          <Co.Time.TimeWrapper setTime={handleSetTime} />
           <Ex.ExInputWrapper.Multiline
             name={"des"}
             label={"Mô tả"}
             onChange={func.handleChange}
             placeholder="Nhập mô tả"
           />
-
-          <Mui.Stack
-            direction={"row"}
-            alignItems={"center"}
-            justifyContent={"flex-end"}
-            borderTop="solid 2px"
-            py={2}
-          >
-            <button>Thêm mới</button>
-          </Mui.Stack>
         </Mui.Stack>
-      </Eui.EuiModal.Title>
+        <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
+          <Eui.EuiButton.Cancel onClick={() => setIsOpen(false)} />
+          <Co.Button.Basic.Update
+            name={"Lưu cấu hình"}
+            onClick={func.onSubmit}
+          />
+        </Mui.Stack>
+      </Co.Modal.BasicModal.Title>
 
       {/* modal delete */}
       <Eui.EuiModal.Title
@@ -217,7 +219,7 @@ export const TypeTime = () => {
                     {i + 1}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
-                    {func.convertSecondToTimeWithUnit(row.time || 0)}
+                    {new Utils.SecondFormat(row.time).getString()}
                   </Eui.EuiTable.StyledTableCell>
                   <Eui.EuiTable.StyledTableCell align="center">
                     {row.description || ""}
@@ -235,6 +237,7 @@ export const TypeTime = () => {
               ))
             : null}
         </Eui.EuiTable>
+
         <Eui.EuiPagination
           count={pages.total}
           defaultPage={1}

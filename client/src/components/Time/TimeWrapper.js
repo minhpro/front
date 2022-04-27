@@ -5,12 +5,26 @@ import * as Ex from "Example";
 import { TimeFormat } from "utils";
 import { SecondFormat } from "utils/timeFormat/secondFormat";
 
-export const TimeWrapper = ({ setTime, label, p }) => {
+export const TimeWrapper = ({ setTime, label, p, preTime }) => {
   const [data, setData] = React.useState({
     hour: 0,
     minute: 0,
     second: 0,
   });
+
+  React.useLayoutEffect(() => {
+    if (preTime) {
+      const time = new SecondFormat(preTime);
+      setData({
+        hour: time.getHour(),
+        minute: time.getMinute(),
+        second: time.getSecond(),
+      });
+    } else {
+      return;
+    }
+    return;
+  }, [preTime]);
 
   function onChange(e) {
     var time = parseInt(e.target.value);

@@ -46,7 +46,7 @@ export const TypeSent = () => {
       })
       .catch((error) => console.log(error));
 
-    handleCloseModal();
+    setIsOpen(false);
     console.log("submit");
   }
 
@@ -99,7 +99,10 @@ export const TypeSent = () => {
         handleClose={() => setIsOpen(false)}
       >
         <Mui.Stack>
-          <Co.Time.TimeWrapper setTime={handleSetTime} />
+          <Co.Time.TimeWrapper
+            setTime={handleSetTime}
+            preTime={reduxOtherConfig.testingDuration}
+          />
         </Mui.Stack>
         <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
           <Eui.EuiButton.Cancel onClick={() => setIsOpen(false)} />
