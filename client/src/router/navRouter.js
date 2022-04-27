@@ -64,18 +64,18 @@ class NavRouter {
           {
             name: "Danh sách câu hỏi",
             link: "danh-sach-cau-hoi-rieng",
-            element: <Pages.BankQuestion.ListQuestion />,
+            element: <Pages.BankPrivateQuestion.ListQuestion />,
           },
 
           {
             name: "Thêm câu hỏi trắc nghiệm",
             link: "them-cau-trac-nghiem-rieng",
-            element: <Pages.BankQuestion.AddMultiQuestion />,
+            element: <Pages.BankPrivateQuestion.AddMultiQuestion />,
           },
           {
             name: "Thêm câu hỏi tự luận",
             link: "them-cau-tu-luan-rieng",
-            element: <Pages.BankQuestion.AddEssayQuestion />,
+            element: <Pages.BankPrivateQuestion.AddEssayQuestion />,
           },
         ],
         role: [
