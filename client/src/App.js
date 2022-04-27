@@ -6,6 +6,8 @@ import navRouter from "router/navRouter";
 
 import * as Layout from "layouts";
 import * as Pages from "pages";
+import AddSchool from "pages/schoolManagement/AddSchool";
+import EditSchool from "pages/schoolManagement/EditSchool";
 
 const ROLES = {
   User: "USER",
@@ -39,6 +41,7 @@ function App() {
               Contants.authContants.ROLES.Admin,
               Contants.authContants.ROLES.teacher,
               Contants.authContants.ROLES.Student,
+              Contants.authContants.ROLES.other
             ]}
           />
         }
@@ -84,6 +87,8 @@ function App() {
 
           <Route path="khao-thi/:id" element={<Pages.OrganTest.ViewTest />} />
         </Route>
+        <Route path="schools/add-school" element={<AddSchool />} />
+        <Route path="schools/edit-school/:id" element={<EditSchool />} />
       </Route>
     </Routes>
   );

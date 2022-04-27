@@ -67,7 +67,7 @@ export const LoginPage = () => {
 
         window.localStorage.setItem("token", res.access_token);
         window.localStorage.setItem("refreshToken", res.refresh_token);
-        LocalStorage.auth.setLocalToken(res);
+        LocalStorage.auth.setLocalToken(res.user);
         dispatch(
           Slide.authSlide.setAuth({
             username: res.role,
