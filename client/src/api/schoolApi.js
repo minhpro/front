@@ -22,10 +22,15 @@ function editSchool(id, editSchoolContent) {
     return axiosClient.put(SCHOOL_API_PATH + "/" + id, editSchoolContent);
 }
 
+function getAreaData() {
+    return axiosClient.get("areas");
+}
+
 export {
     getSchoolList,
     getSchool,
     createSchool,
     editSchool,
-    deleteSchool
+    deleteSchool,
+    getAreaData
 }

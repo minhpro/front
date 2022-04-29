@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { makeStyles } from "@mui/styles";
 import { TextField, MenuItem } from "@mui/material";
 import { Button, Typography } from '@mui/material';
-import { createSchool } from "api/schoolApi";
+import { createSchool, getAreaData } from "api/schoolApi";
 
 const useStyles = makeStyles({
     root: {
@@ -12,39 +12,33 @@ const useStyles = makeStyles({
 
 const initialValues = {
     name: '',
-    province: '',
-    district: '',
-    area: '',
     description: '',
+    provinceId: null,
+    districtId: null,
+    wardId: null,
     adminName: '',
     adminEmail: '',
     adminPassword: ''
 }
 
-const provinces = [
-    "Hà Nội",
-    "TP Hồ Chí Minh",
-    "Hưng Yên"
-]
-
-const districts = {
-    "Hà Nội": ["Cầu Giấy", "Hai Bà Trưng", "Long Biên"],
-    "TP Hồ Chí Minh": ["Bình Thạnh", "Quận 10"],
-    "Hưng Yên": ["Kim Động", "Văn Giang"]
-}
-
-const areas = {
-    "Kim Động": ["Mai Động", "Hùng An", "Toàn Thắng"]
-}
-
-const noneSelectItem = <MenuItem key="none" value="">
+const noneSelectItem = (key, value) => <MenuItem key={key} value={value}>
                         <b>Không chọn</b>
                         </MenuItem>
+
+const noneSelectIdItem = noneSelectItem(0, 0);
 
 export default function AddSchool() {
 
     const [values, setValues] = useState(initialValues);
     const classes = useStyles();
+    const [areaData, setAreaData] = useState(null);
+
+    useEffect(() => {
+        getAreaData()
+        .then(data => {
+            setAreaData(data);
+        })
+    }, [])
 
     const saveSchool = () => {
         createSchool(values)
@@ -77,17 +71,29 @@ export default function AddSchool() {
 
                 <TextField 
                 type="text" 
+                // style={{width: 200}}
+                multiline
+                rows={4}
+                label="Mô tả"
+                fullWidth 
+                margin="normal" 
+                name="description" 
+                value={values.description} 
+                onChange={e => onChange(e)}/>
+
+                <TextField 
+                type="text" 
                 select
                 label="Tỉnh / Thành Phố" 
                 fullWidth 
                 margin="normal" 
-                name="province" 
-                value={values.province} 
+                name="provinceId" 
+                value={values.provinceId} 
                 onChange={e => onChange(e)}>
-                    {noneSelectItem}
-                {provinces.map((p) => (
-                    <MenuItem key={p} value={p}>
-                    {p}
+                    {noneSelectIdItem}
+                {areaData != null && areaData.provinces.map((p) => (
+                    <MenuItem key={p.id} value={p.id}>
+                    {p.name}
                     </MenuItem>
                 ))}
                 </TextField>
@@ -98,13 +104,15 @@ export default function AddSchool() {
                 label="Quận / Huyện" 
                 fullWidth 
                 margin="normal" 
-                name="district" 
-                value={values.district} 
+                name="districtId" 
+                value={values.districtId} 
                 onChange={e => onChange(e)}>
-                    {noneSelectItem}
-                {districts[values.province] != null && districts[values.province].map((p) => (
-                    <MenuItem key={p} value={p}>
-                    {p}
+                    {noneSelectIdItem}
+                {areaData != null && values.provinceId != null && 
+                areaData.districts.filter(x => x.provinceId == values.provinceId)
+                .map((p) => (
+                    <MenuItem key={p.id} value={p.id}>
+                    {p.prefix + " " + p.name}
                     </MenuItem>
                 ))}
                 </TextField>
@@ -115,13 +123,15 @@ export default function AddSchool() {
                 label="Xã / Phường" 
                 fullWidth 
                 margin="normal" 
-                name="area" 
-                value={values.area} 
+                name="wardId" 
+                value={values.wardId} 
                 onChange={e => onChange(e)}>
-                    {noneSelectItem}
-                {areas[values.district] != null && areas[values.district].map((p) => (
-                    <MenuItem key={p} value={p}>
-                    {p}
+                    {noneSelectIdItem}
+                {areaData != null && values.districtId != null && 
+                areaData.wards.filter(x => x.districtId == values.districtId)
+                .map((p) => (
+                    <MenuItem key={p.id} value={p.id}>
+                    {p.prefix + " " + p.name}
                     </MenuItem>
                 ))}
                 </TextField>

@@ -39,7 +39,7 @@ const columns = [
         format: (value) => value.toLocaleString('vi-vn'),
     },
     {
-        id: 'area',
+        id: 'ward',
         label: 'Xã / Phường',
         minWidth: 100,
         align: 'left',
@@ -151,7 +151,15 @@ export default function SchoolManagement() {
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={school.id}>
                                             {columns.map((column) => {
-                                                const value = school[column.id];
+                                                let value = null;
+                                                if (column.id == 'province')
+                                                    value = school.province.name
+                                                else if (column.id == 'district')
+                                                    value = school.district.prefix + " " + school.district.name
+                                                else if (column.id == 'ward')
+                                                    value = school.ward.prefix + " " + school.ward.name
+                                                else
+                                                    value = school[column.id];
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
                                                         {column.format && typeof value === 'number'
