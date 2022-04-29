@@ -76,11 +76,11 @@ export const ViewExam = ({ id }) => {
                           />
                         </Eui.EuiTable.StyledTableCell>
 
-                        <Eui.EuiTable.StyledTableCell align="center">
+                        {/* <Eui.EuiTable.StyledTableCell align="center">
                           <Ex.ExIconEditDelete.ViewOnly
                             onView={() => func.onOpenView(row.id)}
                           />
-                        </Eui.EuiTable.StyledTableCell>
+                        </Eui.EuiTable.StyledTableCell> */}
                       </Eui.EuiTable.StyledTableRow>
                     ))
                   : null}
@@ -115,9 +115,5 @@ const dataColumn = [
   {
     name: "Tên câu",
     width: 200,
-  },
-  {
-    name: "Thao tac",
-    width: 50,
   },
 ];

@@ -67,8 +67,8 @@ ViewQuestion.MultiChoice = function MultiChoice({
         <div dangerouslySetInnerHTML={{ __html: question }} />
       </Co.Text.Body.Medium>
       <Mui.Divider />
-      <Co.Text.Normal.Medium>Chon dap an</Co.Text.Normal.Medium>
-      <Mui.Stack direction={"row"} alignItems={"flex-end"} spacing={2}>
+      <Co.Text.Normal.Medium>Đáp án:</Co.Text.Normal.Medium>
+      <Mui.Stack direction={"row"} alignItems={"flex-start"} spacing={2}>
         <Co.Text.Body.Medium>A.</Co.Text.Body.Medium>
         <Co.Text.Normal.Medium>
           <div dangerouslySetInnerHTML={{ __html: A }} />
@@ -80,13 +80,13 @@ ViewQuestion.MultiChoice = function MultiChoice({
           <div dangerouslySetInnerHTML={{ __html: B }} />
         </Co.Text.Normal.Medium>
       </Mui.Stack>
-      <Mui.Stack direction={"row"} alignItems={"flex-end"} spacing={2}>
+      <Mui.Stack direction={"row"} alignItems={"flex-start"} spacing={2}>
         <Co.Text.Body.Medium>C.</Co.Text.Body.Medium>
         <Co.Text.Normal.Medium>
           <div dangerouslySetInnerHTML={{ __html: C }} />
         </Co.Text.Normal.Medium>
       </Mui.Stack>
-      <Mui.Stack direction={"row"} alignItems={"flex-end"} spacing={2}>
+      <Mui.Stack direction={"row"} alignItems={"flex-start"} spacing={2}>
         <Co.Text.Body.Medium>D.</Co.Text.Body.Medium>
         <Co.Text.Normal.Medium>
           <div dangerouslySetInnerHTML={{ __html: D }} />

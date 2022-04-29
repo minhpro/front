@@ -59,9 +59,12 @@ export const Update = ({ open, handleClose, id }) => {
       if (requirements.input === "") {
         return null;
       }
+
       let data = requirements.data;
-      data.push({ name: requirements.input });
-      setRequirements({ input: "", data: data });
+      const datad = data.filter((item) => item.name !== requirements.input);
+
+      datad.push({ name: requirements.input });
+      setRequirements({ input: "", data: datad });
     }
 
     onDeleteRequirement(name) {
@@ -144,6 +147,25 @@ export const Update = ({ open, handleClose, id }) => {
                 <Eui.EuiTable dataColumn={dataColumn2}>
                   {oldRequirements.data
                     ? oldRequirements.data.map((row, i) => (
+                        <Eui.EuiTable.StyledTableRow key={i}>
+                          <Eui.EuiTable.StyledTableCell align="center">
+                            {i + 1}
+                          </Eui.EuiTable.StyledTableCell>
+                          <Eui.EuiTable.StyledTableCell align="center">
+                            {row.name || "name"}
+                          </Eui.EuiTable.StyledTableCell>
+                          <Eui.EuiTable.StyledTableCell align="center">
+                            <Ex.ExIconEditDelete.DeleteOnly
+                            // onDelete={() =>
+                            //   func.onDeleteRequirement(row.name)
+                            // }
+                            />
+                          </Eui.EuiTable.StyledTableCell>
+                        </Eui.EuiTable.StyledTableRow>
+                      ))
+                    : null}
+                  {requirements.data
+                    ? requirements.data.map((row, i) => (
                         <Eui.EuiTable.StyledTableRow key={i}>
                           <Eui.EuiTable.StyledTableCell align="center">
                             {i + 1}

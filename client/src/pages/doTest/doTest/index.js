@@ -115,7 +115,7 @@ export const DoTest = () => {
         <Mui.Stack direction={{ xs: "column", md: "row" }} spacing={1}>
           <Style.Nav>
             <Views.ViewBoard>
-              <Mui.Stack spacing={2}>
+              <Mui.Stack spacing={2} sx={{ maxWidth: 600 }}>
                 <Mui.Stack alignItems={"center"} spacing={1}>
                   <Co.Text.Body.Caption>Tổng thời gian</Co.Text.Body.Caption>
                   {data ? (
@@ -181,11 +181,14 @@ export const DoTest = () => {
                       />
                     </Mui.Stack>
 
-                    <Co.Card.Clock
-                      timeSecond={data?.questions[question].time}
-                      nextTime={() => nextQuestion(question)}
-                      move={question}
-                    />
+                    {data ? (
+                      <Co.Card.Clock
+                        timeSecond={data.questions[2].time}
+                        nextTime={() => nextQuestion(question)}
+                        move={question}
+                      />
+                    ) : null}
+
                     <Mui.Divider />
                   </Mui.Stack>
                   {data ? (

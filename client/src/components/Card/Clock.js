@@ -29,6 +29,10 @@ export const Clock = ({ timeSecond, nextTime, move }) => {
 
   React.useEffect(() => {
     setClockState(0);
+  }, [timeSecond]);
+
+  React.useEffect(() => {
+    setClockState(0);
   }, [move]);
 
   function getTime() {
