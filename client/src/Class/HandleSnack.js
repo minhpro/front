@@ -50,5 +50,13 @@ class HandleSnack {
       severity: "error",
     });
   }
+
+  custom2(message, severity = "error") {
+    this.setIsOpen({
+      isOpen: true,
+      message: message,
+      severity: severity,
+    });
+  }
 }
 export { HandleSnack };
