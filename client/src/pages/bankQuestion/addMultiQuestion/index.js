@@ -166,7 +166,7 @@ export const AddMultiQuestion = () => {
                   <Ex.ExDataSelect.Class
                     required
                     onChange={func.handleChange}
-                    value={search.classId}
+                    value={search.classId || ""}
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
@@ -174,7 +174,7 @@ export const AddMultiQuestion = () => {
                     required
                     id={search.classId}
                     onChange={func.handleChange}
-                    value={search.subjectId}
+                    value={search.subjectId || ""}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -184,7 +184,7 @@ export const AddMultiQuestion = () => {
                 required
                 id={search.subjectId}
                 onChange={func.handleChange}
-                value={search.chapterId}
+                value={search.chapterId || ""}
               />
             </Item>
             <Item>
@@ -194,7 +194,7 @@ export const AddMultiQuestion = () => {
                     required
                     id={search.chapterId}
                     onChange={func.handleChange}
-                    value={search.unitId}
+                    value={search.unitId || ""}
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
@@ -202,7 +202,7 @@ export const AddMultiQuestion = () => {
                     required
                     id={search.unitId}
                     onChange={func.handleChange}
-                    value={search.requirementId}
+                    value={search.requirementId || ""}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -212,7 +212,7 @@ export const AddMultiQuestion = () => {
               <Ex.ExDataSelect.TypeQuestion
                 required
                 onChange={func.handleChange}
-                value={search.typeQuestionId}
+                value={search.typeQuestionId || ""}
               />
             </Item>
             <Item>
@@ -226,7 +226,7 @@ export const AddMultiQuestion = () => {
               <Ex.ExDataSelect.Classify
                 required
                 onChange={func.handleChange}
-                value={search.classification}
+                value={search.classification || ""}
               />
             </Item>
             <Item>

@@ -66,7 +66,7 @@ EuiInput.Select = function ({ data, ...rest }) {
         inputProps={{ "aria-label": "Without label" }}
         {...rest}
       >
-        <Mui.MenuItem value={null}>
+        <Mui.MenuItem value={""}>
           <em>Chưa chọn</em>
         </Mui.MenuItem>
         {data
