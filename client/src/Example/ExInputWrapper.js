@@ -12,7 +12,7 @@ export const ExInputWrapper = () => {
 ExInputWrapper.Select = function ({ label, name, required, ...rest }) {
   return (
     <Mui.Stack spacing={0.5}>
-      <Style.Label for={name}>
+      <Style.Label htmlFor={name}>
         {label} <span> {required ? "*" : null}</span>
       </Style.Label>
       <EuiInput.Select
@@ -29,7 +29,7 @@ ExInputWrapper.Select = function ({ label, name, required, ...rest }) {
 ExInputWrapper.Basic = function ({ name, label, required, ...rest }) {
   return (
     <Mui.Stack spacing={0.5}>
-      <Style.Label for={name}>
+      <Style.Label htmlFor={name}>
         {label} <span> {required ? "*" : null}</span>
       </Style.Label>
       <EuiInput id={name} name={name} fullWidth required={required} {...rest} />
@@ -40,7 +40,7 @@ ExInputWrapper.Basic = function ({ name, label, required, ...rest }) {
 ExInputWrapper.Multiline = function ({ name, label, required, ...rest }) {
   return (
     <Mui.Stack spacing={0.5}>
-      <Style.Label for={name}>
+      <Style.Label htmlFor={name}>
         {label} <span> {required ? "*" : null}</span>
       </Style.Label>
       <EuiInput.Multiline
@@ -57,7 +57,7 @@ ExInputWrapper.Multiline = function ({ name, label, required, ...rest }) {
 ExInputWrapper.Editor = function ({ name, label, required, ...rest }) {
   return (
     <Mui.Stack spacing={0.5}>
-      <Style.Label for={name}>
+      <Style.Label htmlFor={name}>
         {label} <span> {required ? "*" : null}</span>
       </Style.Label>
       <SuiRichTextEditor name={name} {...rest} />
@@ -78,7 +78,7 @@ const Style = {
 ExInputWrapper.MultiSelect = function ({ name, label, required, ...rest }) {
   return (
     <Mui.Stack spacing={0.5}>
-      <Style.Label for={name}>
+      <Style.Label htmlFor={name}>
         {label} <span> {required ? "*" : null}</span>
       </Style.Label>
       <EuiMultiSelect {...rest} />
@@ -89,7 +89,7 @@ ExInputWrapper.MultiSelect = function ({ name, label, required, ...rest }) {
 ExInputWrapper.Time = function ({ name, label, required, ...rest }) {
   return (
     <Mui.Stack spacing={0.5}>
-      <Style.Label for={name}>
+      <Style.Label htmlFor={name}>
         {label || "Giây"} <span> {required ? "*" : null}</span>
       </Style.Label>
       <EuiInput

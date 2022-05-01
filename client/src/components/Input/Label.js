@@ -7,10 +7,10 @@ import { Text } from "./Text";
 export const Label = ({ label, name, required, ...rest }) => {
   return (
     <Mui.Stack spacing={0.5} width={"100%"}>
-      <Style.Label for={name}>
+      <Style.Label htmlFor={name}>
         {label} <span> {required ? "*" : null}</span>
       </Style.Label>
-      <Select id={name} name={name} fullWidth required={required} {...rest} />
+      <Select id={name} name={name} fullWidth  {...rest} />
     </Mui.Stack>
   );
 };
@@ -18,7 +18,7 @@ export const Label = ({ label, name, required, ...rest }) => {
 Label.Select = function ({ label, name, required, ...rest }) {
   return (
     <Mui.Stack spacing={0.5} width={"100%"}>
-      <Style.Label for={name}>
+      <Style.Label htmlFor={name}>
         {label} <span> {required ? "*" : null}</span>
       </Style.Label>
       <Select id={name} name={name} fullWidth required={required} {...rest} />
@@ -29,7 +29,7 @@ Label.Select = function ({ label, name, required, ...rest }) {
 Label.Text = function ({ label, name, required, ...rest }) {
   return (
     <Mui.Stack spacing={0.5} width={"100%"}>
-      <Style.Label for={name}>
+      <Style.Label htmlFor={name}>
         {label} <span> {required ? "*" : null}</span>
       </Style.Label>
       <Text id={name} name={name} fullWidth required={required} {...rest} />
