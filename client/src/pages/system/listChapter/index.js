@@ -246,13 +246,13 @@ export const ListChapter = () => {
                         <Item>
                             <Ex.SelectLMS.Basic.Class
                                 onChange={(e) => handleChange.change(e)}
-                                value={search.classId}
+                                value={search.classId || ""}
                             />
                         </Item>
                         <Item>
                             <Ex.SelectLMS.Basic.Subject
                                 onChange={(e) => handleChange.change(e)}
-                                value={search.subjectId}
+                                value={search.subjectId || ""}
                                 id={search.classId}
                             />
                         </Item>

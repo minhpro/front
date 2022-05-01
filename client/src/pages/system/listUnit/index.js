@@ -14,7 +14,7 @@ export const PageSystemListUnit = () => {
   const [pages, setPages] = React.useState({
     data: null,
     page: 1,
-    total: 10,
+    total: 1,
     limit: 32,
   });
 
@@ -122,7 +122,7 @@ export const PageSystemListUnit = () => {
       setPages({ ...pages, page: value });
     }
     getTotalPage(total) {
-      return parseInt(total / pages.limit + 1);
+      return Math.ceil(total / pages.limit);
     }
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });
