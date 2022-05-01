@@ -64,7 +64,7 @@ EuiNavMenu.Parent = function ({ name, open, icon, ...rest }) {
       alignItems={"center"}
       sx={{ cursor: "pointer" }}
       pr={1}
-      isOpen={open}
+      open={open}
       {...rest}
     >
       <Mui.Stack
@@ -95,7 +95,7 @@ EuiNavMenu.Chil = function Chil({ linkName, link, ...rest }) {
       sx={{ cursor: "pointer" }}
       pr={1}
       {...rest}
-      isOpen={link === pathnames[1]}
+      open={link === pathnames[1]}
     >
       <Mui.Stack
         direction={"row"}
@@ -120,8 +120,8 @@ EuiNavMenu.NavBoard = function ({ name, ...rest }) {
 
 const Style = {
   SuiStack: styled(Mui.Stack)`
-    color: ${(props) => (props.isOpen ? "red" : null)};
-    font-weight: ${(props) => (props.isOpen ? 600 : 400)};
+    color: ${(props) => (props.open ? "red" : null)};
+    font-weight: ${(props) => (props.open ? 600 : 400)};
     :hover {
       color: red;
     }

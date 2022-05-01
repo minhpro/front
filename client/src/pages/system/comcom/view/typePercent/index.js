@@ -99,12 +99,12 @@ export const TypePercent = () => {
   return (
     <div>
       {/* thong bao */}
-      <Eui.EuiSnackbar
-        open={snack.isOpen}
-        handleClose={handleCloseSnack}
-        message={snack.message}
-        severity={snack.severity}
-      />
+      {/*<Eui.EuiSnackbar*/}
+      {/*  open={snack.isOpen}*/}
+      {/*  handleClose={handleCloseSnack}*/}
+      {/*  message={snack.message}*/}
+      {/*  severity={snack.severity}*/}
+      {/*/>*/}
 
       {/* modal delete */}
       <Eui.EuiModal.Title
@@ -122,7 +122,7 @@ export const TypePercent = () => {
       <ExInputWrapper.Basic
         label={"Số % câu hỏi trùng khi hệ thống bốc đề Kiểm tra/ Thi"}
         name={"persent"}
-        placeholder={reduxOtherConfig?.questionDuplicationRate}
+        placeholder={reduxOtherConfig?.questionDuplicationRate + ""}
         onChange={onChange}
         type={"number"}
         value={data}

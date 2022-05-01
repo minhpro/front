@@ -35,8 +35,8 @@ export const Footer = () => {
         </Item> */}
         {data.map((data, i) => {
           return (
-            <Item>
-              <NavParent title={data.title} key={i}>
+            <Item key={i}>
+              <NavParent title={data.title}>
                 {data.nav.map((nav, i) => {
                   return <p key={i}>{nav.name}</p>;
                 })}

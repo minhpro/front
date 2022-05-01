@@ -27,7 +27,7 @@ export const EuiTable = ({ dataColumn, children }) => {
           );
         })}
       </EuiTable.Head>
-      <EuiTable.Body> {children}</EuiTable.Body>
+      <EuiTable.Body>{children}</EuiTable.Body>
     </EuiTable.Wrapper>
   );
 };
