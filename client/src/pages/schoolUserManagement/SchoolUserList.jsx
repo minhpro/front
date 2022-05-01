@@ -10,73 +10,66 @@ import TableRow from '@mui/material/TableRow';
 import { Button, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import PeopleIcon from '@mui/icons-material/People';
 import { makeStyles } from "@mui/styles";
-import { getSchoolList, deleteSchool } from 'api/schoolApi';
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ConfirmDialog from 'components/Dialog/ConfirmDialog';
+import { getSchoolUserList, removeSchoolUser } from 'api/schoolUserApi';
 
 const columns = [
     { id: 'id', label: 'Id', minWidth: 10 },
     {
-        id: 'name',
-        label: 'Tên trường',
+        id: 'fullName',
+        label: 'Tên',
         minWidth: 200,
         align: 'left',
         format: (value) => value.toLocaleString('vi-vn'),
     },
     {
-        id: 'type',
-        label: 'Cấp trường',
+        id: 'email',
+        label: 'Email',
         minWidth: 100,
         align: 'left',
         format: (value) => value.toLocaleString('vi-vn'),
     },
     {
-        id: 'province',
-        label: 'Tỉnh / Thành Phố',
+        id: 'birthdate',
+        label: 'Ngày sinh',
         minWidth: 100,
         align: 'left',
         format: (value) => value.toLocaleString('vi-vn'),
     },
     {
-        id: 'district',
-        label: 'Quận / Huyện',
+        id: 'role',
+        label: 'Vai trò',
         minWidth: 100,
         align: 'left',
         format: (value) => value.toLocaleString('vi-vn'),
     },
     {
-        id: 'ward',
-        label: 'Xã / Phường',
-        minWidth: 100,
-        align: 'left',
-        format: (value) => value.toLocaleString('vi-vn'),
-    },
-    {
-        id: 'description',
-        label: 'Thông tin',
-        minWidth: 150,
+        id: 'school',
+        label: 'Trường',
+        minWidth: 200,
         align: 'left',
         format: (value) => value.toLocaleString('vi-vn'),
     }
 ];
 
-const schoolTypes = [
-    {value: 'ELEMENTARY', label: 'Tiểu học'},
-    {value: 'MIDDLE', label: 'Trung học cơ sở'},
-    {value: 'HIGH', label: 'Trung học phổ thông'},
-    {value: 'COLLEGE', label: 'Cao đẳng'},
-    {value: 'UNIVERSITY', label: 'Đại học'},
+const memberRoles = [
+    {value: 'ADMIN', label: 'Quản lý'},
+    {value: 'TEACHER', label: 'Giáo viên'},
+    {value: 'STUDENT', label: 'Học sinh'},
+    {value: 'TA', label: 'Trợ giảng'},
+    {value: 'OBSERVER', label: 'Giám sát'},
     {value: 'OTHER', label: 'Loại khác'},
 ]
 
-function getSchoolTypeLabel(type) {
-    let schoolType = schoolTypes.find(x => x.value == type);
-    if (schoolType != undefined)
-        return schoolType.label;
+function getMemberRoleLabel(role) {
+    let memberRole = memberRoles.find(x => x.value == role);
+    if (memberRole != undefined)
+        return memberRole.label;
     return 'Loại khác';
 }
+
 
 const useStyles = makeStyles(theme => ({
     pageContent: {
@@ -85,11 +78,11 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function SchoolManagement() {
+export default function SchoolUserList() {
     const classes = useStyles();
-    const navigate = useNavigate();
+    const { schoolId } = useParams();
 
-    const [schools, setSchools] = useState([]);
+    const [users, setUsers] = useState([]);
     const [message, setMessage] = useState(null);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -105,32 +98,27 @@ export default function SchoolManagement() {
         setPage(0);
     };
 
-    const reloadSchoolList = () => {
-        getSchoolList()
-            .then(res => {
-                setSchools(res.data)
+    const reloadUserList = () => {
+        getSchoolUserList(schoolId)
+            .then(body => {
+                setUsers(body.data)
             }) 
     }
 
-    const editSchool = (id) => {
-        navigate('/schools/edit-school/' + id);
+    const editSchoolUser = (id) => {
+        window.location = "/schools/" + schoolId + "/users/edit-user/" + id;
     }
 
-    const schoolUsers = (id) => {
-        navigate('/schools/' + id + '/users');
+    const addSchoolUser = () => {
+        window.location = "/schools/" + schoolId + "/users/add-user";
     }
 
-    const addSchool = () => {
-        window.location = "/schools/add-school";
-        // navigate('/schools/add-school');
-    }
-
-    const handleDeleteSchool = () => {
+    const handleDeleteSchoolUser = () => {
         if (deleteId != 0)
-            deleteSchool(deleteId)
+            removeSchoolUser(deleteId)
                 .then(data => {
-                    setMessage("School deleted successfully");
-                    setSchools(schools.filter(s => s.id != deleteId));
+                    setMessage("School user deleted successfully");
+                    setUsers(users.filter(s => s.id != deleteId));
                 })
         setDeleteDialogOpen(false);
     }
@@ -146,14 +134,14 @@ export default function SchoolManagement() {
     }
 
     useEffect(() => {
-        reloadSchoolList()       
+        reloadUserList()       
     }, [])
 
     return (
         <div style={{ padding: '80px 30px 0px 50px' }}>
-            <Typography variant="h4" style={style}>Quản lý trường học</Typography>
-            <Button variant="contained" color="primary" onClick={() => addSchool()}>
-                Thêm trường học
+            <Typography variant="h4" style={style}>Quản lý thành viên</Typography>
+            <Button variant="contained" color="primary" onClick={() => addSchoolUser()}>
+                Thêm thành viên
             </Button>
 
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -173,23 +161,19 @@ export default function SchoolManagement() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {schools
+                            {users
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((school) => {
+                                .map((user) => {
                                     return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={school.id}>
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={user.id}>
                                             {columns.map((column) => {
                                                 let value = null;
-                                                if (column.id == 'province')
-                                                    value = school.province.name
-                                                else if (column.id == 'district')
-                                                    value = school.district.prefix + " " + school.district.name
-                                                else if (column.id == 'ward')
-                                                    value = school.ward.prefix + " " + school.ward.name
-                                                else if (column.id == 'type')
-                                                    value = getSchoolTypeLabel(school.type);
+                                                if (column.id == 'school')
+                                                    value = user.school != undefined ? user.school.name : '';
+                                                else if (column.id == 'role')
+                                                    value = getMemberRoleLabel(user.role);
                                                 else
-                                                    value = school[column.id];
+                                                    value = user[column.id];
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
                                                         {column.format && typeof value === 'number'
@@ -199,17 +183,12 @@ export default function SchoolManagement() {
                                                 );
                                             })}
                                             <TableCell key='actions' align='center'>
-                                                <Button variant="outlined" color="secondary" onClick={() => schoolUsers(school.id)}>
-                                                    <PeopleIcon />
-                                                </Button>
-                                            </TableCell>
-                                            <TableCell key='actions' align='center'>
-                                                <Button variant="outlined" color="secondary" onClick={() => editSchool(school.id)}>
+                                                <Button variant="outlined" color="secondary" onClick={() => editSchoolUser(user.id)}>
                                                     <EditIcon />
                                                 </Button>
                                             </TableCell>
                                             <TableCell key='actions' align='center'>
-                                                <Button variant="outlined" color="secondary" onClick={() => openDeleteDialog(school.id)}>
+                                                <Button variant="outlined" color="secondary" onClick={() => openDeleteDialog(user.id)}>
                                                     <DeleteIcon />
                                                 </Button>
                                             </TableCell>
@@ -222,7 +201,7 @@ export default function SchoolManagement() {
                 <TablePagination
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={schools.length}
+                    count={users.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
@@ -233,10 +212,10 @@ export default function SchoolManagement() {
             {
                 deleteDialogOpen && 
                 <ConfirmDialog 
-                    title="Xóa trường học"
-                    detail="Bạn có chắc chắn muốn xóa trường học không?"
+                    title="Xóa thành viên"
+                    detail="Bạn có chắc chắn muốn xóa thành viên không?"
                     handleClose={closeDeleteDialog}
-                    handleConfirm={handleDeleteSchool}
+                    handleConfirm={handleDeleteSchoolUser}
                 />
             }
         </div>

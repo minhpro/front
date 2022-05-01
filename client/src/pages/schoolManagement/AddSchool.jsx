@@ -4,15 +4,26 @@ import { TextField, MenuItem } from "@mui/material";
 import { Button, Typography } from '@mui/material';
 import { createSchool, getAreaData } from "api/schoolApi";
 
-const useStyles = makeStyles({
-    root: {
-
+const useStyles = makeStyles(theme => ({
+    pageContent: {
+        margin: theme.spacing(5),
+        padding: theme.spacing(3)
     }
-})
+}))
+
+const schoolTypes = [
+    {value: 'ELEMENTARY', label: 'Tiểu học'},
+    {value: 'MIDDLE', label: 'Trung học cơ sở'},
+    {value: 'HIGH', label: 'Trung học phổ thông'},
+    {value: 'COLLEGE', label: 'Cao đẳng'},
+    {value: 'UNIVERSITY', label: 'Đại học'},
+    {value: 'OTHER', label: 'Loại khác'},
+]
 
 const initialValues = {
     name: '',
     description: '',
+    type: 'ELEMENTARY',
     provinceId: null,
     districtId: null,
     wardId: null,
@@ -55,7 +66,7 @@ export default function AddSchool() {
     }
 
     return (
-        <div>
+        <div className={classes.pageContent}>
             <Typography variant="h4" style={style}>Thêm trường học</Typography>
             <form style={formContainer}>
 
@@ -68,6 +79,25 @@ export default function AddSchool() {
                 name="name" 
                 value={values.name} 
                 onChange={e => onChange(e)}/>
+
+                <TextField 
+                type="text" 
+                required
+                select
+                label="Cấp trường"
+                fullWidth 
+                margin="normal" 
+                name="type" 
+                value={values.type} 
+                onChange={e => onChange(e)}>
+                    {schoolTypes.map(p => (
+                        <MenuItem key={p.value} value={p.value}>
+                            {p.label}
+                        </MenuItem>
+                    ))
+
+                    }
+                </TextField>
 
                 <TextField 
                 type="text" 

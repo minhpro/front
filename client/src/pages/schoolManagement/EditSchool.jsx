@@ -5,11 +5,12 @@ import { Button, Typography } from '@mui/material';
 import { editSchool, getSchool, getAreaData } from "api/schoolApi";
 import { useParams } from "react-router-dom";
 
-const useStyles = makeStyles({
-    root: {
-
+const useStyles = makeStyles(theme => ({
+    pageContent: {
+        margin: theme.spacing(5),
+        padding: theme.spacing(3)
     }
-})
+}))
 
 const initialValues = {
     name: '',
@@ -69,7 +70,7 @@ export default function EditSchool() {
     }
 
     return (
-        <div>
+        <div className={classes.pageContent}>
             <Typography variant="h4" style={style}>Thêm trường học</Typography>
             <form style={formContainer}>
 

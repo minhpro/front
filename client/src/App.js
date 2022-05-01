@@ -8,6 +8,8 @@ import * as Layout from "layouts";
 import * as Pages from "pages";
 import AddSchool from "pages/schoolManagement/AddSchool";
 import EditSchool from "pages/schoolManagement/EditSchool";
+import SchoolUserList from "pages/schoolUserManagement/SchoolUserList";
+import AddSchoolUser from "pages/schoolUserManagement/AddSchoolUser";
 
 const ROLES = {
   User: "USER",
@@ -38,6 +40,7 @@ function App() {
         element={
           <Auth.RequireAuth
             allowedRoles={[
+              Contants.authContants.ROLES.SystemAdmin,
               Contants.authContants.ROLES.Admin,
               Contants.authContants.ROLES.teacher,
               Contants.authContants.ROLES.Student,
@@ -89,6 +92,9 @@ function App() {
         </Route>
         <Route path="schools/add-school" element={<AddSchool />} />
         <Route path="schools/edit-school/:id" element={<EditSchool />} />
+        <Route path="schools/:schoolId/users" element={<SchoolUserList />} />
+        <Route path="schools/:schoolId/users/add-user" element={<AddSchoolUser />} />
+        <Route path="schools/:schoolId/users/edit-user/:id" element={<EditSchool />} />
       </Route>
     </Routes>
   );
