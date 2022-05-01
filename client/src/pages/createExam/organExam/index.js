@@ -214,14 +214,14 @@ export const OrganExam = () => {
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Class
                     onChange={func.handleChange}
-                    value={search.classId}
+                    value={search.classId || ""}
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Subject
                     id={search.classId}
                     onChange={func.handleChange}
-                    value={search.subjectId}
+                    value={search.subjectId || ""}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -230,13 +230,13 @@ export const OrganExam = () => {
               <Ex.ExDataSelect.Matrix
                 id={search.subjectId}
                 onChange={func.handleChange}
-                value={search.matrixId}
+                value={search.matrixId || ""}
               />
             </Item>
             <Item>
               <Mui.Grid container columnSpacing={5}>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.ExamType value={search.examTypeId} />
+                  <Ex.ExDataSelect.ExamType value={search.examTypeId || ""} />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExInputWrapper.Basic

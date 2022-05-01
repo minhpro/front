@@ -182,7 +182,6 @@ ExDataSelect.Classify = function Classify({ ...rest }) {
     <Ex.ExInputWrapper.Select
       label={"Chọn loại câu hỏi:"}
       name={"classification"}
-      defautValue={data[0].id}
       data={data}
       {...rest}
     />

@@ -180,13 +180,13 @@ export const OrganMatrix = () => {
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Class
                     onChange={func.handleChange}
-                    value={search.classId}
+                    value={search.classId || ""}
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Subject
                     onChange={func.handleChange}
-                    value={search.subjectId}
+                    value={search.subjectId || ""}
                     id={search.classId}
                   />
                 </Mui.Grid>
@@ -201,7 +201,7 @@ export const OrganMatrix = () => {
             <Item>
               <Ex.ExDataSelect.ExamType
                 onChange={func.handleChange}
-                value={search.testTypeId}
+                value={search.testTypeId || ""}
               />
             </Item>
             <Item>

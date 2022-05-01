@@ -176,14 +176,14 @@ export const ListQuestion = () => {
                   <Mui.Grid item xs={6}>
                     <Ex.ExDataSelect.Class
                       onChange={func.handleChange}
-                      value={search.classId}
+                      value={search.classId || ""}
                     />
                   </Mui.Grid>
                   <Mui.Grid item xs={6}>
                     <Ex.ExDataSelect.Subject
                       onChange={func.handleChange}
                       id={search.classId}
-                      value={search.subjectId}
+                      value={search.subjectId || ""}
                     />
                   </Mui.Grid>
                 </Mui.Grid>
@@ -192,14 +192,14 @@ export const ListQuestion = () => {
                 <Ex.ExDataSelect.Chapter
                   onChange={func.handleChange}
                   id={search.subjectId}
-                  value={search.chapterId}
+                  value={search.chapterId || ""}
                 />
               </ItemOne>
               <ItemOne>
                 <Ex.ExDataSelect.Units
                   onChange={func.handleChange}
                   id={search.chapterId}
-                  value={search.unitId}
+                  value={search.unitId || ""}
                 />
               </ItemOne>
               <ItemOne>

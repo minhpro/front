@@ -206,7 +206,7 @@ export const CreateMatrix = () => {
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Class
                     onChange={func.handleChange}
-                    value={search.classId}
+                    value={search.classId || ""}
                     required
                   />
                 </Mui.Grid>
@@ -214,7 +214,7 @@ export const CreateMatrix = () => {
                   <Ex.ExDataSelect.Subject
                     onChange={func.handleChange}
                     id={search.classId}
-                    value={search.subjectId}
+                    value={search.subjectId || ""}
                     required
                   />
                 </Mui.Grid>
@@ -242,7 +242,7 @@ export const CreateMatrix = () => {
                   <Ex.ExDataSelect.ExamType
                     onChange={func.handleChange}
                     required
-                    value={search.testTypeId}
+                    value={search.testTypeId || ""}
                   />
                 </Mui.Grid>
               </Mui.Grid>
