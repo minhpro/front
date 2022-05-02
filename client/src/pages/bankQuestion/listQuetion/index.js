@@ -74,6 +74,19 @@ export const ListQuestion = () => {
 
       return parseInt(number);
     }
+
+    getQuestionType(code){
+      switch (code){
+        case "ConstructedResponseQuestion":{
+          return "Tự luận";
+        }
+        case "MultiChoiceQuestion":{
+          return "Trắc nghiệm"
+        }
+      }
+      return "";
+    }
+
     onView(id) {
       setQuestionId(id);
       handleOpenNew.open();
@@ -282,6 +295,9 @@ export const ListQuestion = () => {
                       {row.questionTypeData?.name || "do kho"}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
+                      {func.getQuestionType(row.type)}
+                    </Eui.EuiTable.StyledTableCell>
+                    <Eui.EuiTable.StyledTableCell align="center">
                       <Ex.ExIconEditDelete.View
                         onDelete={() => func.openDelete(row.id)}
                         onEdit={() => func.onEdit(row.id)}
@@ -338,6 +354,10 @@ const dataColumn = [
   },
   {
     name: "Độ khó",
+    width: 200,
+  },
+  {
+    name: "Loại",
     width: 200,
   },
   {
