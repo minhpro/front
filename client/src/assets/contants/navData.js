@@ -31,5 +31,5 @@ export const header = [
     name: "Schools",
     link: "/schools",
     element: <Pages.SchoolManagement />,
-  },
+  }
 ];

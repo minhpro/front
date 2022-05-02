@@ -32,5 +32,6 @@ export {
     createSchool,
     editSchool,
     deleteSchool,
-    getAreaData
+    getAreaData,
+    SCHOOL_API_PATH
 }
