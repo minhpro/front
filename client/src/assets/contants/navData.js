@@ -26,4 +26,10 @@ export const header = [
     link: "/LMS",
     element: <Pages.LMSSelect />,
   },
+  {
+    id: 5,
+    name: "Schools",
+    link: "/schools",
+    element: <Pages.SchoolManagement />,
+  },
 ];

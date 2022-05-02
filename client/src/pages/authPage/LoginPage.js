@@ -65,8 +65,9 @@ export const LoginPage = () => {
         );
         handleSnack.add("");
 
-        window.localStorage.setItem("token", res.token);
-        LocalStorage.auth.setLocalToken(res);
+        window.localStorage.setItem("token", res.access_token);
+        window.localStorage.setItem("refreshToken", res.refresh_token);
+        LocalStorage.auth.setLocalToken(res.user);
         dispatch(
           Slide.authSlide.setAuth({
             username: res.role,
