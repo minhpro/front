@@ -32,7 +32,7 @@ ExInputWrapper.Basic = function ({ name, label, required, ...rest }) {
       <Style.Label htmlFor={name}>
         {label} <span> {required ? "*" : null}</span>
       </Style.Label>
-      <EuiInput id={name} name={name} fullWidth required={required} {...rest} />
+      <EuiInput id={name} name={name} fullWidth required={required} {...rest}  />
     </Mui.Stack>
   );
 };

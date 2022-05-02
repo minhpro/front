@@ -33,7 +33,7 @@ class Handle {
   }
   close() {
     this.setIsOpen(false);
-    console.log("clode");
+    console.log("close");
   }
   toggle() {
     this.setIsOpen(!this.isOpen);

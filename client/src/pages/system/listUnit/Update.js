@@ -119,7 +119,7 @@ export const Update = ({ open, handleClose, id }) => {
                 name={"code"}
                 onChange={func.handleChangeAdd}
                 placeholder={"Nhập mã đơn vị kiến thức"}
-                value={data.code}
+                value={data.code || ""}
               />
               <Mui.Divider />
             </Mui.Grid>

@@ -18,7 +18,7 @@ class HandlePopup {
   }
   close() {
     this.setIsOpen(false);
-    console.log("clode");
+    console.log("close");
   }
 }
 export { HandlePopup };
