@@ -14,7 +14,7 @@ export const EditMulti = ({ data }) => {
     classId: null,
     subjectId: null,
     unitId: null,
-    typeQuestionId: data.questionTypeData.id,
+    typeQuestionId: data?.questionTypeData?.id,
     questionName: data.name,
     timeAnswer: data.time,
     requirementId: data.requirementData?.id,
