@@ -290,14 +290,14 @@ const Create = () => {
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Class
                     onChange={func.handleChange}
-                    value={search.classId}
+                    value={search.classId || ""}
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Subject
                     id={search.classId}
                     onChange={func.handleChange}
-                    value={search.subjectId}
+                    value={search.subjectId || ""}
                   />
                 </Mui.Grid>
               </Mui.Grid>
@@ -306,13 +306,13 @@ const Create = () => {
               <Ex.ExDataSelect.Matrix
                 id={search.subjectId}
                 onChange={func.handleChange}
-                value={search.matrixId}
+                value={search.matrixId || ""}
               />
             </Item>
             <Item>
               <Mui.Grid container columnSpacing={5}>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.ExamType value={search.examTypeId} />
+                  <Ex.ExDataSelect.ExamType value={search.examTypeId || ""} />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExInputWrapper.Select
@@ -320,7 +320,7 @@ const Create = () => {
                     name={"testId"}
                     onChange={func.handleChange}
                     data={pages?.data}
-                    value={search.testId}
+                    value={search.testId || ""}
                     required
                   />
                 </Mui.Grid>

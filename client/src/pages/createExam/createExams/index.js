@@ -167,7 +167,7 @@ export const CreateExams = () => {
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Class
                     onChange={func.handleChange}
-                    value={search.classId}
+                    value={search.classId || ""}
                     required
                   />
                 </Mui.Grid>
@@ -175,7 +175,7 @@ export const CreateExams = () => {
                   <Ex.ExDataSelect.Subject
                     onChange={func.handleChange}
                     id={search.classId}
-                    value={search.subjectId}
+                    value={search.subjectId || ""}
                     required
                   />
                 </Mui.Grid>
@@ -185,7 +185,7 @@ export const CreateExams = () => {
               <Ex.ExDataSelect.Matrix
                 onChange={func.handleChange}
                 id={search.subjectId}
-                value={search.matrixId}
+                value={search.matrixId || ""}
                 required
               />
             </Item>
@@ -195,7 +195,7 @@ export const CreateExams = () => {
                   <Ex.ExDataSelect.ExamType
                     onChange={func.handleChange}
                     required
-                    value={search.testTypeId}
+                    value={search.testTypeId || ""}
                   />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>

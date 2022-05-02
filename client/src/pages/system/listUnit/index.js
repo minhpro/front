@@ -247,6 +247,7 @@ export const PageSystemListUnit = () => {
             </Ex.ExModalPoppup.ViewQuestion>
 
             <Ex.ExModalPoppup.Create
+                title={"Tạo mới đơn vị kiến thức"}
                 open={open}
                 handleClose={() => handleOpenNew.close()}
                 handleCreate={func.handleAdd}>
@@ -254,21 +255,21 @@ export const PageSystemListUnit = () => {
                     <Mui.Grid item xs={12} md={6}>
                         <Ex.ExDataSelect.Class
                             onChange={func.handleChangeAdd}
-                            value={add.classId}
+                            value={add.classId || ""}
                             required
                         />
                         <Mui.Divider/>
                         <Ex.ExDataSelect.Subject
                             id={add.classId}
                             onChange={func.handleChangeAdd}
-                            value={add.subjectId}
+                            value={add.subjectId  || ""}
                             required
                         />
                         <Mui.Divider/>
                         <Ex.ExDataSelect.Chapter
                             id={add.subjectId}
                             onChange={func.handleChangeAdd}
-                            value={add.chapterId}
+                            value={add.chapterId  || ""}
                             required
                         />
                         <Mui.Divider/>

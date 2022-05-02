@@ -125,7 +125,7 @@ export const Home = () => {
                   label={"Chọn lớp"}
                   name={"classId"}
                   onChange={func.handleChange}
-                  value={search.classId}
+                  value={search.classId || ""}
                 />
               </Item>
               <Item>
@@ -133,7 +133,7 @@ export const Home = () => {
                   label={"Chọn môn"}
                   name={"subjectId"}
                   onChange={func.handleChange}
-                  value={search.subjectId}
+                  value={search.subjectId || ""}
                   id={search.classId}
                 />
               </Item>
@@ -142,7 +142,7 @@ export const Home = () => {
                   label={"Dạng đề thi"}
                   name={"examTypeId"}
                   onChange={func.handleChange}
-                  value={search.examTypeId}
+                  value={search.examTypeId || ""}
                 />
               </Item>
               <Item>

@@ -73,13 +73,13 @@ export function Chapter({ onClose, ...rest }) {
           <Ex.SelectLMS.Basic.Class
             required
             onChange={handleChange}
-            value={create.classId}
+            value={create.classId || ""}
           />
           <Ex.SelectLMS.Basic.Subject
             required
             id={create.classId}
             onChange={handleChange}
-            value={create.subjectId}
+            value={create.subjectId || ""}
           />
           {/* <Sui.Input.Label.Text
             label={titleData.LMS.Code}
