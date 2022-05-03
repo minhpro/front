@@ -1,4 +1,5 @@
 import * as Pages from "pages";
+import { lmsHomeUrl } from "./apiContant";
 
 export const header = [
   { id: 1, name: "Trang chủ", link: "/", element: <Pages.Home.Home /> },
@@ -23,7 +24,7 @@ export const header = [
   {
     id: 4,
     name: "LMS",
-    link: "/LMS",
+    link: lmsHomeUrl,
     element: <Pages.LMSSelect />,
   },
   {

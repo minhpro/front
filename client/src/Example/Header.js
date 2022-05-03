@@ -52,10 +52,14 @@ Header.Nav = function Nav({ c }) {
           alignItems={"center"}
         >
           {Contants.navData.header.map((item, i) => {
-            return (
-              <Style.NavLink to={item.link} key={i} className={"ad"}>
-                <h3 style={{ color: `${c || "width"}` }}>{item.name}</h3>
-              </Style.NavLink>
+            if (item.name != 'LMS')
+              return (
+                <Style.NavLink to={item.link} key={i} className={"ad"}>
+                  <h3 style={{ color: `${c || "width"}` }}>{item.name}</h3>
+                </Style.NavLink>
+              );
+            else return (
+                <h3 key={i} style={{ color: `${c || "width"}` }}><a href={item.link}>{item.name}</a></h3>
             );
           })}
           <Co.Auth.AuthHeader />
