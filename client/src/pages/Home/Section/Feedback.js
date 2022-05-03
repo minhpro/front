@@ -93,26 +93,26 @@ const Style = {
 
 const data = [
   {
-    name: "Thày Phan Minh Trí",
-    type: " THPT Tân Hiệp - TỈnh Kiên Giang",
+    name: "Thầy Phan Minh Trí",
+    type: "THPT Tân Hiệp - TỈnh Kiên Giang",
     feed: "Áp dụng EDB LMS trong việc giảng dậy mang lại nhiều thuận lợi cho giáo viên.",
     img: "testi-1",
   },
   {
-    name: "Thày Phan Minh Trí",
-    type: " THPT Tân Hiệp - TỈnh Kiên Giang",
+    name: "Thầy Đỗ Trung Kiên",
+    type: "THPT Tân Hiệp - TỈnh Kiên Giang",
     feed: "Áp dụng EDB LMS trong việc giảng dậy mang lại nhiều thuận lợi cho giáo viên.",
     img: "testi-4",
   },
   {
-    name: "Thày Phan Minh Trí",
-    type: " THPT Tân Hiệp - TỈnh Kiên Giang",
+    name: "Cô Dương Xuân Hoa",
+    type: "THPT Tân Hiệp - TỈnh Kiên Giang",
     feed: "Áp dụng EDB LMS trong việc giảng dậy mang lại nhiều thuận lợi cho giáo viên.",
     img: "testi-3",
   },
   {
-    name: "Thày Phan Minh Trí",
-    type: " THPT Tân Hiệp - TỈnh Kiên Giang",
+    name: "Thầy Trần Tuấn Hải",
+    type: "THPT Tân Hiệp - TỈnh Kiên Giang",
     feed: "Áp dụng EDB LMS trong việc giảng dậy mang lại nhiều thuận lợi cho giáo viên.",
     img: "testi-2",
   },
