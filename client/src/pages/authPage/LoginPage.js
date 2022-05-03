@@ -47,7 +47,7 @@ export const LoginPage = () => {
           roles: [LocalStorage.auth.getLocalToken().role],
         })
       );
-      return navigate(from, { replace: true });
+      return navigate("/khao-thi/cau-hinh-chung", { replace: true });
     } else return;
   }, [from, navigate, dispatch]);
 
