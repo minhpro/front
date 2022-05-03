@@ -5,3 +5,5 @@
 export const apiUrl = "http://localhost:8081/api/";
 
 export const apiNofi = "http://18.179.5.86:8080/api/event/register";
+
+export const lmsHomeUrl = "http://localhost:3000";
