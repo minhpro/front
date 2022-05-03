@@ -155,11 +155,11 @@ export const Update = ({ open, handleClose, id }) => {
                             {row.name || "name"}
                           </Eui.EuiTable.StyledTableCell>
                           <Eui.EuiTable.StyledTableCell align="center">
-                            <Ex.ExIconEditDelete.DeleteOnly
-                            // onDelete={() =>
-                            //   func.onDeleteRequirement(row.name)
-                            // }
-                            />
+                            {/*<Ex.ExIconEditDelete.DeleteOnly*/}
+                            {/*onDelete={() =>*/}
+                            {/*  func.onDeleteRequirement(row.name)*/}
+                            {/*}*/}
+                            {/*/>*/}
                           </Eui.EuiTable.StyledTableCell>
                         </Eui.EuiTable.StyledTableRow>
                       ))
@@ -175,9 +175,9 @@ export const Update = ({ open, handleClose, id }) => {
                           </Eui.EuiTable.StyledTableCell>
                           <Eui.EuiTable.StyledTableCell align="center">
                             <Ex.ExIconEditDelete.DeleteOnly
-                            // onDelete={() =>
-                            //   func.onDeleteRequirement(row.name)
-                            // }
+                            onDelete={() =>
+                              func.onDeleteRequirement(row.name)
+                            }
                             />
                           </Eui.EuiTable.StyledTableCell>
                         </Eui.EuiTable.StyledTableRow>
