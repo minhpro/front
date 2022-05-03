@@ -202,6 +202,7 @@ export const TypeQuestion = () => {
                         borderTop="solid 2px"
                         py={2}
                     >
+                        <Eui.EuiButton.Cancel onClick={() => setIsOpen(false)} />
                         <Eui.EuiButton.AddNew name={"Thêm mới"} component={"button"}/>
                     </Mui.Stack>
                 </Mui.Stack>

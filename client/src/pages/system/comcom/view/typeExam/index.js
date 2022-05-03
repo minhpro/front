@@ -151,6 +151,7 @@ export const TypeExam = () => {
             borderTop="solid 2px"
             py={2}
           >
+            <Eui.EuiButton.Cancel onClick={() => setIsOpen(false)} />
             <Eui.EuiButton.AddNew component={"button"} />
           </Mui.Stack>
         </Mui.Stack>

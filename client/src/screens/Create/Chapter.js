@@ -163,14 +163,14 @@ Chapter.Update = function Update({ onClose, id, ...rest }) {
             required
             onChange={handleChange}
             placeholder={titleData.LMS.TypeChapter}
-            value={data.name}
+            value={data.name || ""}
           />
           <Sui.Input.Label.Text
             label={titleData.LMS.Code}
             name={"code"}
             required
             disabled
-            value={data.code}
+            value={data.code || ""}
             onChange={handleChange}
             placeholder={titleData.LMS.TypeCode}
           />

@@ -4,6 +4,7 @@ import * as Eui from "components/Eui";
 import * as Ex from "Example";
 import * as Api from "api";
 import * as Class from "Class";
+import * as Sui from "../../../../../components";
 export const Update = ({ open, handleClose, id }) => {
   const [data, setData] = React.useState({
     typeExam: "",
@@ -94,6 +95,7 @@ export const Update = ({ open, handleClose, id }) => {
             borderTop="solid 2px"
             py={2}
           >
+            <Eui.EuiButton.Cancel onClick={handleClose} />
             <Eui.EuiButton.AddNew
               name={"Cập nhật dạng đề"}
               component={"button"}

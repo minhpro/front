@@ -109,6 +109,8 @@ export const Update = ({ open, handleClose, id }) => {
             borderTop="solid 2px"
             py={2}
           >
+            <Eui.EuiButton.Cancel onClick={handleClose} />
+
             <Eui.EuiButton.AddNew
               name={"Cập nhật loại câu hỏi"}
               component={"button"}
