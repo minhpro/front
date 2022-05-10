@@ -2,6 +2,7 @@ import { Stack } from "@mui/material";
 import React from "react";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { AddAlarmRounded } from "@mui/icons-material";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
@@ -29,6 +30,17 @@ ExIconEditDelete.View = function ({ onEdit, onDelete, onView }) {
       <DeleteIcon onClick={onDelete} sx={{ ...style }} />
     </Stack>
   );
+};
+
+ExIconEditDelete.ViewAndConfirm = function ({ onEdit, onDelete, onView, onConfirm }) {
+    return (
+        <Stack direction={"row"} justifyContent="center" spacing={1}>
+            <VisibilityIcon onClick={onView} sx={{ ...style }} />
+            <ModeEditIcon onClick={onEdit} sx={{ ...style }} />
+            <DeleteIcon onClick={onDelete} sx={{ ...style }} />
+            <DoneAllIcon onClick={onConfirm} sx={{ ...style }} />
+        </Stack>
+    );
 };
 
 ExIconEditDelete.ViewOnly = function ({ onEdit, onDelete, onView }) {

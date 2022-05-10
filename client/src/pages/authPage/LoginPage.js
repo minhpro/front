@@ -67,6 +67,7 @@ export const LoginPage = () => {
         handleSnack.add("");
 
         window.localStorage.setItem("token", res.access_token);
+        window.localStorage.setItem("id", res.user?.id);
         window.localStorage.setItem("refreshToken", res.refresh_token);
         LocalStorage.auth.setLocalToken(res.user);
         dispatch(

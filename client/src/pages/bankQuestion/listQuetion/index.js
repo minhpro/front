@@ -7,361 +7,401 @@ import * as Class from "Class";
 import * as Function from "functions";
 import * as Api from "api";
 import * as View from "./view";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export const ListQuestion = () => {
-  // redux
-  const navigate = useNavigate();
-  const [questionList, setQuestionList] = React.useState(null);
-  const [pages, setPages] = React.useState({
-    page: 1,
-    total: 10,
-    limit: 32,
-  });
+    // redux
+    const navigate = useNavigate();
+    const [questionList, setQuestionList] = React.useState({
+        data:[],
+        total: 0
+    });
+    const [pages, setPages] = React.useState({
+        page: 1,
+        total: 10,
+        limit: 32,
+    });
 
-  const [search, setSearch] = React.useState({
-    chapterId: null,
-    classId: null,
-    subjectId: null,
-    unitId: null,
-    questionName: "",
-  });
+    const [search, setSearch] = React.useState({
+        chapterId: null,
+        classId: null,
+        subjectId: null,
+        unitId: null,
+        questionName: "",
+    });
 
-  const [open, setIsOpen] = React.useState(false);
-  const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
+    const [open, setIsOpen] = React.useState(false);
+    const [isDeteteOpen, setIsDeleteOpen] = React.useState(false);
 
-  const [deleteId, setDeleteId] = React.useState(null);
+    const [deleteId, setDeleteId] = React.useState(null);
 
-  const [questionId, setQuestionId] = React.useState(null);
-  const [snack, setSnack] = React.useState({
-    isOpen: false,
-    message: "",
-    severity: null,
-  });
-  // class
+    const [questionId, setQuestionId] = React.useState(null);
+    const [snack, setSnack] = React.useState({
+        isOpen: false,
+        message: "",
+        severity: null,
+    });
+    // class
 
-  const handleSnack = new Class.HandleSnack(setSnack);
-  handleSnack.setMessage(
-    "Đã thêm loại câu hỏi mới, id: ",
-    "Đã xoá loại câu hỏi, id: ",
-    "Lỗi hệ thống, không thể xoá"
-  );
+    const handleSnack = new Class.HandleSnack(setSnack);
+    handleSnack.setMessage(
+        "Đã thêm loại câu hỏi mới, id: ",
+        "Đã xoá loại câu hỏi, id: ",
+        "Lỗi hệ thống, không thể xoá"
+    );
 
-  const handleOpenNew = new Class.HandlePopup(
-    setIsOpen,
-    "",
-    "Thêm mới loại câu hỏi"
-  );
+    const handleOpenNew = new Class.HandlePopup(
+        setIsOpen,
+        "",
+        "Thêm mới loại câu hỏi"
+    );
 
-  const handleOpenDelete = new Class.HandlePopup(
-    setIsDeleteOpen,
-    "",
-    "Xác nhận xoá?"
-  );
+    const handleOpenDelete = new Class.HandlePopup(
+        setIsDeleteOpen,
+        "",
+        "Xác nhận xoá?"
+    );
 
-  //  func
+    //  func
 
-  //   function
-  class Func {
-    handlePagination(event, value) {
-      if (value > pages.total) {
-        return;
-      }
-      setPages({ ...pages, page: value });
-    }
-    getTotalPage(total) {
-      const number = total / pages.limit + 1;
-
-      return parseInt(number);
-    }
-
-    getQuestionType(code){
-      switch (code){
-        case "ConstructedResponseQuestion":{
-          return "Tự luận";
+    //   function
+    class Func {
+        handlePagination(event, value) {
+            if (value > pages.total) {
+                return;
+            }
+            setPages({...pages, page: value});
         }
-        case "MultiChoiceQuestion":{
-          return "Trắc nghiệm"
+
+        getTotalPage(total) {
+            const number = total / pages.limit + 1;
+
+            return parseInt(number);
         }
-      }
-      return "";
+
+        getQuestionType(code) {
+            switch (code) {
+                case "ConstructedResponseQuestion": {
+                    return "Tự luận";
+                }
+                case "MultiChoiceQuestion": {
+                    return "Trắc nghiệm"
+                }
+            }
+            return "";
+        }
+
+        getApprovedStatus(approved) {
+            if (approved == null || approved == "NOT_YET") {
+                return "Chờ duyệt"
+            }
+            return "Đã duyệt"
+        }
+
+        onView(id) {
+            setQuestionId(id);
+            handleOpenNew.open();
+        }
+
+        openDelete(id) {
+            handleOpenDelete.open();
+            setDeleteId(id);
+        }
+
+        handleChange = (e) => {
+            setSearch({...search, [e.target.name]: e.target.value});
+            console.log(search);
+        };
+
+        handleSearch = () => {
+            Function.handler
+                .api(() =>
+                    Api.questionApi.search(
+                        search.unitId,
+                        search.chapterId,
+                        search.subjectId,
+                        search.classId,
+                        search.questionName,
+                        null,
+                        pages.page,
+                        pages.limit
+                    )
+                )
+                .then((res) => {
+                    console.log(res);
+                    setPages({...pages, total: this.getTotalPage(res.total)});
+                    setQuestionList(res);
+                })
+                .catch((error) => console.log(error));
+        };
+
+        onDelete = () => {
+            Function.handler
+                .api(() => Api.questionApi.delete(deleteId))
+                .then((res) => {
+                    handleSnack.delete("");
+                })
+                .catch((error) => console.log(error));
+            handleOpenDelete.close();
+        };
+
+        onEdit(id) {
+            navigate(`chinh-sua/${id}`);
+        }
+
+        onConfirm(id, cb) {
+            Api.questionApi.approve(id).then(()=>{
+                setQuestionList({
+                    data: questionList.data.map(item => {
+                        if(item.id == id){
+                            item.approved = 'APPROVED'
+                        }
+                        return item;
+                    }),
+                    total: questionList.total
+                })
+            });
+        }
     }
 
-    onView(id) {
-      setQuestionId(id);
-      handleOpenNew.open();
+    const func = new Func();
+
+    React.useEffect(() => {
+        func.handleSearch();
+    }, [pages.page, snack]);
+
+    function resets(name) {
+        setSearch({...search, [name]: null});
     }
 
-    openDelete(id) {
-      handleOpenDelete.open();
-      setDeleteId(id);
-    }
+    React.useEffect(() => {
+        resets("subjectId");
+    }, [search.classId]);
 
-    handleChange = (e) => {
-      setSearch({ ...search, [e.target.name]: e.target.value });
-      console.log(search);
-    };
+    React.useEffect(() => {
+        resets("chapterId");
+    }, [search.subjectId]);
 
-    handleSearch = () => {
-      Function.handler
-        .api(() =>
-          Api.questionApi.search(
-            search.unitId,
-            search.chapterId,
-            search.subjectId,
-            search.classId,
-            search.questionName,
-            null,
-            pages.page,
-            pages.limit
-          )
-        )
-        .then((res) => {
-          console.log(res);
-          setPages({ ...pages, total: this.getTotalPage(res.total) });
-          setQuestionList(res);
-        })
-        .catch((error) => console.log(error));
-    };
+    React.useEffect(() => {
+        resets("unitId");
+    }, [search.chapterId]);
 
-    onDelete = () => {
-      Function.handler
-        .api(() => Api.questionApi.delete(deleteId))
-        .then((res) => {
-          handleSnack.delete("");
-        })
-        .catch((error) => console.log(error));
-      handleOpenDelete.close();
-    };
-    onEdit(id) {
-      navigate(`chinh-sua/${id}`);
-    }
-  }
-
-  const func = new Func();
-
-  React.useEffect(() => {
-    func.handleSearch();
-  }, [pages.page, snack]);
-
-  function resets(name) {
-    setSearch({ ...search, [name]: null });
-  }
-
-  React.useEffect(() => {
-    resets("subjectId");
-  }, [search.classId]);
-
-  React.useEffect(() => {
-    resets("chapterId");
-  }, [search.subjectId]);
-
-  React.useEffect(() => {
-    resets("unitId");
-  }, [search.chapterId]);
-
-  return (
-    <Views.ViewContent title={"Danh sách câu hỏi EBD"}>
-      {/* snack */}
-      {/* thong bao */}
-      <Eui.EuiSnackbar
-        open={snack.isOpen}
-        handleClose={() => handleSnack.close()}
-        message={snack.message}
-        severity={snack.severity}
-      />
-      {/* modal delete */}
-      <Eui.EuiModal.Title
-        open={isDeteteOpen}
-        handleClose={() => handleOpenDelete.close()}
-        w={"80%"}
-        mw={300}
-        title={"Xác nhận xoá?"}
-      >
-        <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
-          <Eui.EuiButton.Cancel onClick={() => handleOpenDelete.close()} />
-          <Eui.EuiButton.Progress name={"Xoá"} onClick={func.onDelete} />
-        </Mui.Stack>
-      </Eui.EuiModal.Title>
-
-      {/* view cau hoi */}
-
-      <Ex.ExModalPoppup.ViewQuestion
-        open={open}
-        handleClose={() => handleOpenNew.close()}
-      >
-        <View.ViewQuestion id={questionId} />
-      </Ex.ExModalPoppup.ViewQuestion>
-
-      {/* view */}
-      <Mui.Stack spacing={0.5}>
-        <Views.ViewBoard>
-          <Mui.Stack>
-            <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
-              <ItemOne>
-                <Mui.Grid container columnSpacing={2}>
-                  <Mui.Grid item xs={6}>
-                    <Ex.ExDataSelect.Class
-                      onChange={func.handleChange}
-                      value={search.classId || ""}
-                    />
-                  </Mui.Grid>
-                  <Mui.Grid item xs={6}>
-                    <Ex.ExDataSelect.Subject
-                      onChange={func.handleChange}
-                      id={search.classId}
-                      value={search.subjectId || ""}
-                    />
-                  </Mui.Grid>
-                </Mui.Grid>
-              </ItemOne>
-              <ItemOne>
-                <Ex.ExDataSelect.Chapter
-                  onChange={func.handleChange}
-                  id={search.subjectId}
-                  value={search.chapterId || ""}
-                />
-              </ItemOne>
-              <ItemOne>
-                <Ex.ExDataSelect.Units
-                  onChange={func.handleChange}
-                  id={search.chapterId}
-                  value={search.unitId || ""}
-                />
-              </ItemOne>
-              <ItemOne>
-                <Ex.ExInputWrapper.Basic
-                  label={"Từ khoá"}
-                  name={"questionName"}
-                  onChange={func.handleChange}
-                  placeholder={"Nhập từ khoá"}
-                />
-              </ItemOne>
-            </Mui.Grid>
-            <Mui.Stack
-              pt={2}
-              borderColor={"primary.main"}
-              borderTop={"solid 2px"}
-              direction={"row"}
-              spacing={2}
-              justifyContent={"flex-start"}
-              alignItems={"flex-start"}
-              flexWrap={"wrap"}
-              rowGap={2}
+    return (
+        <Views.ViewContent title={"Danh sách câu hỏi EBD"}>
+            {/* snack */}
+            {/* thong bao */}
+            <Eui.EuiSnackbar
+                open={snack.isOpen}
+                handleClose={() => handleSnack.close()}
+                message={snack.message}
+                severity={snack.severity}
+            />
+            {/* modal delete */}
+            <Eui.EuiModal.Title
+                open={isDeteteOpen}
+                handleClose={() => handleOpenDelete.close()}
+                w={"80%"}
+                mw={300}
+                title={"Xác nhận xoá?"}
             >
-              <Eui.EuiButton.Search
-                name={"Tìm kiếm"}
-                onClick={func.handleSearch}
-              />
-              <Link to="/khao-thi/them-cau-tu-luan-EBD">
-                <Eui.EuiButton.AddNew
-                  name={"Câu tự luận"}
-                  onClick={func.handleSearch}
-                />
-              </Link>
-              <Link to={"/khao-thi/them-cau-trac-nghiem-EDB"}>
-                <Eui.EuiButton.AddNew
-                  name={"Câu trắc nghiệm"}
-                  onClick={func.handleSearch}
-                />
-              </Link>
+                <Mui.Stack direction={"row"} justifyContent={"center"} pt={5}>
+                    <Eui.EuiButton.Cancel onClick={() => handleOpenDelete.close()}/>
+                    <Eui.EuiButton.Progress name={"Xoá"} onClick={func.onDelete}/>
+                </Mui.Stack>
+            </Eui.EuiModal.Title>
+
+            {/* view cau hoi */}
+
+            <Ex.ExModalPoppup.ViewQuestion
+                open={open}
+                handleClose={() => handleOpenNew.close()}
+            >
+                <View.ViewQuestion id={questionId}/>
+            </Ex.ExModalPoppup.ViewQuestion>
+
+            {/* view */}
+            <Mui.Stack spacing={0.5}>
+                <Views.ViewBoard>
+                    <Mui.Stack>
+                        <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
+                            <ItemOne>
+                                <Mui.Grid container columnSpacing={2}>
+                                    <Mui.Grid item xs={6}>
+                                        <Ex.ExDataSelect.Class
+                                            onChange={func.handleChange}
+                                            value={search.classId || ""}
+                                        />
+                                    </Mui.Grid>
+                                    <Mui.Grid item xs={6}>
+                                        <Ex.ExDataSelect.Subject
+                                            onChange={func.handleChange}
+                                            id={search.classId}
+                                            value={search.subjectId || ""}
+                                        />
+                                    </Mui.Grid>
+                                </Mui.Grid>
+                            </ItemOne>
+                            <ItemOne>
+                                <Ex.ExDataSelect.Chapter
+                                    onChange={func.handleChange}
+                                    id={search.subjectId}
+                                    value={search.chapterId || ""}
+                                />
+                            </ItemOne>
+                            <ItemOne>
+                                <Ex.ExDataSelect.Units
+                                    onChange={func.handleChange}
+                                    id={search.chapterId}
+                                    value={search.unitId || ""}
+                                />
+                            </ItemOne>
+                            <ItemOne>
+                                <Ex.ExInputWrapper.Basic
+                                    label={"Từ khoá"}
+                                    name={"questionName"}
+                                    onChange={func.handleChange}
+                                    placeholder={"Nhập từ khoá"}
+                                />
+                            </ItemOne>
+                        </Mui.Grid>
+                        <Mui.Stack
+                            pt={2}
+                            borderColor={"primary.main"}
+                            borderTop={"solid 2px"}
+                            direction={"row"}
+                            spacing={2}
+                            justifyContent={"flex-start"}
+                            alignItems={"flex-start"}
+                            flexWrap={"wrap"}
+                            rowGap={2}
+                        >
+                            <Eui.EuiButton.Search
+                                name={"Tìm kiếm"}
+                                onClick={func.handleSearch}
+                            />
+                            <Link to="/khao-thi/them-cau-tu-luan-EBD">
+                                <Eui.EuiButton.AddNew
+                                    name={"Câu tự luận"}
+                                    onClick={func.handleSearch}
+                                />
+                            </Link>
+                            <Link to={"/khao-thi/them-cau-trac-nghiem-EDB"}>
+                                <Eui.EuiButton.AddNew
+                                    name={"Câu trắc nghiệm"}
+                                    onClick={func.handleSearch}
+                                />
+                            </Link>
+                        </Mui.Stack>
+                    </Mui.Stack>
+                </Views.ViewBoard>
+                {/* bang du lieu */}
+                <Views.ViewBoard>
+                    <Eui.EuiTable dataColumn={dataColumn}>
+                        {questionList
+                            ? questionList.data.map((row, i) => (
+                                <Eui.EuiTable.StyledTableRow key={i}>
+                                    <Eui.EuiTable.StyledTableCell align="center">
+                                        {Function.formatNumber.getSTT(i, pages.page, pages.limit)}
+                                    </Eui.EuiTable.StyledTableCell>
+                                    <Eui.EuiTable.StyledTableCell align="center">
+                                        {row?.code || "code"}
+                                    </Eui.EuiTable.StyledTableCell>
+                                    <Eui.EuiTable.StyledTableCell align="center">
+                                        {row?.requirementData?.unitData?.chapterData?.subjectData
+                                            ?.classs?.name || "name class"}
+                                    </Eui.EuiTable.StyledTableCell>
+                                    <Eui.EuiTable.StyledTableCell align="center">
+                                        {row.requirementData?.unitData?.chapterData?.subjectData
+                                            ?.name || "list class"}
+                                    </Eui.EuiTable.StyledTableCell>
+                                    <Eui.EuiTable.StyledTableCell align="center">
+                                        {row.name || "ten cau hoi"}
+                                    </Eui.EuiTable.StyledTableCell>
+                                    <Eui.EuiTable.StyledTableCell align="center">
+                                        {row.questionTypeData?.name || "do kho"}
+                                    </Eui.EuiTable.StyledTableCell>
+                                    <Eui.EuiTable.StyledTableCell align="center">
+                                        {func.getQuestionType(row.type)}
+                                    </Eui.EuiTable.StyledTableCell>
+                                    <Eui.EuiTable.StyledTableCell align="center">
+                                        {func.getApprovedStatus(row.approved)}
+                                    </Eui.EuiTable.StyledTableCell>
+                                    <Eui.EuiTable.StyledTableCell align="center">{
+                                        ( (row.approved == null || row.approved == 'NOT_YET') ) ? (
+                                            <Ex.ExIconEditDelete.ViewAndConfirm
+                                                onDelete={() => func.openDelete(row.id)}
+                                                onEdit={() => func.onEdit(row.id)}
+                                                onView={() => func.onView(row.id)}
+                                                onConfirm={() => func.onConfirm(row.id)}
+                                            />) : (<Ex.ExIconEditDelete.View
+                                            onDelete={() => func.openDelete(row.id)}
+                                            onEdit={() => func.onEdit(row.id)}
+                                            onView={() => func.onView(row.id)}
+                                        />)
+                                    }
+                                    </Eui.EuiTable.StyledTableCell>
+                                </Eui.EuiTable.StyledTableRow>
+                            ))
+                            : null}
+                    </Eui.EuiTable>
+                    <Eui.EuiPagination
+                        count={pages.total}
+                        defaultPage={1}
+                        siblingCount={0}
+                        boundaryCount={2}
+                        size={"large"}
+                        shape={"rounded"}
+                        onChange={func.handlePagination}
+                    />
+                </Views.ViewBoard>
             </Mui.Stack>
-          </Mui.Stack>
-        </Views.ViewBoard>
-        {/* bang du lieu */}
-        <Views.ViewBoard>
-          <Eui.EuiTable dataColumn={dataColumn}>
-            {questionList
-              ? questionList.data.map((row, i) => (
-                  <Eui.EuiTable.StyledTableRow key={i}>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {Function.formatNumber.getSTT(i, pages.page, pages.limit)}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {row?.code || "code"}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {row?.requirementData?.unitData?.chapterData?.subjectData
-                        ?.classs?.name || "name class"}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {row.requirementData?.unitData?.chapterData?.subjectData
-                        ?.name || "list class"}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {row.name || "ten cau hoi"}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {row.questionTypeData?.name || "do kho"}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      {func.getQuestionType(row.type)}
-                    </Eui.EuiTable.StyledTableCell>
-                    <Eui.EuiTable.StyledTableCell align="center">
-                      <Ex.ExIconEditDelete.View
-                        onDelete={() => func.openDelete(row.id)}
-                        onEdit={() => func.onEdit(row.id)}
-                        onView={() => func.onView(row.id)}
-                      />
-                    </Eui.EuiTable.StyledTableCell>
-                  </Eui.EuiTable.StyledTableRow>
-                ))
-              : null}
-          </Eui.EuiTable>
-          <Eui.EuiPagination
-            count={pages.total}
-            defaultPage={1}
-            siblingCount={0}
-            boundaryCount={2}
-            size={"large"}
-            shape={"rounded"}
-            onChange={func.handlePagination}
-          />
-        </Views.ViewBoard>
-      </Mui.Stack>
-    </Views.ViewContent>
-  );
+        </Views.ViewContent>
+    );
 };
 
-const ItemOne = ({ children }) => {
-  return (
-    <Mui.Grid item xs={12} md={6}>
-      {children}
-    </Mui.Grid>
-  );
+const ItemOne = ({children}) => {
+    return (
+        <Mui.Grid item xs={12} md={6}>
+            {children}
+        </Mui.Grid>
+    );
 };
 
 const dataColumn = [
-  {
-    name: "STT",
-    width: 50,
-  },
-  {
-    name: "Mã câu hỏi",
-    width: 200,
-  },
-  {
-    name: "Lớp",
-    width: 200,
-  },
-  {
-    name: "Môn",
-    width: 200,
-  },
-  {
-    name: "Tên câu hỏi",
-    width: 200,
-  },
-  {
-    name: "Độ khó",
-    width: 200,
-  },
-  {
-    name: "Loại",
-    width: 200,
-  },
-  {
-    name: "Thao tác",
-    width: 200,
-  },
+    {
+        name: "STT",
+        width: 50,
+    },
+    {
+        name: "Mã câu hỏi",
+        width: 200,
+    },
+    {
+        name: "Lớp",
+        width: 200,
+    },
+    {
+        name: "Môn",
+        width: 200,
+    },
+    {
+        name: "Tên câu hỏi",
+        width: 200,
+    },
+    {
+        name: "Độ khó",
+        width: 200,
+    },
+    {
+        name: "Loại",
+        width: 200,
+    },
+    {
+        name: "Trạng thái",
+        width: 200,
+    },
+    {
+        name: "Thao tác",
+        width: 200,
+    },
 ];
