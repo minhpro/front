@@ -21,7 +21,6 @@ export const CreateMatrix = () => {
     time: 0,
     scoreCalculationTypeId: 1,
     code: "",
-    typeQuestionId: null,
   });
 
   const [snack, setSnack] = React.useState({
@@ -99,6 +98,7 @@ export const CreateMatrix = () => {
             questionDistributions:
               dataNumber.data[i].unitData[j].questionDistributions,
             requirements: [],
+            questionTypes: [],
           });
 
           for (
@@ -111,6 +111,16 @@ export const CreateMatrix = () => {
               numberOfQuestions:
                 dataNumber.data[i].unitData[j].requirements[h]
                   .numberOfQuestions,
+            });
+          }
+
+          for (
+            let h = 0;
+            h < dataNumber.data[i].unitData[j].questionTypes.length;
+            h++
+          ) {
+            payload.questionDistributions[i].units[j].questionTypes.push({
+              id: dataNumber.data[i].unitData[j].questionTypes[h],
             });
           }
         }
@@ -263,13 +273,13 @@ export const CreateMatrix = () => {
                 value={search.scoreCalculationTypeId}
               />
             </Item>
-            <Item>
+            {/* <Item>
               <Ex.ExDataSelect.TypeQuestion
                 required
                 onChange={func.handleChange}
                 value={search.typeQuestionId}
               />
-            </Item>
+            </Item> */}
           </Mui.Grid>
           {/* <Mui.Stack
             direction={"row"}
@@ -289,7 +299,7 @@ export const CreateMatrix = () => {
               dataNumber.data?.map((data, i) => {
                 return (
                   <Mui.Stack key={i}>
-                    <Eui.EuiMatrix data={data} />
+                    <Eui.EuiMatrix data={data} indexData={i} />
                   </Mui.Stack>
                 );
               })

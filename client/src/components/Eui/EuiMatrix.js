@@ -1,6 +1,6 @@
 import * as Mui from "@mui/material";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import * as Slide from "redux/slide";
@@ -8,7 +8,9 @@ import styled from "styled-components";
 import * as Eui from "./";
 import { EuiInput } from "./EuiInput";
 
-export const EuiMatrix = ({ data, icon }) => {
+export const EuiMatrix = ({ data, icon, indexData }) => {
+  const questionTypesData = useSelector((s) => s.reduxQuestionType);
+
   return (
     <Mui.Stack spacing={2}>
       <EuiMatrix.Parent
@@ -32,6 +34,21 @@ export const EuiMatrix = ({ data, icon }) => {
                     {unit.requirements
                       ? unit.requirements?.map((row, i) => (
                           <EuiMatrix.Chil2 data={row} i={i + 1} key={i} />
+                        ))
+                      : null}
+                  </Eui.EuiTable>
+                  {/* do kho */}
+                  <p>do kho cau hoi:</p>
+                  <Eui.EuiTable dataColumn={dataColumn2}>
+                    {questionTypesData?.data
+                      ? questionTypesData.data?.map((row, ii) => (
+                          <EuiMatrix.Chil3
+                            data={row}
+                            i={ii + 1}
+                            key={ii}
+                            indexData={indexData}
+                            unitId={i}
+                          />
                         ))
                       : null}
                   </Eui.EuiTable>
@@ -203,6 +220,55 @@ const Style = {
   `,
 };
 
+EuiMatrix.Chil3 = function Chil({ data, i, indexData, unitId, ...rest }) {
+  const dispatch = useDispatch();
+  const questionTypesData = useSelector((s) => s.reduxQuestionDistributions);
+  function handChange(e) {
+    if (e.target.value) {
+      const payload = {
+        questionType: {
+          id: data.id,
+          numberOfQuestions: parseInt(e.target.value),
+        },
+        indexData: indexData,
+        unitId: unitId,
+      };
+      dispatch(Slide.questionDistributionsSlide.updateQuestionType(payload));
+    } else {
+      const payload = { requireID: data.id, number: parseInt(0) };
+      dispatch(
+        Slide.questionDistributionsSlide.updateQuestionDistributions(payload)
+      );
+    }
+  }
+  const hi = questionTypesData?.data[indexData]?.unitData[
+    unitId
+  ]?.questionTypes?.find((s) => s.id === data.id);
+  console.log(hi?.numberOfQuestions);
+
+  return (
+    <>
+      <Eui.EuiTable.StyledTableRow>
+        <Eui.EuiTable.StyledTableCell align="center">
+          {i}
+        </Eui.EuiTable.StyledTableCell>
+        <Eui.EuiTable.StyledTableCell align="center">
+          {data.name}
+        </Eui.EuiTable.StyledTableCell>
+
+        <Eui.EuiTable.StyledTableCell align="center">
+          <EuiInput
+            type={"number"}
+            defaultValue={0}
+            value={hi?.numberOfQuestions || 0}
+            onChange={handChange}
+          />
+        </Eui.EuiTable.StyledTableCell>
+      </Eui.EuiTable.StyledTableRow>
+    </>
+  );
+};
+
 const dataColumn = [
   {
     name: "STT",
@@ -210,6 +276,21 @@ const dataColumn = [
   },
   {
     name: "Tên yêu cầu cần đạt",
+    width: 200,
+  },
+  {
+    name: "Số câu",
+    width: 50,
+  },
+];
+
+const dataColumn2 = [
+  {
+    name: "STT",
+    width: 50,
+  },
+  {
+    name: "Mức độ câu hỏi",
     width: 200,
   },
   {

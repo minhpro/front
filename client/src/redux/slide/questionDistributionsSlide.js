@@ -19,6 +19,7 @@ const questionDistributionsSlide = createSlice({
         chapter.numberOfQuestions = 0;
         chapter.unitData.forEach((unit) => {
           unit.numberOfQuestions = 0;
+          unit.questionTypes = [];
           unit.requirements?.forEach((require) => {
             require.numberOfQuestions = 0;
           });
@@ -73,10 +74,27 @@ const questionDistributionsSlide = createSlice({
         state.total = state.total + state.data[i].numberOfQuestions;
       }
     },
+
+    updateQuestionType(state, action) {
+      const { questionType, indexData, unitId } = action.payload;
+      const { id, numberOfQuestions } = questionType;
+
+      const filterArr = state.data[indexData].unitData[
+        unitId
+      ].questionTypes.filter((item) => item.id !== id);
+      filterArr.push(questionType);
+
+      state.data[indexData].unitData[unitId].questionTypes = filterArr;
+    },
+
+    // dsa
   },
 });
 
-export const { setQuestionDistributions, updateQuestionDistributions } =
-  questionDistributionsSlide.actions;
+export const {
+  setQuestionDistributions,
+  updateQuestionDistributions,
+  updateQuestionType,
+} = questionDistributionsSlide.actions;
 
 export default questionDistributionsSlide.reducer;
