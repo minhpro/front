@@ -75,13 +75,13 @@ const Style = {
   `,
 };
 
-ExInputWrapper.MultiSelect = function ({ name, label, required, ...rest }) {
+ExInputWrapper.MultiSelect = function ({ name, label, required, onCodeChange, ...rest }) {
   return (
     <Mui.Stack spacing={0.5}>
       <Style.Label htmlFor={name}>
         {label} <span> {required ? "*" : null}</span>
       </Style.Label>
-      <EuiMultiSelect {...rest} />
+      <EuiMultiSelect onCodeChange={onCodeChange} {...rest} />
     </Mui.Stack>
   );
 };

@@ -152,9 +152,13 @@ CustomMultiSelect.propTypes = {
   }),
 };
 
-export default function EuiMultiSelect({ ...rest }) {
+export default function EuiMultiSelect({onCodeChange, ...rest }) {
   return (
-    <CustomMultiSelect defaultValue={[]} {...rest} name={"targets"}>
+    <CustomMultiSelect defaultValue={[]} {...rest} name={"targets"}
+    onChange={(e)=>{rest.onChange(e); if(onCodeChange){
+      onCodeChange({key: 'targetCodes', value: data.map(item => (e.find(item2 => item2 == item.id)) ? item.code : "0").join("")})
+    }}}
+    >
       {data.map((data, i) => {
         return (
           <StyledOption key={i} value={data.id}>
@@ -167,7 +171,7 @@ export default function EuiMultiSelect({ ...rest }) {
 }
 
 const data = [
-  { id: "ONLINE_REVIEW", name: "online" },
-  { id: "ONLINE_TEST", name: "Kiểm tra online" },
-  { id: "OFFLINE_TEST", name: "Kiểm tra offline" },
+  { id: "ONLINE_REVIEW", name: "Ôn tập online", code: "T" },
+  { id: "ONLINE_TEST", name: "Kiểm tra online", code: "E" },
+  { id: "OFFLINE_TEST", name: "Kiểm tra offline", code: "F" },
 ];

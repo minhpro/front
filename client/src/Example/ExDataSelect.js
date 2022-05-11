@@ -9,7 +9,7 @@ export const ExDataSelect = () => {
   return <div>ExDataSelect</div>;
 };
 
-ExDataSelect.Class = function Class({ ...rest }) {
+ExDataSelect.Class = function Class({onCodeChange, onChange, ...rest }) {
   // redux
   const reduxClass = useSelector((state) => state.reduxClass);
 
@@ -17,6 +17,10 @@ ExDataSelect.Class = function Class({ ...rest }) {
     <Ex.ExInputWrapper.Select
       label={"Chọn lớp:"}
       name={"classId"}
+      onChange={(e)=>{onChange(e); if(onCodeChange){
+        let row = reduxClass?.data?.find(item => item.id == e.target.value);
+        onCodeChange({key: 'classCode', value: row.code})
+      }}}
       data={reduxClass?.data}
       {...rest}
     />
@@ -37,7 +41,7 @@ ExDataSelect.ExamType = function ExamType({ ...rest }) {
   );
 };
 
-ExDataSelect.Subject = function Subject({ id, ...rest }) {
+ExDataSelect.Subject = function Subject({ id, onCodeChange, onChange, ...rest }) {
   // redux
   const [subject, setSubject] = React.useState(null);
   React.useEffect(() => {
@@ -57,12 +61,16 @@ ExDataSelect.Subject = function Subject({ id, ...rest }) {
       label={"Chọn môn:"}
       name={"subjectId"}
       data={subject?.data}
+      onChange={(e)=>{onChange(e); if(onCodeChange){
+        let row = subject?.data?.find(item => item.id == e.target.value);
+        onCodeChange({key: 'subjectCode', value: row.code})
+      }}}
       {...rest}
     />
   );
 };
 
-ExDataSelect.Chapter = function Chapter({ id, ...rest }) {
+ExDataSelect.Chapter = function Chapter({ id, onCodeChange, onChange, ...rest }) {
   const [chapter, setChapter] = React.useState(null);
   // life cirle
   React.useEffect(() => {
@@ -82,12 +90,16 @@ ExDataSelect.Chapter = function Chapter({ id, ...rest }) {
       label={"Chọn chủ đề:"}
       name={"chapterId"}
       data={chapter?.data}
+      onChange={(e)=>{onChange(e); if(onCodeChange){
+        let row = chapter?.data?.find(item => item.id == e.target.value);
+        onCodeChange({key: 'chapterCode', value: row.code})
+      }}}
       {...rest}
     />
   );
 };
 
-ExDataSelect.Units = function Units({ id, ...rest }) {
+ExDataSelect.Units = function Units({ id, onCodeChange, onChange, ...rest }) {
   const [units, setUnits] = React.useState(null);
   // life cirle
   React.useEffect(() => {
@@ -107,12 +119,16 @@ ExDataSelect.Units = function Units({ id, ...rest }) {
       label={"Chọn đơn vị kiến thức:"}
       name={"unitId"}
       data={units?.data}
+      onChange={(e)=>{onChange(e); if(onCodeChange){
+        let row = units?.data?.find(item => item.id == e.target.value);
+        onCodeChange({key: 'unitCode', value: row.code})
+      }}}
       {...rest}
     />
   );
 };
 
-ExDataSelect.Require = function Require({ id, ...rest }) {
+ExDataSelect.Require = function Require({ id, onCodeChange, onChange, ...rest }) {
   const [data, setData] = React.useState(null);
   // life cirle
   React.useEffect(() => {
@@ -126,11 +142,17 @@ ExDataSelect.Require = function Require({ id, ...rest }) {
     } else setData(null);
   }, [id]);
 
+  console.log("requirement:")
+  console.log(data)
   return (
     <Ex.ExInputWrapper.Select
       label={"Chọn yêu cầu cần đạt:"}
       name={"requirementId"}
       data={data?.requirementData}
+      onChange={(e)=>{onChange(e); if(onCodeChange){
+        let row = data?.requirementData?.find(item => item.id == e.target.value);
+        onCodeChange({key: 'requirementCode', value: row.code})
+      }}}
       {...rest}
     />
   );
@@ -272,7 +294,7 @@ ExDataSelect.TimeType = function TimeType({ ...rest }) {
   );
 };
 
-ExDataSelect.TypeQuestion = function TypeQuestion({ ...rest }) {
+ExDataSelect.TypeQuestion = function TypeQuestion({onCodeChange, onChange, ...rest }) {
   // redux
   const reduxQuestionType = useSelector((state) => state.reduxQuestionType);
 
@@ -281,6 +303,10 @@ ExDataSelect.TypeQuestion = function TypeQuestion({ ...rest }) {
       label={"Mức độ câu hỏi:"}
       name={"typeQuestionId"}
       data={reduxQuestionType?.data}
+      onChange={(e)=>{onChange(e); if(onCodeChange){
+        let row = reduxQuestionType?.data?.find(item => item.id == e.target.value);
+        onCodeChange({key: 'typeQuestionCode', value: row.code})
+      }}}
       {...rest}
     />
   );

@@ -23,6 +23,19 @@ export const AddEssayQuestion = () => {
     bank: "EDB",
   });
 
+  const [searchCode, setSearchCode] = React.useState({
+    chapterCode: "",
+    classCode: "",
+    subjectCode: "",
+    unitCode: "",
+    typeQuestionCode: "",
+    questionCode: "",
+    requirementCode: "",
+    classification: "",
+    targetCodes: "",
+    bank: "EDB",
+  });
+
   const [question, setQuestion] = React.useState({
     question: "",
     suggest: "",
@@ -47,6 +60,14 @@ export const AddEssayQuestion = () => {
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });
       console.log(search);
+    };
+
+    handleCodeChange = (data)=>{
+      console.log("code change nay")
+      console.log(data)
+
+      setSearchCode({...searchCode, [data.key]: data.value});
+      console.log(searchCode)
     };
 
     handleChangeQuestion = (name, e) => {
@@ -163,6 +184,7 @@ export const AddEssayQuestion = () => {
                   <Ex.ExDataSelect.Class
                     required
                     onChange={func.handleChange}
+                    onCodeChange={func.handleCodeChange}
                     value={search.classId || ""}
                   />
                 </Mui.Grid>
@@ -171,6 +193,7 @@ export const AddEssayQuestion = () => {
                     required
                     id={search.classId}
                     onChange={func.handleChange}
+                    onCodeChange={func.handleCodeChange}
                     value={search.subjectId || ""}
                   />
                 </Mui.Grid>
@@ -181,6 +204,7 @@ export const AddEssayQuestion = () => {
                 required
                 id={search.subjectId}
                 onChange={func.handleChange}
+                onCodeChange={func.handleCodeChange}
                 value={search.chapterId || ""}
               />
             </Item>
@@ -191,6 +215,7 @@ export const AddEssayQuestion = () => {
                     required
                     id={search.chapterId}
                     onChange={func.handleChange}
+                    onCodeChange={func.handleCodeChange}
                     value={search.unitId || ""}
                   />
                 </Mui.Grid>
@@ -199,6 +224,7 @@ export const AddEssayQuestion = () => {
                     required
                     id={search.unitId}
                     onChange={func.handleChange}
+                    onCodeChange={func.handleCodeChange}
                     value={search.requirementId || ""}
                   />
                 </Mui.Grid>
@@ -209,6 +235,7 @@ export const AddEssayQuestion = () => {
               <Ex.ExDataSelect.TypeQuestion
                 required
                 onChange={func.handleChange}
+                onCodeChange={func.handleCodeChange}
                 value={search.typeQuestionId || ""}
               />
             </Item>
@@ -216,6 +243,7 @@ export const AddEssayQuestion = () => {
               <Ex.ExInputWrapper.MultiSelect
                 label={"Mục tiêu ma trận:"}
                 onChange={(e) => setSearch({ ...search, targets: e })}
+                onCodeChange={func.handleCodeChange}
                 defaultValue={["ONLINE_REVIEW"]}
               />
             </Item>
@@ -241,7 +269,8 @@ export const AddEssayQuestion = () => {
         <Views.ViewBoard>
           <Mui.Stack spacing={1}>
             <Mui.Stack py={1}>
-              <Co.Text.Body.Medium>Mã câu hỏi: xx</Co.Text.Body.Medium>
+              <Co.Text.Body.Medium>Mã câu hỏi: {`${searchCode.subjectCode}.${searchCode.chapterCode}.
+              ${searchCode.unitCode}.${searchCode.requirementCode}.${searchCode.typeQuestionCode}.N.S.${searchCode.targetCodes}.XX`}</Co.Text.Body.Medium>
             </Mui.Stack>
             <Ex.ExInputWrapper.Editor
               label={"Câu hỏi:"}
