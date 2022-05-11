@@ -119,9 +119,9 @@ export const CreateMatrix = () => {
             h < dataNumber.data[i].unitData[j].questionTypes.length;
             h++
           ) {
-            payload.questionDistributions[i].units[j].questionTypes.push({
-              id: dataNumber.data[i].unitData[j].questionTypes[h],
-            });
+            payload.questionDistributions[i].units[j].questionTypes.push(
+              dataNumber.data[i].unitData[j].questionTypes[h]
+            );
           }
         }
       }
