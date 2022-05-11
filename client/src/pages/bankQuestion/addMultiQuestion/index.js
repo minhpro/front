@@ -61,9 +61,6 @@ export const AddMultiQuestion = () => {
     };
 
     handleCodeChange = (data)=>{
-      console.log("code change nay")
-      console.log(data)
-
       setSearchCode({...searchCode, [data.key]: data.value});
       console.log(searchCode)
     };
@@ -289,8 +286,7 @@ export const AddMultiQuestion = () => {
         <Views.ViewBoard>
           <Mui.Stack spacing={1}>
             <Mui.Stack py={1}>
-              <Co.Text.Body.Medium>Mã câu hỏi: {`${searchCode.subjectCode}.${searchCode.chapterCode}.
-              ${searchCode.unitCode}.${searchCode.requirementCode}.${searchCode.typeQuestionCode}.N.S.${searchCode.targetCodes}.XX`}</Co.Text.Body.Medium>
+              <Co.Text.Body.Medium>Mã câu hỏi: {`${searchCode.subjectCode}.${searchCode.chapterCode}.${searchCode.unitCode}.${searchCode.requirementCode}.${searchCode.typeQuestionCode}.N.S.${searchCode.targetCodes}.XX`}</Co.Text.Body.Medium>
             </Mui.Stack>
             <Ex.ExInputWrapper.Editor
               label={"Câu hỏi:"}
