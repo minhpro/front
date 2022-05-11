@@ -21,6 +21,7 @@ export const CreateMatrix = () => {
     time: 0,
     scoreCalculationTypeId: 1,
     code: "",
+    typeQuestionId: null,
   });
 
   const [snack, setSnack] = React.useState({
@@ -260,6 +261,13 @@ export const CreateMatrix = () => {
                 required
                 onChange={func.handleChange}
                 value={search.scoreCalculationTypeId}
+              />
+            </Item>
+            <Item>
+              <Ex.ExDataSelect.TypeQuestion
+                required
+                onChange={func.handleChange}
+                value={search.typeQuestionId}
               />
             </Item>
           </Mui.Grid>

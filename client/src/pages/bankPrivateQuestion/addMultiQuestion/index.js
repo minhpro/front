@@ -241,6 +241,9 @@ export const AddMultiQuestion = () => {
         {/* noi dung cau hoi */}
         <Views.ViewBoard>
           <Mui.Stack spacing={1}>
+            <Mui.Stack py={1}>
+              <Co.Text.Body.Medium>Mã câu hỏi: xx</Co.Text.Body.Medium>
+            </Mui.Stack>
             <Ex.ExInputWrapper.Editor
               label={"Câu hỏi:"}
               name={"ads"}
