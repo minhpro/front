@@ -52,16 +52,29 @@ Header.Nav = function Nav({ c }) {
           alignItems={"center"}
         >
           {Contants.navData.header.map((item, i) => {
-            if (item.name != 'LMS')
+            if (item.name != "LMS")
               return (
                 <Style.NavLink to={item.link} key={i} className={"ad"}>
-                  <h3 style={{ color: `${c || "width"}` }}>{item.name}</h3>
+                  <h3 style={{ color: `${c || "white"}` }}>{item.name}</h3>
                 </Style.NavLink>
               );
-            else return (
-                <h3 key={i} style={{ color: `${c || "width"}` }}><a href={item.link}>{item.name}</a></h3>
-            );
+            else
+              return (
+                <h3 key={i} style={{ color: `${c || "white"}` }}>
+                  <a href={item.link} style={{ color: `${c || "white"}` }}>
+                    {item.name}
+                  </a>
+                </h3>
+              );
           })}
+
+          {/* {Contants.navData.header.map((item, i) => {
+            return (
+              <Style.NavLink to={item.link} key={i} className={"ad"}>
+                <h3 style={{ color: `${c || "white"}` }}>{item.name}</h3>
+              </Style.NavLink>
+            );
+          })} */}
           <Co.Auth.AuthHeader />
         </Mui.Stack>
       </Mui.Stack>

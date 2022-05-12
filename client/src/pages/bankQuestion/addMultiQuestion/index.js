@@ -60,9 +60,9 @@ export const AddMultiQuestion = () => {
       console.log(search);
     };
 
-    handleCodeChange = (data)=>{
-      setSearchCode({...searchCode, [data.key]: data.value});
-      console.log(searchCode)
+    handleCodeChange = (data) => {
+      setSearchCode({ ...searchCode, [data.key]: data.value });
+      console.log(searchCode);
     };
 
     handleChangeQuestion = (name, e) => {
@@ -168,6 +168,25 @@ export const AddMultiQuestion = () => {
         {/* tim kiem */}
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
+            <Mui.Grid item xs={12}>
+              <Ex.ExDataSelect.Class2
+                required
+                onChange={func.handleChange}
+                onCodeChange={func.handleCodeChange}
+                value={search.classId || ""}
+              />
+            </Mui.Grid>
+
+            <Mui.Grid item xs={12}>
+              <Ex.ExDataSelect.Subject2
+                id={search.classId}
+                required
+                onChange={func.handleChange}
+                onCodeChange={func.handleCodeChange}
+                value={search.classId || ""}
+              />
+            </Mui.Grid>
+
             <Item>
               <Ex.ExInputWrapper.Basic
                 label={"Tên câu hỏi"}
@@ -177,7 +196,7 @@ export const AddMultiQuestion = () => {
                 placeholder={"Nhập tên câu hỏi"}
               />
             </Item>
-            <Item>
+            {/* <Item>
               <Mui.Grid container columnSpacing={2}>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.Class
@@ -197,7 +216,7 @@ export const AddMultiQuestion = () => {
                   />
                 </Mui.Grid>
               </Mui.Grid>
-            </Item>
+            </Item> */}
             <Item>
               <Ex.ExDataSelect.Chapter
                 required
@@ -286,7 +305,10 @@ export const AddMultiQuestion = () => {
         <Views.ViewBoard>
           <Mui.Stack spacing={1}>
             <Mui.Stack py={1}>
-              <Co.Text.Body.Medium>Mã câu hỏi: {`${searchCode.subjectCode}.${searchCode.chapterCode}.${searchCode.unitCode}.${searchCode.requirementCode}.${searchCode.typeQuestionCode}.N.S.${searchCode.targetCodes}.XX`}</Co.Text.Body.Medium>
+              <Co.Text.Body.Medium>
+                Mã câu hỏi:{" "}
+                {`${searchCode.subjectCode}.${searchCode.chapterCode}.${searchCode.unitCode}.${searchCode.requirementCode}.${searchCode.typeQuestionCode}.N.S.${searchCode.targetCodes}.XX`}
+              </Co.Text.Body.Medium>
             </Mui.Stack>
             <Ex.ExInputWrapper.Editor
               label={"Câu hỏi:"}

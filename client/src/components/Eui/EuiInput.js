@@ -124,3 +124,31 @@ EuiInput.Icon = function (props) {
     />
   );
 };
+
+EuiInput.Radio = function ({ data, ...rest }) {
+  return (
+    <Mui.FormControl sx={{ m: 1, minWidth: 120 }}>
+      {/* <Mui.FormLabel id="demo-radio-buttons-group-label">Gender</Mui.FormLabel> */}
+      <Mui.RadioGroup
+        // aria-labelledby="demo-radio-buttons-group-label"
+        // defaultValue={0}
+        // name="radio-buttons-group"
+        row
+        {...rest}
+      >
+        {data
+          ? data.map((data, i) => {
+              return (
+                <Mui.FormControlLabel
+                  value={data.id}
+                  control={<Mui.Radio />}
+                  label={data.name}
+                  key={i}
+                />
+              );
+            })
+          : null}
+      </Mui.RadioGroup>
+    </Mui.FormControl>
+  );
+};

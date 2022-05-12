@@ -32,7 +32,7 @@ ExInputWrapper.Basic = function ({ name, label, required, ...rest }) {
       <Style.Label htmlFor={name}>
         {label} <span> {required ? "*" : null}</span>
       </Style.Label>
-      <EuiInput id={name} name={name} fullWidth required={required} {...rest}  />
+      <EuiInput id={name} name={name} fullWidth required={required} {...rest} />
     </Mui.Stack>
   );
 };
@@ -75,7 +75,13 @@ const Style = {
   `,
 };
 
-ExInputWrapper.MultiSelect = function ({ name, label, required, onCodeChange, ...rest }) {
+ExInputWrapper.MultiSelect = function ({
+  name,
+  label,
+  required,
+  onCodeChange,
+  ...rest
+}) {
   return (
     <Mui.Stack spacing={0.5}>
       <Style.Label htmlFor={name}>
@@ -94,6 +100,23 @@ ExInputWrapper.Time = function ({ name, label, required, ...rest }) {
       </Style.Label>
       <EuiInput
         type={"number"}
+        id={name}
+        name={name}
+        fullWidth
+        required={required}
+        {...rest}
+      />
+    </Mui.Stack>
+  );
+};
+
+ExInputWrapper.Radio = function ({ label, name, required, ...rest }) {
+  return (
+    <Mui.Stack spacing={0.5}>
+      <Style.Label htmlFor={name}>
+        {label} <span> {required ? "*" : null}</span>
+      </Style.Label>
+      <EuiInput.Radio
         id={name}
         name={name}
         fullWidth
