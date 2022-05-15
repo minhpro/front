@@ -196,7 +196,7 @@ const Create = () => {
       />
 
       <Eui.EuiModal.Title
-        title={"Trộn đề thi: " + exam.name}
+        title={"Sinh đề hoán vị: " + exam.name}
         open={isOpen}
         handleClose={() => handleOpenNew.close()}
         w={600}
@@ -282,7 +282,7 @@ const Create = () => {
       </Eui.EuiModal.Title>
 
       {/* tim kiem */}
-      <Views.ViewContent title={"Tạo mới khảo thí"}>
+      <Views.ViewContent title={"Tạo mới đề hoán vị"}>
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
             <Item>
@@ -312,17 +312,17 @@ const Create = () => {
             <Item>
               <Mui.Grid container columnSpacing={5}>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.ExamType value={search.examTypeId || ""} />
+                  <Ex.ExInputWrapper.Select
+                      label={"Đề thi:"}
+                      name={"testId"}
+                      onChange={func.handleChange}
+                      data={pages?.data}
+                      value={search.testId || ""}
+                      required
+                  />
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExInputWrapper.Select
-                    label={"Đề thi:"}
-                    name={"testId"}
-                    onChange={func.handleChange}
-                    data={pages?.data}
-                    value={search.testId || ""}
-                    required
-                  />
+                  <Ex.ExDataSelect.ExamType value={search.examTypeId || ""} />
                 </Mui.Grid>
               </Mui.Grid>
             </Item>

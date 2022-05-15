@@ -71,6 +71,7 @@ export const CreateExams = () => {
                 handleSnack.add("Đã tạo bộ câu hỏi mới");
                 console.log(res);
             } catch (err) {
+                handleSnack.custom2(err?.response?.data?.message)
                 console.log(err);
             }
         };
@@ -252,7 +253,10 @@ export const CreateExams = () => {
                                         {row?.name || "name "}
                                     </Eui.EuiTable.StyledTableCell>
                                     <Eui.EuiTable.StyledTableCell align="center">
-                                        do kho
+                                        {row?.requirement?.name}
+                                    </Eui.EuiTable.StyledTableCell>
+                                    <Eui.EuiTable.StyledTableCell align="center">
+                                        {row?.questionType?.name}
                                     </Eui.EuiTable.StyledTableCell>
                                     <Eui.EuiTable.StyledTableCell align="center">
                                         {func.getNameTypeExam(row.type)}
@@ -311,6 +315,10 @@ const dataColumn = [
     {
         name: "Tên câu hỏi",
         width: 300,
+    },
+    {
+        name: "Yêu cầu cần đạt",
+        width: 200,
     },
     {
         name: "Độ khó",

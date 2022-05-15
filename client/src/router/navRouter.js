@@ -93,7 +93,12 @@ class NavRouter {
             element: <Pages.CreateExam.OrganMatrix />,
           },
           {
-            name: "Quản lý đề thi",
+            name: "Quản lý đề gốc",
+            link: "quan-ly-de-thi",
+            element: <Pages.OrganTest.Home />,
+          },
+          {
+            name: "Quản lý đề hoán vị",
             link: "quan-ly-de-thi",
             element: <Pages.CreateExam.OrganExam />,
           },
@@ -106,6 +111,11 @@ class NavRouter {
             name: "Tạo đề thi mới",
             link: "tao-de-thi-moi",
             element: <Pages.CreateExam.CreateExams />,
+          },
+          {
+            name: "Tạo đề hoán vị",
+            link: "tao-de-hoan-vi",
+            element: <Pages.OrganTest.Create />,
           },
         ],
         role: [
