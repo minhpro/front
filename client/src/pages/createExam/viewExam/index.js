@@ -172,13 +172,13 @@ const QuestionWrapper = ({ num, data, ...rest }) => {
       {num !== null ? (
         <>
           <h2>Câu hỏi: {num + 1} </h2>
-          <div dangerouslySetInnerHTML={{ __html: data[num].question }} />
+          <div dangerouslySetInnerHTML={{ __html: data[num]?.question }} />
           {data[num].type === "MultiChoiceQuestion" ? (
             <Mui.Stack spacing={1}>
-              <AnswerItem answer={"A"} content={data[num].answerOne} />
-              <AnswerItem answer={"B"} content={data[num].answerOne} />
-              <AnswerItem answer={"C"} content={data[num].answerOne} />
-              <AnswerItem answer={"D"} content={data[num].answerOne} />
+              <AnswerItem answer={"A"} content={data[num]?.answerOne} />
+              <AnswerItem answer={"B"} content={data[num]?.answerOne} />
+              <AnswerItem answer={"C"} content={data[num]?.answerOne} />
+              <AnswerItem answer={"D"} content={data[num]?.answerOne} />
             </Mui.Stack>
           ) : null}
 
