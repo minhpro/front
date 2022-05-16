@@ -17,7 +17,7 @@ export const LayoutAuth = () => {
               <img src={getImage.getPng("logo")} style={{ width: "300px" }} />
             </Link>
 
-            <h2>Hệ thống quản lý Học và thi trực tuyến EBD MLS</h2>
+            <h2>Hệ thống quản lý Học và thi trực tuyến EBD LMS</h2>
           </Mui.Stack>
         </Mui.Stack>
       </Item>

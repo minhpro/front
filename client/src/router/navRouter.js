@@ -95,12 +95,12 @@ class NavRouter {
           {
             name: "Quản lý đề gốc",
             link: "quan-ly-de-thi",
-            element: <Pages.OrganTest.Home />,
+            element: <Pages.CreateExam.OrganExam />,
           },
           {
             name: "Quản lý đề hoán vị",
-            link: "quan-ly-de-thi",
-            element: <Pages.CreateExam.OrganExam />,
+            link: "quan-ly-de-hoan-vi",
+            element: <Pages.OrganTest.Home />,
           },
           {
             name: "Tạo ma trận mới",
