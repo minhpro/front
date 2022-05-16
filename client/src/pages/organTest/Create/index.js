@@ -157,6 +157,7 @@ const Create = () => {
           )
         )
         .then((res) => {
+          console.log("search exam day:");
           console.log(res);
           setPages({
             ...pages,
@@ -312,14 +313,19 @@ const Create = () => {
             <Item>
               <Mui.Grid container columnSpacing={5}>
                 <Mui.Grid item xs={6}>
-                  <Ex.ExInputWrapper.Select
-                      label={"Đề thi:"}
-                      name={"testId"}
+                  <Ex.ExDataSelect.Test
+                      id={search.matrixId}
                       onChange={func.handleChange}
-                      data={pages?.data}
                       value={search.testId || ""}
-                      required
                   />
+                  {/*<Ex.ExInputWrapper.Select*/}
+                  {/*    label={"Đề thi:"}*/}
+                  {/*    name={"testId"}*/}
+                  {/*    onChange={func.handleChange}*/}
+                  {/*    data={pages?.data}*/}
+                  {/*    value={search.testId || ""}*/}
+                  {/*    required*/}
+                  {/*/>*/}
                 </Mui.Grid>
                 <Mui.Grid item xs={6}>
                   <Ex.ExDataSelect.ExamType value={search.examTypeId || ""} />

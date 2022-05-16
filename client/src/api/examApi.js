@@ -25,6 +25,24 @@ class ExamApi {
     };
     return axiosClient.post(url, body);
   };
+
+
+  search2 = (
+      testMatrixId,
+      keyword,
+      page,
+      limit
+  ) => {
+    const url = `${this.api}search`;
+    const body = {
+      keyword: keyword,
+      testMatrixId,
+      page: page || 1,
+      limit: limit || 32,
+    };
+    return axiosClient.post(url, body);
+  };
+
   delete = (id) => {
     const url = `${this.api}delete`;
     const body = { id: id };
