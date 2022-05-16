@@ -183,7 +183,7 @@ export const AddMultiQuestion = () => {
                 required
                 onChange={func.handleChange}
                 onCodeChange={func.handleCodeChange}
-                value={search.classId || ""}
+                value={search.subjectId || ""}
               />
             </Mui.Grid>
 

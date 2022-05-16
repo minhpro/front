@@ -25,6 +25,10 @@ const Create = () => {
     testId: null,
   });
 
+  const [errorAdd, setErrorAdd] = React.useState(false)
+
+
+
   const [kits, setKits] = React.useState(null);
 
   const [add, setAdd] = React.useState({
@@ -185,6 +189,24 @@ const Create = () => {
     func.handleSearch();
   }, [search.subjectId]);
 
+  React.useEffect(() => {
+    if(add.numberOfTests >10){
+      setErrorAdd(true)
+      console.log("loi 10")
+      setAdd({...add, numberOfTests: 10})
+    } else {
+      setErrorAdd(false)
+    }
+
+    if(add.numberOfTests < 0){
+      setErrorAdd(true)
+      setAdd({...add, numberOfTests: 0})
+      console.log("loi 0")
+    } else {
+      setErrorAdd(false)
+    }
+  }, [add.numberOfTests])
+
   return (
     <>
       {/* poppup */}
@@ -209,7 +231,7 @@ const Create = () => {
         >
           {/* noi dung */}
           <Mui.Stack sx={{ maxHeight: "70%", overflowY: "scroll" }}>
-            <Mui.Grid container>
+            <Mui.Grid container spacing={2}>
               <Mui.Grid item xs={12}>
                 <Ex.ExInputWrapper.Basic
                   label={"Ten bo de thi:"}
@@ -227,6 +249,7 @@ const Create = () => {
                   name={"numberOfQuestions"}
                   value={parseInt(add.numberOfQuestions)}
                   onChange={func.handleChangeAdd}
+                  error
                 />
               </Mui.Grid>
               <Mui.Grid item xs={6}>
@@ -237,6 +260,8 @@ const Create = () => {
                   name={"numberOfTests"}
                   value={add.numberOfTests}
                   onChange={func.handleChangeAdd}
+                  textHelper={"dsadsa"}
+                  error={true}
                 />
               </Mui.Grid>
               {/* gen */}
