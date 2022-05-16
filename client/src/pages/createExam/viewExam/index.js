@@ -173,7 +173,7 @@ const QuestionWrapper = ({ num, data, ...rest }) => {
         <>
           <h2>Câu hỏi: {num + 1} </h2>
           <div dangerouslySetInnerHTML={{ __html: data[num]?.question }} />
-          {data[num].type === "MultiChoiceQuestion" ? (
+          {data[num]?.type === "MultiChoiceQuestion" ? (
             <Mui.Stack spacing={1}>
               <AnswerItem answer={"A"} content={data[num]?.answerOne} />
               <AnswerItem answer={"B"} content={data[num]?.answerOne} />
@@ -184,7 +184,7 @@ const QuestionWrapper = ({ num, data, ...rest }) => {
 
           <Mui.Stack bgcolor={"green"} borderRadius={2} p={1} spacing={1}>
             <h5>Gợi ý làm bài:</h5>
-            <div dangerouslySetInnerHTML={{ __html: data[num].suggest }} />
+            <div dangerouslySetInnerHTML={{ __html: data[num]?.suggest }} />
           </Mui.Stack>
         </>
       ) : (
