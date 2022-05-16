@@ -171,7 +171,7 @@ export const OrganExam = () => {
   }, [search.subjectId]);
 
   return (
-    <Views.ViewContent title={"Quản lý đề thi"}>
+    <Views.ViewContent title={"Quản lý đề gốc"}>
       {/* thong bao */}
       <Eui.EuiSnackbar
         open={snack.isOpen}
@@ -296,13 +296,15 @@ export const OrganExam = () => {
                       {row?.testMatrixData?.subjectData?.name}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
+                      {row?.numberOfQuestions}
+                    </Eui.EuiTable.StyledTableCell>
+                    <Eui.EuiTable.StyledTableCell align="center">
                       {moment(row.createdAt).format("DD-MM-YYYY h:mm:ss")}
                     </Eui.EuiTable.StyledTableCell>
                     <Eui.EuiTable.StyledTableCell align="center">
-                      <Ex.ExIconEditDelete.View
+                      <Ex.ExIconEditDelete.ViewDelete
                         onDelete={() => func.onOpenDelete(row.id)}
-                        onEdit={() => func.onEdit(row.id)}
-                        onView={() => func.onOpenView(row.id)}
+                        onView={() =>func.onEdit(row.id)}
                       />
                     </Eui.EuiTable.StyledTableCell>
                   </Eui.EuiTable.StyledTableRow>
@@ -355,6 +357,10 @@ const dataColumn = [
   },
   {
     name: "Môn",
+    width: 200,
+  },
+  {
+    name: "Số lượng câu hỏi",
     width: 200,
   },
   {

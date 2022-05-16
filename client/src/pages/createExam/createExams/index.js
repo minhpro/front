@@ -133,7 +133,7 @@ export const CreateExams = () => {
     }, [search.matrixId]);
 
     return (
-        <Views.ViewContent title={"Tạo đề thi mới"}>
+        <Views.ViewContent title={"Tạo đề gốc"}>
             {/* thong bao */}
             <Eui.EuiSnackbar
                 open={snack.isOpen}

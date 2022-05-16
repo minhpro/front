@@ -89,6 +89,7 @@ function App() {
           />
 
           <Route path="khao-thi/:id" element={<Pages.OrganTest.ViewTest />} />
+          <Route path="quan-ly-de-hoan-vi/:id" element={<Pages.CreateExam.DetailPermutaionExam />} />
         </Route>
         <Route path="schools/add-school" element={<AddSchool />} />
         <Route path="schools/edit-school/:id" element={<EditSchool />} />

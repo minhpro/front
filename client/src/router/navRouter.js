@@ -100,7 +100,7 @@ class NavRouter {
           {
             name: "Quản lý đề hoán vị",
             link: "quan-ly-de-hoan-vi",
-            element: <Pages.OrganTest.Home />,
+            element: <Pages.CreateExam.ListPermutationExam />,
           },
           {
             name: "Tạo ma trận mới",
@@ -108,14 +108,14 @@ class NavRouter {
             element: <Pages.CreateExam.CreateMatrix />,
           },
           {
-            name: "Tạo đề thi mới",
+            name: "Tạo đề gốc",
             link: "tao-de-thi-moi",
             element: <Pages.CreateExam.CreateExams />,
           },
           {
             name: "Tạo đề hoán vị",
             link: "tao-de-hoan-vi",
-            element: <Pages.OrganTest.Create />,
+            element: <Pages.CreateExam.CreatePermutationExam />,
           },
         ],
         role: [

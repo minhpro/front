@@ -18,6 +18,7 @@ ExInputWrapper.Select = function ({ label, name, required, ...rest }) {
       <EuiInput.Select
         id={name}
         name={name}
+
         fullWidth
         required={required}
         {...rest}

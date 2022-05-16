@@ -51,7 +51,6 @@ export const CreateMatrix = () => {
 
     handleChange = (e) => {
       setSearch({ ...search, [e.target.name]: e.target.value });
-      console.log("change nay");
       console.log(search);
     };
 
@@ -308,6 +307,7 @@ export const CreateMatrix = () => {
             )}
           </Mui.Stack>
         </Views.ViewBoard>
+
         <Views.ViewBoard>
           <Mui.Stack spacing={3}>
             <Eui.EuiButton.OpenCreate onClick={func.handleOpen} />

@@ -220,7 +220,7 @@ ExDataSelect.Matrix = function Matrix({id, ...rest}) {
     );
 };
 
-ExDataSelect.Test = function Test({id, ...rest}) {
+ExDataSelect.Test = function Test({id, onNameChange, ...rest}) {
     const [exam, setExam] = React.useState(null);
     // life cirle
     React.useEffect(() => {
@@ -240,9 +240,20 @@ ExDataSelect.Test = function Test({id, ...rest}) {
     return (
         <Ex.ExInputWrapper.Select
             label={"Chọn đề gốc:"}
-            name={"examId"}
+            name={"testId"}
             data={exam?.data}
             {...rest}
+            onChange={(e) => {
+                if (rest.onChange) {
+                    rest.onChange(e);
+                }
+                if (onNameChange) {
+                    onNameChange({
+                        key: "testName",
+                        value: exam?.data?.find(item => item.id == e.target.value)?.name
+                    })
+                }
+            }}
         />
     );
 };

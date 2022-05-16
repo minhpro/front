@@ -5,7 +5,7 @@ export const ViewBoard = ({ children }) => {
   return (
     <Mui.Box
       bgcolor={"white.main"}
-      sx={{ boxShadow: "0 0 20px 0 rgb(76 87 125 / 2%)" }}
+      sx={{ boxShadow: "0 0 20px 0 rgb(76 87 125 / 2%)", marginTop: "4px"}}
       p={2}
       borderRadius={2}
     >
