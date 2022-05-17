@@ -207,7 +207,7 @@ export const CreateMatrix = () => {
         handleFunc={func.handleAdd}
         mw={300}
       />
-      <Mui.Stack spacing={0.5}>
+      <Mui.Stack spacing={1}>
         {/* nav */}
         <Views.ViewBoard>
           <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
