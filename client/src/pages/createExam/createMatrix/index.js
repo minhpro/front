@@ -57,13 +57,13 @@ export const CreateMatrix = () => {
     handleSearch = () => {
       if (search.subjectId) {
         Function.handler
-          .api(() => Api.chapterApi.search(search.subjectId))
+          .api(() => Api.chapterApi.allCount(search.subjectId))
           .then((res) => {
             console.log(res);
             // setChapter(res);
             dispatch(
               Slide.questionDistributionsSlide.setQuestionDistributions(
-                res?.data
+                res
               )
             );
           })
@@ -124,6 +124,7 @@ export const CreateMatrix = () => {
           }
         }
       }
+      payload.questionDistributions = payload.questionDistributions.filter(item => item.numberOfQuestions > 0);
       console.log("huhu", payload);
       Api.matrixApi
         .add(

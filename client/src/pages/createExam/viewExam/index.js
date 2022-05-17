@@ -33,7 +33,7 @@ export const ViewExam = () => {
   }, []);
   return (
     <Views.ViewContent
-      title={`Quản lý đề thi /Đề thi: ${data ? data.name : "name"} `}
+      title={`Quản lý đề gốc: ${data ? data.name : "name"} `}
     >
       <Mui.Stack spacing={1}>
         <Views.ViewBoard>
