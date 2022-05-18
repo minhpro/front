@@ -42,12 +42,15 @@ export const EuiMatrix = ({data, icon, indexData}) => {
                                     </Eui.EuiTable>
                                     {/* do kho */}
                                     <p>độ khó câu hỏi:</p>
-                                    {/*<p>{JSON.stringify(dataNumber?.number?.filter(item => item.numberOfQuestions > 0))}</p>*/}
                                     <Eui.EuiTable dataColumn={dataColumn2}>
                                         {questionTypesData?.data?.map((row, ii) => (
                                             <EuiMatrix.Chil3
                                                 data={row}
-                                                // max={unit?.requirements}
+                                                // max={Math.min( unit?.questionCounts?.find(item => item.questionTypeId == row.id)?.total - (unit?.questionTypes?.find(item=> item.id == row.id)?.numberOfQuestions || 0),
+                                                //     (unit?.numberOfQuestions || 0) - (unit?.questionTypes?.reduce((a, b) => a + b.numberOfQuestions, 0) || 0))}
+                                                max={unit?.questionCounts?.find(item => item.questionTypeId == row.id)?.total || 0}
+                                                current={unit?.questionTypes?.find(item => item.questionTypeId == row.id)?.numberOfQuestions || 0}
+                                                maxLeft={(unit?.numberOfQuestions || 0) - (unit?.questionTypes?.reduce((a, b) => a + b.numberOfQuestions, 0) || 0)}
                                                 i={ii + 1}
                                                 key={ii}
                                                 indexData={indexData}
@@ -116,7 +119,7 @@ EuiMatrix.Chil2 = function Chil({data, i, max, ...rest}) {
     const dispatch = useDispatch();
 
     function handChange(e) {
-        if (e.target.value && parseInt(e.target.value) < (max || 0) && parseInt(e.target.value) > 0) {
+        if (e.target.value && parseInt(e.target.value) <= (max || 0) && parseInt(e.target.value) >= 0) {
             const payload = {requireID: data.id, number: parseInt(e.target.value)};
             dispatch(
                 Slide.questionDistributionsSlide.updateQuestionDistributions(payload)
@@ -230,12 +233,16 @@ const Style = {
     `,
 };
 
-EuiMatrix.Chil3 = function Chil({data, i, max, indexData, unitId, ...rest}) {
+EuiMatrix.Chil3 = function Chil({data, i, max, current, maxLeft, indexData, unitId, ...rest}) {
     const dispatch = useDispatch();
     const questionTypesData = useSelector((s) => s.reduxQuestionDistributions);
 
     function handChange(e) {
-        if (e.target.value) {
+        if (e.target.value &&
+            parseInt(e.target.value) <= (max || 0) &&
+            parseInt(e.target.value) >= 0 &&
+            parseInt(e.target.value) - current <= maxLeft
+        ) {
             const payload = {
                 questionType: {
                     id: data.id,
