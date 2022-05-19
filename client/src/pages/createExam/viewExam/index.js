@@ -176,9 +176,9 @@ const QuestionWrapper = ({ num, data, ...rest }) => {
           {data[num]?.type === "MultiChoiceQuestion" ? (
             <Mui.Stack spacing={1}>
               <AnswerItem answer={"A"} content={data[num]?.answerOne} />
-              <AnswerItem answer={"B"} content={data[num]?.answerOne} />
-              <AnswerItem answer={"C"} content={data[num]?.answerOne} />
-              <AnswerItem answer={"D"} content={data[num]?.answerOne} />
+              <AnswerItem answer={"B"} content={data[num]?.answerTwo} />
+              <AnswerItem answer={"C"} content={data[num]?.answerThree} />
+              <AnswerItem answer={"D"} content={data[num]?.answerFour} />
             </Mui.Stack>
           ) : null}
 
