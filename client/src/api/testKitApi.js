@@ -52,6 +52,17 @@ class TestKitApi {
         return axiosClient.post(url, body);
     };
 
+    allByTest = (
+        testId
+    ) => {
+        const url = `${this.api}all-by-test`;
+        const body = {
+            testId
+        };
+        return axiosClient.post(url, body);
+    };
+
+
     getExam = (id) => {
         const url = `${this.api}get-exam-questions`;
         return axiosClient.get(url, {params: {id: id}});

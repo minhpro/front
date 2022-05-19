@@ -258,6 +258,45 @@ ExDataSelect.Test = function Test({id, onNameChange, ...rest}) {
     );
 };
 
+ExDataSelect.PermutationTest = function Test({id, onNameChange, ...rest}) {
+    const [permutationExam, setPermutationExam] = React.useState(null);
+    // life cirle
+    React.useEffect(() => {
+        if (id) {
+            Function.handler
+                .api(() =>
+                    Api.testKitApi.allByTest(id)
+                )
+                .then((res) => {
+                    console.log(res);
+                    setPermutationExam(res);
+                })
+                .catch((error) => console.log(error));
+        } else setPermutationExam(null);
+    }, [id]);
+
+    return (
+        <Ex.ExInputWrapper.Select
+            label={"Chọn đề hoán vị:"}
+            name={"testKitId"}
+            data={permutationExam}
+            {...rest}
+            onChange={(e) => {
+                if (rest.onChange) {
+                    rest.onChange(e);
+                }
+                if (onNameChange) {
+                    onNameChange({
+                        key: "testName",
+                        value: permutationExam?.find(item => item.id == e.target.value)?.name
+                    })
+                }
+            }}
+        />
+    );
+};
+
+
 ExDataSelect.Classify = function Classify({...rest}) {
     const data = [
         {

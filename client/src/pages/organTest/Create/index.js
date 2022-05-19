@@ -6,428 +6,554 @@ import * as Views from "views";
 import * as Class from "Class";
 import * as Function from "functions";
 import * as Api from "api";
+import moment from "moment";
+import * as Co from "../../../components";
+import {DoneAll} from "@mui/icons-material";
+import {Link} from "react-router-dom";
 
 const Create = () => {
-  const [pages, setPages] = React.useState({
-    data: null,
-    page: 1,
-    total: 10,
-    limit: 32,
-  });
+    const [pages, setPages] = React.useState({
+        data: null,
+        page: 1,
+        total: 10,
+        limit: 32,
+    });
 
-  const [search, setSearch] = React.useState({
-    examTypeId: null,
-    classId: null,
-    subjectId: null,
-    testName: "",
-    matrixId: null,
-    testCode: "",
-    testId: null,
-  });
+    const [search, setSearch] = React.useState({
+        examTypeId: null,
+        classId: null,
+        subjectId: null,
+        testName: "",
+        matrixId: null,
+        testCode: "",
+        testId: null,
+        testKitId: null,
+    });
 
-  const [errorAdd, setErrorAdd] = React.useState(false)
+    const [errorAdd, setErrorAdd] = React.useState(false)
+
+    const [kits, setKits] = React.useState(null);
+
+    const [add, setAdd] = React.useState({
+        name: "",
+
+        numberOfQuestions: 1,
+        numberOfTests: 1,
+        start: "2022-03-27T15:54:52.780966",
+        end: "2022-03-27T15:54:52.780966",
+        testMethod: "ONLINE",
+        target: "EXAM",
+        timeCalculationType: "BY_TEST",
+        candidateIds: [],
+        // kits: [],
+    });
+
+    const [isOpen, setIsOpen] = React.useState(false);
+    const [exam, setExam] = React.useState({
+        name: null,
+        id: null,
+    });
+
+    const [snack, setSnack] = React.useState({
+        isOpen: false,
+        message: "",
+        severity: null,
+    });
+
+    const [students, setStudents] = React.useState({
+        total: 0,
+        data: []
+    });
 
 
+    // class
 
-  const [kits, setKits] = React.useState(null);
+    const handleSnack = new Class.HandleSnack(setSnack);
+    handleSnack.setMessage(
+        "Đã thêm bộ đề mới",
+        "Đã trộn bộ đề",
+        "Lỗi hệ thống, chưa thể thêm đề thi mới"
+    );
 
-  const [add, setAdd] = React.useState({
-    name: "",
+    const handleOpenNew = new Class.HandlePopup(
+        setIsOpen,
+        "",
+        "Thêm mới thời gian làm bài"
+    );
 
-    numberOfQuestions: 1,
-    numberOfTests: 1,
-    start: "2022-03-27T15:54:52.780966",
-    end: "2022-03-27T15:54:52.780966",
-    testMethod: "ONLINE",
-    target: "EXAM",
-    timeCalculationType: "BY_TEST",
-    candidateIds: [],
-    // kits: [],
-  });
-
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [exam, setExam] = React.useState({
-    name: null,
-    id: null,
-  });
-
-  const [snack, setSnack] = React.useState({
-    isOpen: false,
-    message: "",
-    severity: null,
-  });
-
-  // class
-
-  const handleSnack = new Class.HandleSnack(setSnack);
-  handleSnack.setMessage(
-    "Đã thêm bộ đề mới",
-    "Đã trộn bộ đề",
-    "Lỗi hệ thống, chưa thể thêm đề thi mới"
-  );
-
-  const handleOpenNew = new Class.HandlePopup(
-    setIsOpen,
-    "",
-    "Thêm mới thời gian làm bài"
-  );
-
-  //   function
-  class Func {
-    handlePagination(event, value) {
-      console.log(value);
-      setPages({ ...pages, page: value });
-    }
-
-    handleChange = (e) => {
-      setSearch({ ...search, [e.target.name]: e.target.value });
-      console.log(search);
-    };
-
-    handleChangeAdd = (e) => {
-      setAdd({ ...add, [e.target.name]: e.target.value });
-      console.log(search);
-    };
-
-    onOpenGen() {
-      if (search.testId) {
-        handleOpenNew.open();
-      }
-    }
-
-    async handleGen() {
-      try {
-        const res = await Api.testKitApi.generate(
-          search.testId,
-          add.numberOfQuestions,
-          add.numberOfTests
-        );
-        console.log(res);
-
-        setKits(res);
-        handleSnack.delete("");
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    async handleAdd(e) {
-      e.preventDefault();
-
-      if (kits === null) {
-        return;
-      }
-      let body = {
-        ...add,
-        testId: search.testId,
-        kits: [],
-      };
-
-      kits.forEach((item) => {
-        body.kits.push({ code: item.code, questionIds: [] });
-      });
-
-      for (let i = 0; i < kits.length; i++) {
-        body.kits.push({ code: kits[i].code, questionIds: [] });
-
-        for (let j = 0; j < kits[i].questions.length; j++) {
-          body.kits[i].questionIds.push(kits[i].questions[j].id);
+    //   function
+    class Func {
+        handlePagination(event, value) {
+            console.log(value);
+            setPages({...pages, page: value});
         }
-      }
 
-      console.log(body);
+        handleChange = (e) => {
+            setSearch({...search, [e.target.name]: e.target.value});
+            console.log(search);
+        };
 
-      try {
-        const res = await Api.testKitApi.add(body);
-        console.log(res);
-        handleSnack.add("");
-        handleOpenNew.close();
-      } catch (error) {
-        console.log(error);
-      }
+        handleChangeAdd = (e) => {
+            setAdd({...add, [e.target.name]: e.target.value});
+            console.log(search);
+        };
+
+        onOpenGen() {
+            if (search.testId) {
+                handleOpenNew.open();
+            }
+        }
+
+        async handleGen() {
+            try {
+                const res = await Api.testKitApi.generate(
+                    search.testId,
+                    add.numberOfQuestions,
+                    add.numberOfTests
+                );
+                console.log(res);
+
+                setKits(res);
+                handleSnack.delete("");
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        async handleAdd(e) {
+            Api.testRoom.add({
+                testKitId: search.testKitId,
+                candidates: students?.data.map(item => {
+                    return {
+                        id: item.id
+                    }
+                })
+            }).then(res => {
+                handleSnack.add(search.testId)
+            }).catch(err => {
+                handleSnack.custom2(err?.response?.data?.message)
+            })
+        }
+
+        handleSearch = () => {
+            Function.handler
+                .api(() =>
+                    Api.examApi.search(
+                        search.testName,
+                        search.examTypeId,
+                        search.matrixId,
+                        search.classId,
+                        search.subjectId,
+                        pages.page,
+                        pages.limit
+                    )
+                )
+                .then((res) => {
+                    console.log("search exam day:");
+                    console.log(res);
+                    setPages({
+                        ...pages,
+                        data: res.data,
+                        total: Function.formatNumber.getTotalPage(res.total, pages.limit),
+                    });
+                })
+                .catch((error) => console.log(error));
+        };
+
+        handleGetStudent() {
+            Api.memberApi
+                .search(null, 1, 60)
+                .then(res => {
+                    res.data = res?.data?.map(item => Object.assign(item, {chosed: false}))
+                    setStudents(res)
+                })
+        }
+
+        onStudentChose(id) {
+            students.data = students.data.map(item => {
+                if (item.id == id) {
+                    item.chosed = true
+                }
+                return item;
+            })
+            setStudents(Object.assign({}, students))
+        }
+
+        onStudentUnchose(id) {
+            students.data = students.data.map(item => {
+                if (item.id == id) {
+                    item.chosed = false
+                }
+                return item;
+            })
+            setStudents(Object.assign({}, students))
+        }
     }
 
-    handleSearch = () => {
-      Function.handler
-        .api(() =>
-          Api.examApi.search(
-            search.testName,
-            search.examTypeId,
-            search.matrixId,
-            search.classId,
-            search.subjectId,
-            pages.page,
-            pages.limit
-          )
-        )
-        .then((res) => {
-          console.log("search exam day:");
-          console.log(res);
-          setPages({
-            ...pages,
-            data: res.data,
-            total: Function.formatNumber.getTotalPage(res.total, pages.limit),
-          });
-        })
-        .catch((error) => console.log(error));
-    };
-  }
+    const func = new Func();
 
-  const func = new Func();
-  React.useEffect(() => {
-    func.handleSearch();
-  }, []);
+    React.useEffect(() => {
+        func.handleGetStudent()
+        func.handleSearch();
+    }, []);
 
-  React.useEffect(() => {
-    setSearch({ ...search, subjectId: null });
-  }, [search.classId]);
-  React.useEffect(() => {
-    setSearch({ ...search, matrixId: null });
-  }, [search.subjectId]);
+    React.useEffect(() => {
+        setSearch({...search, subjectId: null});
+    }, [search.classId]);
+    React.useEffect(() => {
+        setSearch({...search, matrixId: null});
+    }, [search.subjectId]);
 
-  React.useEffect(() => {
-    func.handleSearch();
-  }, [search.subjectId]);
+    React.useEffect(() => {
+        func.handleSearch();
+    }, [search.subjectId]);
 
-  React.useEffect(() => {
-    if(add.numberOfTests >10){
-      setErrorAdd(true)
-      console.log("loi 10")
-      setAdd({...add, numberOfTests: 10})
-    } else {
-      setErrorAdd(false)
-    }
+    React.useEffect(() => {
+        if (add.numberOfTests > 10) {
+            setErrorAdd(true)
+            console.log("loi 10")
+            setAdd({...add, numberOfTests: 10})
+        } else {
+            setErrorAdd(false)
+        }
 
-    if(add.numberOfTests < 0){
-      setErrorAdd(true)
-      setAdd({...add, numberOfTests: 0})
-      console.log("loi 0")
-    } else {
-      setErrorAdd(false)
-    }
-  }, [add.numberOfTests])
+        if (add.numberOfTests < 0) {
+            setErrorAdd(true)
+            setAdd({...add, numberOfTests: 0})
+            console.log("loi 0")
+        } else {
+            setErrorAdd(false)
+        }
+    }, [add.numberOfTests])
 
-  return (
-    <>
-      {/* poppup */}
-      {/* thong bao */}
-      <Eui.EuiSnackbar
-        open={snack.isOpen}
-        handleClose={() => handleSnack.close()}
-        message={snack.message}
-        severity={snack.severity}
-      />
+    return (
+        <>
+            {/* poppup */}
+            {/* thong bao */}
+            <Eui.EuiSnackbar
+                open={snack.isOpen}
+                handleClose={() => handleSnack.close()}
+                message={snack.message}
+                severity={snack.severity}
+            />
 
-      <Eui.EuiModal.Title
-        title={"Sinh đề hoán vị: " + exam.name}
-        open={isOpen}
-        handleClose={() => handleOpenNew.close()}
-        w={600}
-      >
-        <Mui.Stack
-          component={"form"}
-          sx={{ height: "70vh" }}
-          onSubmit={func.handleAdd}
-        >
-          {/* noi dung */}
-          <Mui.Stack sx={{ maxHeight: "70%", overflowY: "scroll" }}>
-            <Mui.Grid container spacing={2}>
-              <Mui.Grid item xs={12}>
-                <Ex.ExInputWrapper.Basic
-                  label={"Ten bo de thi:"}
-                  required
-                  name={"name"}
-                  value={add.name}
-                  onChange={func.handleChangeAdd}
-                />
-              </Mui.Grid>
-              <Mui.Grid item xs={6}>
-                <Ex.ExInputWrapper.Basic
-                  label={"Số lượng câu hỏi:"}
-                  required
-                  type={"number"}
-                  name={"numberOfQuestions"}
-                  value={parseInt(add.numberOfQuestions)}
-                  onChange={func.handleChangeAdd}
-                  error
-                />
-              </Mui.Grid>
-              <Mui.Grid item xs={6}>
-                <Ex.ExInputWrapper.Basic
-                  label={"Số đề thi:"}
-                  required
-                  type={"number"}
-                  name={"numberOfTests"}
-                  value={add.numberOfTests}
-                  onChange={func.handleChangeAdd}
-                  textHelper={"dsadsa"}
-                  error={true}
-                />
-              </Mui.Grid>
-              {/* gen */}
-              <Mui.Grid item xs={12}>
-                {kits ? (
-                  <Eui.EuiTable dataColumn={dataColumn2}>
-                    {kits.map((row, i) => (
-                      <Eui.EuiTable.StyledTableRow key={i}>
-                        <Eui.EuiTable.StyledTableCell align="center">
-                          {i + 1}
-                        </Eui.EuiTable.StyledTableCell>
-                        <Eui.EuiTable.StyledTableCell align="center">
-                          {row.code}
-                        </Eui.EuiTable.StyledTableCell>
+            <Eui.EuiModal.Title
+                title={"Sinh đề hoán vị: " + exam.name}
+                open={isOpen}
+                handleClose={() => handleOpenNew.close()}
+                w={600}
+            >
+                <Mui.Stack
+                    component={"form"}
+                    sx={{height: "70vh"}}
+                    onSubmit={func.handleAdd}
+                >
+                    {/* noi dung */}
+                    <Mui.Stack sx={{maxHeight: "70%", overflowY: "scroll"}}>
+                        <Mui.Grid container spacing={2}>
+                            <Mui.Grid item xs={12}>
+                                <Ex.ExInputWrapper.Basic
+                                    label={"Ten bo de thi:"}
+                                    required
+                                    name={"name"}
+                                    value={add.name}
+                                    onChange={func.handleChangeAdd}
+                                />
+                            </Mui.Grid>
+                            <Mui.Grid item xs={6}>
+                                <Ex.ExInputWrapper.Basic
+                                    label={"Số lượng câu hỏi:"}
+                                    required
+                                    type={"number"}
+                                    name={"numberOfQuestions"}
+                                    value={parseInt(add.numberOfQuestions)}
+                                    onChange={func.handleChangeAdd}
+                                    error
+                                />
+                            </Mui.Grid>
+                            <Mui.Grid item xs={6}>
+                                <Ex.ExInputWrapper.Basic
+                                    label={"Số đề thi:"}
+                                    required
+                                    type={"number"}
+                                    name={"numberOfTests"}
+                                    value={add.numberOfTests}
+                                    onChange={func.handleChangeAdd}
+                                    textHelper={"dsadsa"}
+                                    error={true}
+                                />
+                            </Mui.Grid>
+                            {/* gen */}
+                            <Mui.Grid item xs={12}>
+                                {kits ? (
+                                    <Eui.EuiTable dataColumn={dataColumn2}>
+                                        {kits.map((row, i) => (
+                                            <Eui.EuiTable.StyledTableRow key={i}>
+                                                <Eui.EuiTable.StyledTableCell align="center">
+                                                    {i + 1}
+                                                </Eui.EuiTable.StyledTableCell>
+                                                <Eui.EuiTable.StyledTableCell align="center">
+                                                    {row.code}
+                                                </Eui.EuiTable.StyledTableCell>
 
-                        <Eui.EuiTable.StyledTableCell align="center">
-                          <Ex.ExIconEditDelete.Gen
-                            onGen={() => func.onOpenGen(row.id, row.name)}
-                          />
-                        </Eui.EuiTable.StyledTableCell>
-                      </Eui.EuiTable.StyledTableRow>
+                                                <Eui.EuiTable.StyledTableCell align="center">
+                                                    <Ex.ExIconEditDelete.Gen
+                                                        onGen={() => func.onOpenGen(row.id, row.name)}
+                                                    />
+                                                </Eui.EuiTable.StyledTableCell>
+                                            </Eui.EuiTable.StyledTableRow>
+                                        ))}
+                                    </Eui.EuiTable>
+                                ) : null}
+                            </Mui.Grid>
+                        </Mui.Grid>
+                    </Mui.Stack>
+
+                    {/* button */}
+                    <Mui.Stack
+                        direction={"row"}
+                        justifyContent={"flex-end"}
+                        mt={10}
+                        spacing={2}
+                    >
+                        <Eui.EuiButton.AddNew component={"button"}/>
+                        <Eui.EuiButton.AddType
+                            name={"Trộn bộ đề"}
+                            onClick={func.handleGen}
+                        />
+                        <Eui.EuiButton.Cancel onClick={() => handleOpenNew.close()}/>
+                    </Mui.Stack>
+                </Mui.Stack>
+            </Eui.EuiModal.Title>
+
+            {/* tim kiem */}
+            <Views.ViewContent title={"Tổ chức khảo thí"}>
+                <Views.ViewBoard>
+                    <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
+                        <Item>
+                            <Mui.Grid container columnSpacing={5}>
+                                <Mui.Grid item xs={6}>
+                                    <Ex.ExDataSelect.Class
+                                        onChange={func.handleChange}
+                                        value={search.classId || ""}
+                                    />
+                                </Mui.Grid>
+                                <Mui.Grid item xs={6}>
+                                    <Ex.ExDataSelect.Subject
+                                        id={search.classId}
+                                        onChange={func.handleChange}
+                                        value={search.subjectId || ""}
+                                    />
+                                </Mui.Grid>
+                            </Mui.Grid>
+                        </Item>
+                        <Item>
+                            <Ex.ExDataSelect.Matrix
+                                id={search.subjectId}
+                                onChange={func.handleChange}
+                                value={search.matrixId || ""}
+                            />
+                        </Item>
+                        <Item>
+                            <Mui.Grid container columnSpacing={5}>
+                                <Mui.Grid item xs={6}>
+                                    <Ex.ExDataSelect.Test
+                                        id={search.matrixId}
+                                        onChange={func.handleChange}
+                                        value={search.testId || ""}
+                                    />
+                                </Mui.Grid>
+                                <Mui.Grid item xs={6}>
+                                    <Ex.ExDataSelect.PermutationTest
+                                        id={search.testId}
+                                        onChange={func.handleChange}
+                                        value={search.testKitId || ""}
+                                    />
+                                </Mui.Grid>
+                            </Mui.Grid>
+                        </Item>
+                        <Item>
+                            <Mui.Grid container columnSpacing={5}>
+                                <Mui.Grid item xs={6}>
+                                    <Ex.ExDataSelect.ExamType value={search.examTypeId || ""}/>
+                                </Mui.Grid>
+                            </Mui.Grid>
+                        </Item>
+                    </Mui.Grid>
+                </Views.ViewBoard>
+            </Views.ViewContent>
+
+            {/*List hoc sinh da chon*/}
+            <Views.ViewBoard>
+                <Mui.Stack py={1}>
+                    <Co.Text.Body.Medium>
+                        Thí sinh đã chọn
+                    </Co.Text.Body.Medium>
+                </Mui.Stack>
+                <Eui.EuiTable dataColumn={dataColumn3}>
+                    {students?.data?.filter(item => item.chosed)?.map((row, i) => (
+                        <Eui.EuiTable.StyledTableRow key={i}>
+                            <Eui.EuiTable.StyledTableCell align="center">
+                                {i + 1}
+                            </Eui.EuiTable.StyledTableCell>
+
+                            <Eui.EuiTable.StyledTableCell align="center">
+                                {row?.fullName || ""}
+                            </Eui.EuiTable.StyledTableCell>
+                            <Eui.EuiTable.StyledTableCell align="center">
+                                {row?.email || ""}
+                            </Eui.EuiTable.StyledTableCell>
+                            <Eui.EuiTable.StyledTableCell align="center">
+                                {row?.phone || ""}
+                            </Eui.EuiTable.StyledTableCell>
+                            <Eui.EuiTable.StyledTableCell>
+                                {/*<DoneAll onClick={()=>{row.chosed = true}}/>*/}
+                                <Ex.ExIconEditDelete.DeleteOnly
+                                    onDelete={() => {
+                                        func.onStudentUnchose(row.id)
+                                    }}
+                                />
+                            </Eui.EuiTable.StyledTableCell>
+                        </Eui.EuiTable.StyledTableRow>
                     ))}
-                  </Eui.EuiTable>
-                ) : null}
-              </Mui.Grid>
-            </Mui.Grid>
-          </Mui.Stack>
+                </Eui.EuiTable>
+                <Mui.Stack
+                    direction={"row"}
+                    spacing={2}
+                    pt={2}
+                    borderTop={"solid 1px"}
+                    borderColor={"red"}
+                >
+                    <Eui.EuiButton.OpenCreate
+                        onClick={func.handleAdd}
+                    />
+                </Mui.Stack>
 
-          {/* button */}
-          <Mui.Stack
-            direction={"row"}
-            justifyContent={"flex-end"}
-            mt={10}
-            spacing={2}
-          >
-            <Eui.EuiButton.AddNew component={"button"} />
-            <Eui.EuiButton.AddType
-              name={"Trộn bộ đề"}
-              onClick={func.handleGen}
-            />
-            <Eui.EuiButton.Cancel onClick={() => handleOpenNew.close()} />
-          </Mui.Stack>
-        </Mui.Stack>
-      </Eui.EuiModal.Title>
+            </Views.ViewBoard>
 
-      {/* tim kiem */}
-      <Views.ViewContent title={"Tạo mới đề hoán vị"}>
-        <Views.ViewBoard>
-          <Mui.Grid container columnSpacing={5} rowSpacing={2} py={2}>
-            <Item>
-              <Mui.Grid container columnSpacing={5}>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Class
-                    onChange={func.handleChange}
-                    value={search.classId || ""}
-                  />
-                </Mui.Grid>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Subject
-                    id={search.classId}
-                    onChange={func.handleChange}
-                    value={search.subjectId || ""}
-                  />
-                </Mui.Grid>
-              </Mui.Grid>
-            </Item>
-            <Item>
-              <Ex.ExDataSelect.Matrix
-                id={search.subjectId}
-                onChange={func.handleChange}
-                value={search.matrixId || ""}
-              />
-            </Item>
-            <Item>
-              <Mui.Grid container columnSpacing={5}>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.Test
-                      id={search.matrixId}
-                      onChange={func.handleChange}
-                      value={search.testId || ""}
-                  />
-                  {/*<Ex.ExInputWrapper.Select*/}
-                  {/*    label={"Đề thi:"}*/}
-                  {/*    name={"testId"}*/}
-                  {/*    onChange={func.handleChange}*/}
-                  {/*    data={pages?.data}*/}
-                  {/*    value={search.testId || ""}*/}
-                  {/*    required*/}
-                  {/*/>*/}
-                </Mui.Grid>
-                <Mui.Grid item xs={6}>
-                  <Ex.ExDataSelect.ExamType value={search.examTypeId || ""} />
-                </Mui.Grid>
-              </Mui.Grid>
-            </Item>
-          </Mui.Grid>
-          <Mui.Stack
-            direction={"row"}
-            spacing={2}
-            pt={2}
-            borderTop={"solid 1px"}
-            borderColor={"red"}
-          >
-            <Eui.EuiButton.AddType
-              onClick={func.onOpenGen}
-              name={"Trộn câu hỏi"}
-            />
-          </Mui.Stack>
-        </Views.ViewBoard>
-      </Views.ViewContent>
-    </>
-  );
+            {/*List hoc sinh he thong*/}
+            <Views.ViewBoard>
+                <Mui.Stack py={1}>
+                    <Co.Text.Body.Medium>
+                        Danh sách thí sinh
+                    </Co.Text.Body.Medium>
+                </Mui.Stack>
+                <Eui.EuiTable dataColumn={dataColumn3}>
+                    {students?.data?.filter(item => !item.chosed)?.map((row, i) => (
+                        <Eui.EuiTable.StyledTableRow key={i}>
+                            <Eui.EuiTable.StyledTableCell align="center">
+                                {i + 1}
+                            </Eui.EuiTable.StyledTableCell>
+
+                            <Eui.EuiTable.StyledTableCell align="center">
+                                {row?.fullName || ""}
+                            </Eui.EuiTable.StyledTableCell>
+                            <Eui.EuiTable.StyledTableCell align="center">
+                                {row?.email || ""}
+                            </Eui.EuiTable.StyledTableCell>
+                            <Eui.EuiTable.StyledTableCell align="center">
+                                {row?.phone || ""}
+                            </Eui.EuiTable.StyledTableCell>
+                            <Eui.EuiTable.StyledTableCell>
+                                {/*<DoneAll onClick={()=>{row.chosed = true}}/>*/}
+                                <Ex.ExIconEditDelete.ChoseOnly
+                                    onChose={() => {
+                                        func.onStudentChose(row.id)
+                                    }}
+                                />
+                            </Eui.EuiTable.StyledTableCell>
+                        </Eui.EuiTable.StyledTableRow>
+                    ))}
+                </Eui.EuiTable>
+                {/*<Eui.EuiPagination*/}
+                {/*    count={pages.total}*/}
+                {/*    defaultPage={1}*/}
+                {/*    siblingCount={0}*/}
+                {/*    boundaryCount={2}*/}
+                {/*    size={"large"}*/}
+                {/*    shape={"rounded"}*/}
+                {/*    onChange={func.handlePagination}*/}
+                {/*/>*/}
+            </Views.ViewBoard>
+        </>
+    );
 };
 
 export default Create;
 
-const Item = ({ children }) => {
-  return (
-    <Mui.Grid item xs={12} lg={6}>
-      {children}
-    </Mui.Grid>
-  );
+const Item = ({children}) => {
+    return (
+        <Mui.Grid item xs={12} lg={6}>
+            {children}
+        </Mui.Grid>
+    );
 };
 
 const dataColumn = [
-  {
-    name: "STT",
-    width: 50,
-  },
-  {
-    name: "Mã đề",
-    width: 200,
-  },
-  {
-    name: "Tên đề",
-    width: 200,
-  },
-  {
-    name: "Ma trận đề thi",
-    width: 200,
-  },
-  {
-    name: "Lớp",
-    width: 200,
-  },
-  {
-    name: "Môn",
-    width: 200,
-  },
-  {
-    name: "Thao tác",
-    width: 200,
-  },
+    {
+        name: "STT",
+        width: 50,
+    },
+    {
+        name: "Mã đề",
+        width: 200,
+    },
+    {
+        name: "Tên đề",
+        width: 200,
+    },
+    {
+        name: "Ma trận đề thi",
+        width: 200,
+    },
+    {
+        name: "Lớp",
+        width: 200,
+    },
+    {
+        name: "Môn",
+        width: 200,
+    },
+    {
+        name: "Thao tác",
+        width: 200,
+    },
 ];
 
 const dataColumn2 = [
-  {
-    name: "STT",
-    width: 50,
-  },
-  {
-    name: "Mã đề",
-  },
+    {
+        name: "STT",
+        width: 50,
+    },
+    {
+        name: "Mã đề",
+    },
 
-  {
-    name: "Thao tác",
-    width: 100,
-  },
+    {
+        name: "Thao tác",
+        width: 100,
+    },
+];
+
+const dataColumn3 = [
+    {
+        name: "STT",
+        width: 50,
+    },
+    {
+        name: "Họ tên",
+    },
+
+    {
+        name: "Email",
+        width: 100,
+    },
+    {
+        name: "SDT",
+        width: 100,
+    },
+    {
+        name: "Thao tác",
+        width: 100,
+    },
 ];

@@ -275,8 +275,13 @@ EuiMatrix.Chil3 = function Chil({data, i, max, current, maxLeft, indexData, unit
                     {data.name}
                 </Eui.EuiTable.StyledTableCell>
                 <Eui.EuiTable.StyledTableCell align="center">
-                    {max || 0}
+                    {max || 0}                  {max}
+                    {current}
+                    {maxLeft}
                 </Eui.EuiTable.StyledTableCell>
+
+
+
 
                 <Eui.EuiTable.StyledTableCell align="center">
                     <EuiInput

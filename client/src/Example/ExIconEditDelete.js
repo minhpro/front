@@ -61,6 +61,14 @@ ExIconEditDelete.DeleteOnly = function ({ onDelete }) {
   );
 };
 
+ExIconEditDelete.ChoseOnly = function ({ onChose }) {
+    return (
+        <Stack direction={"row"} justifyContent="center" spacing={1}>
+            <DoneAllIcon onClick={onChose} sx={{ ...style }} />
+        </Stack>
+    );
+};
+
 ExIconEditDelete.Gen = function ({ onGen }) {
   return (
     <Stack direction={"row"} justifyContent="center" spacing={1}>
